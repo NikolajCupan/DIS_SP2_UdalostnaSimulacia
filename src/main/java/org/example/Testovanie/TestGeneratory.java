@@ -5,6 +5,7 @@ import org.example.Generatory.Ostatne.DeterministickyGenerator;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.Ostatne.SkupinaEmpirickyGenerator;
 import org.example.Generatory.SpojityEmpirickyGenerator;
+import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Generatory.SpojityRovnomernyGenerator;
 import org.example.Ostatne.Konstanty;
 
@@ -176,6 +177,26 @@ public class TestGeneratory
         System.out.println("Pomer: " + sucetPomer);
 
         System.out.println("OK: Test spojity empiricky generator\n");
+
+        w.flush();
+        w.close();
+    }
+
+    public void testSpojityExponencialnyGenerator() throws Exception
+    {
+        PrintWriter w = new PrintWriter("test_spojity_exponencialny_generator.txt");
+
+        final int pocetGenerovani = 1000000;
+        final double lambda = 20;
+
+        SpojityExponencialnyGenerator seg = new SpojityExponencialnyGenerator(lambda, this.generatorNasad);
+        for (int i = 0; i < pocetGenerovani; i++)
+        {
+            double sample = seg.sample();
+            w.println(sample);
+        }
+
+        System.out.println("OK: Test spojity exponencialny generator\n");
 
         w.flush();
         w.close();

@@ -22,6 +22,7 @@ public class Main
             test.testDiskretnyRovnomernyGenerator();
             test.testSpojityRovnomernyGenerator();
             test.testSpojityEmpirickyGenerator();
+            test.testSpojityExponencialnyGenerator();
         }
     }
 }

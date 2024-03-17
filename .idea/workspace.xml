@@ -4,15 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Uprava logiky generatora nasad">
+    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Nove testovanie generatorov">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Generatory/SpojityExponencialnyGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Generatory/SpojityTrojuholnikovyGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Testovanie/TestSpojityEmpirickyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Testovanie/TestGeneratory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Testovanie/TestGeneratory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Testovanie/TestGeneratory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -74,7 +83,7 @@
       <workItem from="1710675392831" duration="171000" />
       <workItem from="1710675564716" duration="84000" />
       <workItem from="1710675649438" duration="3514000" />
-      <workItem from="1710691895274" duration="2481000" />
+      <workItem from="1710691895274" duration="4684000" />
     </task>
     <task id="LOCAL-00001" summary="Initial">
       <option name="closed" value="true" />
@@ -92,7 +101,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710680040433</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Nove testovanie generatorov">
+      <option name="closed" value="true" />
+      <created>1710694409302</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710694409302</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,6 +118,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial" />
     <MESSAGE value="Uprava logiky generatora nasad" />
-    <option name="LAST_COMMIT_MESSAGE" value="Uprava logiky generatora nasad" />
+    <MESSAGE value="Nove testovanie generatorov" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nove testovanie generatorov" />
   </component>
 </project>
