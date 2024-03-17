@@ -6,11 +6,9 @@ import org.example.Generatory.SpojityEmpirickyGenerator;
 
 public class TestSpojityEmpirickyGenerator
 {
-    public void test(int nasada, boolean pouziNasadu)
+    public void test(int pocetGenerovani)
     {
-        final int pocetGenerovani = 100000000;
-
-        GeneratorNasad generatorNasad = (pouziNasadu ? new GeneratorNasad(nasada) : new GeneratorNasad());
+        GeneratorNasad generatorNasad = new GeneratorNasad();
 
         SkupinaEmpirickyGenerator[] skupiny = new SkupinaEmpirickyGenerator[]{
                 new SkupinaEmpirickyGenerator(0.10, 0.30, 0.10),
