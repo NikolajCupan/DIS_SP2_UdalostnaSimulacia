@@ -1,8 +1,7 @@
 package org.example;
 
 import org.example.GUI.HlavneOkno;
-import org.example.Generatory.Ostatne.GeneratorNasad;
-import org.example.Testovanie.TestSpojityEmpirickyGenerator;
+import org.example.Testovanie.TestGeneratory;
 
 public class Main
 {
@@ -10,7 +9,7 @@ public class Main
     private static final boolean POUZI_TESTOVACIU_NASADU = false;
     private static char REZIM = 'T';
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         if (Main.REZIM == 'G')
         {
@@ -18,10 +17,11 @@ public class Main
         }
         else if (Main.REZIM == 'T')
         {
-            GeneratorNasad.inicializujGeneratorNasad(Main.TESTOVACIA_NASADA, Main.POUZI_TESTOVACIU_NASADU);
-
-            TestSpojityEmpirickyGenerator test = new TestSpojityEmpirickyGenerator();
-            test.test(1000000000);
+            TestGeneratory test = new TestGeneratory(Main.TESTOVACIA_NASADA, Main.POUZI_TESTOVACIU_NASADU);
+            test.testDeterministickyGenerator();
+            test.testDiskretnyRovnomernyGenerator();
+            test.testSpojityRovnomernyGenerator();
+            test.testSpojityEmpirickyGenerator();
         }
     }
 }
