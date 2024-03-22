@@ -1,6 +1,6 @@
 package org.example.Simulacia.Jadro;
 
-import org.example.Simulacia.Stanok.Agent;
+import org.example.Simulacia.Stanok.Agenti.Agent;
 
 public abstract class Udalost
 {

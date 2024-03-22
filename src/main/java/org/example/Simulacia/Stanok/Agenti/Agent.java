@@ -1,18 +1,20 @@
-package org.example.Simulacia.Stanok;
+package org.example.Simulacia.Stanok.Agenti;
 
 import org.example.Ostatne.Konstanty;
 
 public class Agent
 {
     private final long ID;
+    private final TypAgenta typAgenta;
 
     private double casPrichod;
     private double casZaciatokObsluhy;
     private double casKoniecObsluhy;
 
-    public Agent(long ID)
+    public Agent(long ID, TypAgenta typAgenta)
     {
         this.ID = ID;
+        this.typAgenta = typAgenta;
 
         this.casPrichod = -1;
         this.casZaciatokObsluhy = -1;

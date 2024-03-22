@@ -41,3 +41,4 @@ build/
 /test_spojity_empiricky_generator.txt
 /test_spojity_rovnomerny_generator.txt
 /test_spojity_exponencialny_generator.txt
+/test_spojity_trojuholnikovy_generator.txt

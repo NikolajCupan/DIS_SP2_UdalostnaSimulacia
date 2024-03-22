@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Zaklad pre dalsie generatory">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Ostatne/Identifikator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Jadro/Udalost.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/SimulaciaStanok.java" afterDir="false" />
+    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Zosuladenie projektov">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieDlzkyPlatenia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieTypuZakaznika.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agenti/TypAgenta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Generatory/SpojityExponencialnyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Generatory/SpojityExponencialnyGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Generatory/SpojityTrojuholnikovyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Generatory/SpojityTrojuholnikovyGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Ostatne/Konstanty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Ostatne/Konstanty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/SimulacneJadro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Jadro/SimulacneJadro.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Testovanie/TestGeneratory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Testovanie/TestGeneratory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Jadro/Udalost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Jadro/Udalost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agenti/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/SimulaciaStanok.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/SimulaciaStanok.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostKoniecObsluhy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostPrichodZakaznika.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostPrichodZakaznika.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostZaciatokObsluhy.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +25,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -41,27 +42,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "35",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "776",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Niko/IntelliJ Projects/DISSP2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;35&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;776&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Niko/IntelliJ Projects/DISSP2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
@@ -91,7 +92,8 @@
       <workItem from="1710675649438" duration="3514000" />
       <workItem from="1710691895274" duration="5328000" />
       <workItem from="1710952454200" duration="19000" />
-      <workItem from="1711106563566" duration="304000" />
+      <workItem from="1711106563566" duration="2912000" />
+      <workItem from="1711109478561" duration="298000" />
     </task>
     <task id="LOCAL-00001" summary="Initial">
       <option name="closed" value="true" />
@@ -125,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710696838522</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Zosuladenie projektov">
+      <option name="closed" value="true" />
+      <created>1711106975470</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1711106975470</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +146,7 @@
     <MESSAGE value="Uprava logiky generatora nasad" />
     <MESSAGE value="Nove testovanie generatorov" />
     <MESSAGE value="Zaklad pre dalsie generatory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zaklad pre dalsie generatory" />
+    <MESSAGE value="Zosuladenie projektov" />
+    <option name="LAST_COMMIT_MESSAGE" value="Zosuladenie projektov" />
   </component>
 </project>

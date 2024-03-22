@@ -5,7 +5,7 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Stanok.SimulaciaStanok;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.Stanok.Agent;
+import org.example.Simulacia.Stanok.Agenti.Agent;
 
 public class UdalostPrichodZakaznika extends Udalost
 {
@@ -37,23 +37,11 @@ public class UdalostPrichodZakaznika extends Udalost
         vykonavajuciAgent.setCasPrichod(this.getCasVykonania());
 
         // Naplanuj prichod dalsieho zakaznika
-        double dalsiPrichodPo = simulacia.getSpojityExponencialnyGenerator().sample();
+        double dalsiPrichodPo = simulacia.getGeneratorDalsiehoVstupu().sample();
         double casDalsiehoPrichodu = simulacia.getAktualnySimulacnyCas() + dalsiPrichodPo;
 
-        UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casDalsiehoPrichodu, new Agent(Identifikator.getID()));
+        Agent dalsiPrichadzajuciAgent = new Agent(Identifikator.getID(), simulacia.getGeneratorTypuZakaznika().getTypAgenta());
+        UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casDalsiehoPrichodu, dalsiPrichadzajuciAgent);
         simulacia.naplanujUdalost(dalsiPrichod);
-
-        if (simulacia.getObsluhaPrebieha())
-        {
-            // Niekto je obsluhovany, pridaj agenta do frontu
-            simulacia.pridajAgentaDoFrontu(vykonavajuciAgent);
-            simulacia.getStatistikaVelkostFrontu().pridajHodnotu(this.getCasVykonania(), simulacia.getPocetAgentovVoFronte());
-        }
-        else
-        {
-            // Nikto nie je obsluhovany, mozno obsluzit zakaznika
-            UdalostZaciatokObsluhy zaciatokObsluhy = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania(), vykonavajuciAgent);
-            simulacia.naplanujUdalost(zaciatokObsluhy);
-        }
     }
 }
