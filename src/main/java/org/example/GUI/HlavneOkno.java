@@ -36,7 +36,8 @@ public class HlavneOkno extends JFrame
 
                 this.simulacia = new SimulaciaSystem(pocetReplikacii, Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND,
                     nasada, nasadaZadana);
-                new Thread(() ->  this.simulacia.simuluj()).start();
+                this.simulacia.simuluj();
+                //new Thread(() ->  this.simulacia.simuluj()).start();
             }
             catch (Exception ex)
             {

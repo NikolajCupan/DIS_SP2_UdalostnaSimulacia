@@ -60,7 +60,7 @@ public abstract class SimulacneJadro
             this.predReplikaciou();
 
             while (!this.kalendarUdalosti.isEmpty()
-                    && this.aktualnySimulacnyCas <= this.dlzkaTrvaniaSimulacie)
+                   && this.aktualnySimulacnyCas <= this.dlzkaTrvaniaSimulacie)
             {
                 if (this.simulaciaUkoncena)
                 {

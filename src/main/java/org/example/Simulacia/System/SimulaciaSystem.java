@@ -3,11 +3,13 @@ package org.example.Simulacia.System;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Generatory.SpojityRovnomernyGenerator;
+import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
 import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.ObsluznyZamestnanec;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
@@ -22,12 +24,21 @@ public class SimulaciaSystem extends SimulacneJadro
 
     // Automat
     private boolean obsluhaAutomatPrebieha;
+    private boolean automatVypnuty;
     private Queue<Agent> frontAutomat;
+
+    // Obsluha
+    private Queue<Agent> frontObsluha;
+    private ObsluznyZamestnanec[] oknaObycajni;
+    private ObsluznyZamestnanec[] oknaOnline;
 
     // Generatory
     private SpojityExponencialnyGenerator generatorDalsiehoVstupu;
     private GenerovanieTypuZakaznika generatorTypuZakaznika;
     private SpojityRovnomernyGenerator generatorVydanieListka;
+
+    private SpojityRovnomernyGenerator generatorObsluhaObycajni;
+    private SpojityTrojuholnikovyGenerator generatorObsluhaOnline;
 
     // Statistiky jednej replikacie
     private DiskretnaStatistika statistikaCasSystem;
@@ -68,6 +79,26 @@ public class SimulaciaSystem extends SimulacneJadro
         return this.obsluhaAutomatPrebieha;
     }
 
+    public boolean getAutomatVypnuty()
+    {
+        return this.automatVypnuty;
+    }
+
+    public Queue<Agent> getFrontObsluha()
+    {
+        return this.frontObsluha;
+    }
+
+    public ObsluznyZamestnanec[] getOknaObycajni()
+    {
+        return this.oknaObycajni;
+    }
+
+    public ObsluznyZamestnanec[] getOknaOnline()
+    {
+        return this.oknaOnline;
+    }
+
     public SpojityExponencialnyGenerator getGeneratorDalsiehoVstupu()
     {
         return this.generatorDalsiehoVstupu;
@@ -83,6 +114,16 @@ public class SimulaciaSystem extends SimulacneJadro
         return this.generatorVydanieListka;
     }
 
+    public SpojityRovnomernyGenerator getGeneratorObsluhaObycajni()
+    {
+        return this.generatorObsluhaObycajni;
+    }
+
+    public SpojityTrojuholnikovyGenerator getGeneratorObsluhaOnline()
+    {
+        return this.generatorObsluhaOnline;
+    }
+
     public DiskretnaStatistika getStatistikaCasSystem()
     {
         return this.statistikaCasSystem;
@@ -91,6 +132,11 @@ public class SimulaciaSystem extends SimulacneJadro
     public void setObsluhaAutomatPrebieha(boolean obsluhaAutomatPrebieha)
     {
         this.obsluhaAutomatPrebieha = obsluhaAutomatPrebieha;
+    }
+
+    public void setAutomatVypnuty(boolean automatVypnuty)
+    {
+        this.automatVypnuty = automatVypnuty;
     }
 
     @Override
@@ -103,6 +149,9 @@ public class SimulaciaSystem extends SimulacneJadro
         this.generatorDalsiehoVstupu = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
         this.generatorTypuZakaznika = new GenerovanieTypuZakaznika(this.generatorNasad);
         this.generatorVydanieListka = new SpojityRovnomernyGenerator(30.0, 180.0, this.generatorNasad);
+
+        this.generatorObsluhaObycajni = new SpojityRovnomernyGenerator(60.0, 900.0, this.generatorNasad);
+        this.generatorObsluhaOnline = new SpojityTrojuholnikovyGenerator(60.0, 480.0, 120.0, this.generatorNasad);
 
         // Statistiky
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika();
@@ -123,7 +172,23 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         // Automat
         this.obsluhaAutomatPrebieha = false;
+        this.automatVypnuty = false;
         this.frontAutomat = new LinkedList<>();
+
+        // Obsluha
+        this.frontObsluha = new LinkedList<>();
+
+        this.oknaObycajni = new ObsluznyZamestnanec[2];
+        for (int i = 0; i < this.oknaObycajni.length; i++)
+        {
+            this.oknaObycajni[i] = new ObsluznyZamestnanec();
+        }
+
+        this.oknaOnline = new ObsluznyZamestnanec[1];
+        for (int i = 0; i < this.oknaOnline.length; i++)
+        {
+            this.oknaOnline[i] = new ObsluznyZamestnanec();
+        }
 
         // Statistiky
         this.statistikaCasSystem = new DiskretnaStatistika();
@@ -141,6 +206,7 @@ public class SimulaciaSystem extends SimulacneJadro
         if (this.statistikaCasSystem.getStatistikyVypocitane())
         {
             this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
+            this.celkovaStatistikaCasSystem.skusPrepocitatStatistiky();
         }
     }
 }

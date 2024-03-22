@@ -44,9 +44,9 @@ public class UdalostPrichodZakaznika extends Udalost
         UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casDalsiehoPrichodu, dalsiPrichadzajuciAgent);
         simulacia.naplanujUdalost(dalsiPrichod);
 
-        if (simulacia.getObsluhaAutomatPrebieha())
+        if (simulacia.getObsluhaAutomatPrebieha() || simulacia.getAutomatVypnuty())
         {
-            // Niekto je obsluhovany, pridaj agenta do frontu pred automatom
+            // Niekto je obsluhovany alebo je automat vypnuty, pridaj agenta do frontu pred automatom
             simulacia.pridajAgentaDoFrontuAutomat(vykonavajuciAgent);
         }
         else

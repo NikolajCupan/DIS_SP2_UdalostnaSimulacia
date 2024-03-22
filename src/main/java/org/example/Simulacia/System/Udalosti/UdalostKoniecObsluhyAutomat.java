@@ -4,7 +4,11 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.ObsluznyZamestnanec;
+import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
+
+import java.util.Queue;
 
 public class UdalostKoniecObsluhyAutomat extends Udalost
 {
@@ -35,15 +39,65 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         // Nastavenie atributov agenta, ktory udalost vykonava
         Agent vykonavajuciAgent = this.getAgent();
         vykonavajuciAgent.setCasKoniecObsluhyAutomat(this.getCasVykonania());
-        vykonavajuciAgent.vypis();
 
-        // Zaznamenanie statistik
-        simulacia.getStatistikaCasSystem().pridajHodnotu(vykonavajuciAgent.getCasKoniecObsluhyAutomat() - vykonavajuciAgent.getCasPrichod());
-
-        // Naplanovanie dalsej obsluhy
-        if (simulacia.getPocetAgentovVoFronteAutomat() == 0)
+        // Naplanovanie obsluhy u okienka
+        Queue<Agent> frontObsluha = simulacia.getFrontObsluha();
+        if (frontObsluha.size() >= Konstanty.KAPACITA_FRONT_OBSLUHA)
         {
-            // Front je prazdny, nemozno naplanovat dalsiu obsluhu
+            throw new RuntimeException("Doslo k vydaniu listka hoci je front pred obsluhou plny!");
+        }
+
+        // Skontroluj, ci nemoze byt zacata obsluha daneho agenta
+        boolean obsluhaNaplanovana = false;
+        if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE)
+        {
+            ObsluznyZamestnanec[] oknaOnline = simulacia.getOknaOnline();
+            for (ObsluznyZamestnanec okno : oknaOnline)
+            {
+                if (!okno.getObsadeny())
+                {
+                    obsluhaNaplanovana = true;
+
+                    UdalostZaciatokObsluhy zaciatokObsluhyOkno = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania(),
+                        vykonavajuciAgent, okno);
+                    simulacia.naplanujUdalost(zaciatokObsluhyOkno);
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            ObsluznyZamestnanec[] oknaOstatne = simulacia.getOknaObycajni();
+            for (ObsluznyZamestnanec okno : oknaOstatne)
+            {
+                if (!okno.getObsadeny())
+                {
+                    obsluhaNaplanovana = true;
+
+                    UdalostZaciatokObsluhy zaciatokObsluhyOkno = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania(),
+                            vykonavajuciAgent, okno);
+                    simulacia.naplanujUdalost(zaciatokObsluhyOkno);
+
+                    break;
+                }
+            }
+        }
+
+        if (!obsluhaNaplanovana)
+        {
+            frontObsluha.add(vykonavajuciAgent);
+            if (frontObsluha.size() == Konstanty.KAPACITA_FRONT_OBSLUHA)
+            {
+                // Front sa naplnil, vypni automat
+                simulacia.setAutomatVypnuty(true);
+            }
+        }
+
+        // Naplanovanie dalsej obsluhy u automatu
+        if (simulacia.getPocetAgentovVoFronteAutomat() == 0 || simulacia.getAutomatVypnuty())
+        {
+            // Front je prazdny alebo automat je vypnuty, nemozno naplanovat dalsiu obsluhu u automatu
         }
         else
         {
