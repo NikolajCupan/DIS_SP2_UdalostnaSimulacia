@@ -1,4 +1,4 @@
-package org.example.Simulacia.System.Udalosti;
+package org.example.Simulacia.System.Udalosti.Okno;
 
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
@@ -8,11 +8,11 @@ import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 
-public class UdalostZaciatokObsluhy extends Udalost
+public class UdalostZaciatokObsluhyOkno extends Udalost
 {
     private final Okno okno;
 
-    public UdalostZaciatokObsluhy(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, Okno okno)
+    public UdalostZaciatokObsluhyOkno(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, Okno okno)
     {
         super(simulacneJadro, casVykonania, agent);
 
@@ -26,7 +26,7 @@ public class UdalostZaciatokObsluhy extends Udalost
             System.out.print("[UDALOST ");
             System.out.format("%6s", this.getAgent().getID());
             System.out.print("]   ");
-            System.out.format("%-35s", "Zaciatok obsluhy");
+            System.out.format("%-35s", "Zaciatok obsluhy okno");
             System.out.println(this.getCasVykonania());
         }
     }
@@ -36,25 +36,21 @@ public class UdalostZaciatokObsluhy extends Udalost
     {
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
+        Agent vykonavajuciAgent = this.getAgent();
+
+        // Zmena stavu simulacie
         this.okno.setObsadene(true);
 
         // Nastavenie atributov agenta, ktory udalost vykonava
-        Agent vykonavajuciAgent = this.getAgent();
         vykonavajuciAgent.setCasZaciatokObsluhyOkno(this.getCasVykonania());
 
+
         // Naplanuj koniec obsluhy pri okne
-        double dlzkaObsluhy;
-        if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE)
-        {
-            dlzkaObsluhy = simulacia.getGeneratorObsluhaOnline().sample();
-        }
-        else
-        {
-            dlzkaObsluhy = simulacia.getGeneratorObsluhaObycajni().sample();
-        }
+        double dlzkaObsluhy = (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE
+            ? simulacia.getGeneratorObsluhaOnline().sample() : simulacia.getGeneratorObsluhaObycajni().sample());
         double casKoncaObsluhy = simulacia.getAktualnySimulacnyCas() + dlzkaObsluhy;
 
-        UdalostKoniecObsluhy koniecObsluhy = new UdalostKoniecObsluhy(simulacia, casKoncaObsluhy, vykonavajuciAgent, this.okno);
+        UdalostKoniecObsluhyOkno koniecObsluhy = new UdalostKoniecObsluhyOkno(simulacia, casKoncaObsluhy, vykonavajuciAgent, this.okno);
         simulacia.naplanujUdalost(koniecObsluhy);
     }
 }

@@ -1,4 +1,4 @@
-package org.example.Simulacia.System.Udalosti;
+package org.example.Simulacia.System.Udalosti.Automat;
 
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
@@ -30,11 +30,14 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
     {
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
+        Agent vykonavajuciAgent = this.getAgent();
+
+        // Zmena stavu simulacie
         simulacia.setObsluhaAutomatPrebieha(true);
 
         // Nastavenie atributov agenta, ktory udalost vykonava
-        Agent vykonavajuciAgent = this.getAgent();
         vykonavajuciAgent.setCasZaciatokObsluhyAutomat(this.getCasVykonania());
+
 
         // Naplanuj koniec obsluhy pri automate
         double dlzkaObsluhy = simulacia.getGeneratorVydanieListka().sample();

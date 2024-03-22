@@ -10,6 +10,7 @@ import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.Agenti.Okno;
+import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
@@ -34,7 +35,7 @@ public class SimulaciaSystem extends SimulacneJadro
     private Okno[] oknaOnline;
 
     // Generatory
-    private SpojityExponencialnyGenerator generatorDalsiVstup;
+    private SpojityExponencialnyGenerator generatorDalsiPrichod;
     private GenerovanieTypuZakaznika generatorTypZakaznika;
     private SpojityRovnomernyGenerator generatorVydanieListka;
 
@@ -73,7 +74,7 @@ public class SimulaciaSystem extends SimulacneJadro
         this.nastavKomparator(komparator);
 
         // Generatory
-        this.generatorDalsiVstup = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
+        this.generatorDalsiPrichod = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
         this.generatorTypZakaznika = new GenerovanieTypuZakaznika(this.generatorNasad);
         this.generatorVydanieListka = new SpojityRovnomernyGenerator(30.0, 180.0, this.generatorNasad);
 
@@ -204,6 +205,76 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         return this.oknaOnline;
     }
+
+    public Agent vyberPrvehoOnlineAgent()
+    {
+        for (Agent agent : this.frontOkno)
+        {
+            if (agent.getTypAgenta() == TypAgenta.ONLINE)
+            {
+                this.frontOkno.remove(agent);
+                return agent;
+            }
+        }
+
+        throw new RuntimeException("Front pred oknami neobsahuje online agenta!");
+    }
+
+    public Agent vyberPrvehoObycajnehoAgenta()
+    {
+        boolean obsahujeZmluvneho = this.frontOknoObsahujeZmluvnehoAgenta();
+        TypAgenta vyberanyTyp = (obsahujeZmluvneho ? TypAgenta.ZMLUVNY : TypAgenta.BEZNY);
+
+        for (Agent agent : this.frontOkno)
+        {
+            if (agent.getTypAgenta() == vyberanyTyp)
+            {
+                this.frontOkno.remove(agent);
+                return agent;
+            }
+        }
+
+        throw new RuntimeException("Front pred oknami neobsahuje bezneho agenta!");
+    }
+
+    private boolean frontOknoObsahujeZmluvnehoAgenta()
+    {
+        for (Agent agent : this.frontOkno)
+        {
+            if (agent.getTypAgenta() == TypAgenta.ZMLUVNY)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean frontOknoObsahujeObycajnehoAgenta()
+    {
+        for (Agent agent : this.frontOkno)
+        {
+            if (agent.getTypAgenta() == TypAgenta.ZMLUVNY || agent.getTypAgenta() == TypAgenta.BEZNY)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean frontOknoObsahujeOnlineAgenta()
+    {
+        for (Agent agent : this.frontOkno)
+        {
+            if (agent.getTypAgenta() == TypAgenta.ONLINE)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     // Koniec okno
 
 
@@ -213,9 +284,9 @@ public class SimulaciaSystem extends SimulacneJadro
         return this.generatorTypZakaznika;
     }
 
-    public SpojityExponencialnyGenerator getGeneratorDalsiVstup()
+    public SpojityExponencialnyGenerator getGeneratorDalsiPrichod()
     {
-        return this.generatorDalsiVstup;
+        return this.generatorDalsiPrichod;
     }
 
     public SpojityRovnomernyGenerator getGeneratorVydanieListka()

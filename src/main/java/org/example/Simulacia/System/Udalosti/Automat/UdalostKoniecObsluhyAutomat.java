@@ -1,4 +1,4 @@
-package org.example.Simulacia.System.Udalosti;
+package org.example.Simulacia.System.Udalosti.Automat;
 
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
@@ -7,6 +7,7 @@ import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
+import org.example.Simulacia.System.Udalosti.Okno.UdalostZaciatokObsluhyOkno;
 
 import java.util.Queue;
 
@@ -34,67 +35,55 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
     {
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
+        Agent vykonavajuciAgent = this.getAgent();
+
+        // Zmena stavu simulacie
         simulacia.setObsluhaAutomatPrebieha(false);
 
         // Nastavenie atributov agenta, ktory udalost vykonava
-        Agent vykonavajuciAgent = this.getAgent();
         vykonavajuciAgent.setCasKoniecObsluhyAutomat(this.getCasVykonania());
 
-        // Naplanovanie obsluhy u okienka
-        Queue<Agent> frontObsluha = simulacia.getFrontOkno();
-        if (frontObsluha.size() >= Konstanty.KAPACITA_FRONT_OBSLUHA)
+
+        // Pokus o naplanovanie obsluhy vykonavajuceho agenta u okienka
+        Queue<Agent> frontOkno = simulacia.getFrontOkno();
+        if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
         {
-            throw new RuntimeException("Doslo k vydaniu listka hoci je front pred obsluhou plny!");
+            throw new RuntimeException("Doslo k vydaniu listka hoci je front pred oknom plny!");
         }
 
-        // Skontroluj, ci nemoze byt zacata obsluha daneho agenta
         boolean obsluhaNaplanovana = false;
-        if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE)
+        Okno[] okna = (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE
+            ? simulacia.getOknaOnline() : simulacia.getOknaObycajni());
+
+        for (Okno okno : okna)
         {
-            Okno[] oknaOnline = simulacia.getOknaOnline();
-            for (Okno okno : oknaOnline)
+            if (!okno.getObsadene())
             {
-                if (!okno.getObsadene())
-                {
-                    obsluhaNaplanovana = true;
+                // Bolo najdene okno, ku ktoremu moze byt agent priradeny
+                obsluhaNaplanovana = true;
 
-                    UdalostZaciatokObsluhy zaciatokObsluhyOkno = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania(),
-                        vykonavajuciAgent, okno);
-                    simulacia.naplanujUdalost(zaciatokObsluhyOkno);
+                UdalostZaciatokObsluhyOkno zaciatokObsluhyOkno =
+                    new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), vykonavajuciAgent, okno);
+                simulacia.naplanujUdalost(zaciatokObsluhyOkno);
 
-                    break;
-                }
-            }
-        }
-        else
-        {
-            Okno[] oknaOstatne = simulacia.getOknaObycajni();
-            for (Okno okno : oknaOstatne)
-            {
-                if (!okno.getObsadene())
-                {
-                    obsluhaNaplanovana = true;
-
-                    UdalostZaciatokObsluhy zaciatokObsluhyOkno = new UdalostZaciatokObsluhy(simulacia, this.getCasVykonania(),
-                            vykonavajuciAgent, okno);
-                    simulacia.naplanujUdalost(zaciatokObsluhyOkno);
-
-                    break;
-                }
+                break;
             }
         }
 
         if (!obsluhaNaplanovana)
         {
-            frontObsluha.add(vykonavajuciAgent);
-            if (frontObsluha.size() == Konstanty.KAPACITA_FRONT_OBSLUHA)
+            // Nebolo mozno agenta priradit ku ziadnemu oknu, agent je pridany do frontu pred oknami
+            frontOkno.add(vykonavajuciAgent);
+
+            if (frontOkno.size() == Konstanty.KAPACITA_FRONT_OKNO)
             {
                 // Front sa naplnil, vypni automat
                 simulacia.setAutomatVypnuty(true);
             }
         }
 
-        // Naplanovanie dalsej obsluhy u automatu
+
+        // Pokus o naplanovanie dalsej obsluhy u automatu
         if (simulacia.getPocetFrontAutomat() == 0 || simulacia.getAutomatVypnuty())
         {
             // Front je prazdny alebo automat je vypnuty, nemozno naplanovat dalsiu obsluhu u automatu

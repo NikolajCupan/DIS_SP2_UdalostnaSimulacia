@@ -19,5 +19,5 @@ public class Konstanty
     public static final double KVANTIL_99_PERCENT = 2.5758293035489;
 
     // Obsluha
-    public static final int KAPACITA_FRONT_OBSLUHA = 1;
+    public static final int KAPACITA_FRONT_OKNO = 3;
 }

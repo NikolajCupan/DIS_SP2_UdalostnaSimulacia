@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Nove udalosti">
+    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Velky refaktor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieDlzkyPlatenia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieDlzkyPlatenia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieTypuZakaznika.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieTypuZakaznika.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Agenti/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Agenti/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Agenti/ObsluznyZamestnanec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Agenti/Okno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Ostatne/Konstanty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Ostatne/Konstanty.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/SimulaciaSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/SimulaciaSystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKoniecObsluhy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKoniecObsluhy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKoniecObsluhyAutomat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKoniecObsluhyAutomat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKoniecObsluhy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/Okno/UdalostKoniecObsluhyOkno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKoniecObsluhyAutomat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/Automat/UdalostKoniecObsluhyAutomat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostPrichodZakaznika.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostPrichodZakaznika.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostZaciatokObsluhy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostZaciatokObsluhy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostZaciatokObsluhy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/Okno/UdalostZaciatokObsluhyOkno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostZaciatokObsluhyAutomat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/Automat/UdalostZaciatokObsluhyAutomat.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,27 +40,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;35&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;776&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Niko/IntelliJ Projects/DISSP2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "35",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "776",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Niko/IntelliJ Projects/DISSP2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "Errors",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
@@ -94,7 +92,8 @@
       <workItem from="1710952454200" duration="19000" />
       <workItem from="1711106563566" duration="2912000" />
       <workItem from="1711109478561" duration="9528000" />
-      <workItem from="1711124491620" duration="974000" />
+      <workItem from="1711124491620" duration="1696000" />
+      <workItem from="1711133059775" duration="3191000" />
     </task>
     <task id="LOCAL-00001" summary="Initial">
       <option name="closed" value="true" />
@@ -160,7 +159,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711124507864</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Velky refaktor">
+      <option name="closed" value="true" />
+      <created>1711125530442</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1711125530442</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +182,18 @@
     <MESSAGE value="Zaklad novej simulacie" />
     <MESSAGE value="Udalosti automatu" />
     <MESSAGE value="Nove udalosti" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nove udalosti" />
+    <MESSAGE value="Velky refaktor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Velky refaktor" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Simulacia/Jadro/SimulacneJadro.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
