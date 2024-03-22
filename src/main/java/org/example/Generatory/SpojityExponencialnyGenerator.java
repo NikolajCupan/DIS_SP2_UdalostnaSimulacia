@@ -27,6 +27,12 @@ public class SpojityExponencialnyGenerator implements ISpojityGenerator
     @Override
     public double sample()
     {
-        return Math.log(1 - this.spojityRovnomernyGenerator.sample()) / -this.lambda;
+        double sample = this.spojityRovnomernyGenerator.sample();
+        if (sample == 0.0)
+        {
+            throw new RuntimeException("Nemozno vypocitat logaritmus cisla 0!");
+        }
+
+        return Math.log(1 - sample) / -this.lambda;
     }
 }

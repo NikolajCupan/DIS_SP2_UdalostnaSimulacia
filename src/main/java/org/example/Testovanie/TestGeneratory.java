@@ -1,12 +1,9 @@
 package org.example.Testovanie;
 
-import org.example.Generatory.DiskretnyRovnomernyGenerator;
+import org.example.Generatory.*;
 import org.example.Generatory.Ostatne.DeterministickyGenerator;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.Ostatne.SkupinaEmpirickyGenerator;
-import org.example.Generatory.SpojityEmpirickyGenerator;
-import org.example.Generatory.SpojityExponencialnyGenerator;
-import org.example.Generatory.SpojityRovnomernyGenerator;
 import org.example.Ostatne.Konstanty;
 
 import java.io.PrintWriter;
@@ -187,7 +184,7 @@ public class TestGeneratory
         PrintWriter w = new PrintWriter("test_spojity_exponencialny_generator.txt");
 
         final int pocetGenerovani = 1000000;
-        final double lambda = 20;
+        final double lambda = 1.0 / 240.0;
 
         SpojityExponencialnyGenerator seg = new SpojityExponencialnyGenerator(lambda, this.generatorNasad);
         for (int i = 0; i < pocetGenerovani; i++)
@@ -197,6 +194,28 @@ public class TestGeneratory
         }
 
         System.out.println("OK: Test spojity exponencialny generator\n");
+
+        w.flush();
+        w.close();
+    }
+
+    public void testSpojityTrojuholnikovyGenerator() throws Exception
+    {
+        PrintWriter w = new PrintWriter("test_spojity_trojuholnikovy_generator.txt");
+
+        final int pocetGenerovani = 1000000;
+        final double minHodnota = 100.0;
+        final double maxHodnota = 400.0;
+        final double modus = 120.0;
+
+        SpojityTrojuholnikovyGenerator stg = new SpojityTrojuholnikovyGenerator(minHodnota, maxHodnota, modus, this.generatorNasad);
+        for (int i = 0; i < pocetGenerovani; i++)
+        {
+            double sample = stg.sample();
+            w.println(sample);
+        }
+
+        System.out.println("OK: Test spojity trojuholnikovy generator\n");
 
         w.flush();
         w.close();

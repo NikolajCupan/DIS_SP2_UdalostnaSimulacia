@@ -34,6 +34,16 @@ public class SpojityTrojuholnikovyGenerator implements ISpojityGenerator
     @Override
     public double sample()
     {
-        throw new RuntimeException("Spojityr trojuholnikovy generator zatial nie je implmenetovany!");
+        double sample = this.random.nextDouble();
+        double hranica = (this.modus - this.minHodnota) / (this.maxHodnota - this.minHodnota);
+
+        if (hranica > sample)
+        {
+            return this.minHodnota + Math.sqrt(sample * (this.maxHodnota - this.minHodnota) * (this.modus - this.minHodnota));
+        }
+        else
+        {
+            return this.maxHodnota - Math.sqrt((1 - sample) * (this.maxHodnota - this.minHodnota) * (this.maxHodnota - this.modus));
+        }
     }
 }
