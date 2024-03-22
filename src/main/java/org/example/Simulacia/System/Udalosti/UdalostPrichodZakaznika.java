@@ -1,11 +1,11 @@
-package org.example.Simulacia.Stanok.Udalosti;
+package org.example.Simulacia.System.Udalosti;
 
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
-import org.example.Simulacia.Stanok.SimulaciaStanok;
+import org.example.Simulacia.System.SimulaciaSystem;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.Stanok.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.Agent;
 
 public class UdalostPrichodZakaznika extends Udalost
 {
@@ -30,7 +30,7 @@ public class UdalostPrichodZakaznika extends Udalost
     public void vykonajUdalost()
     {
         this.vypis();
-        SimulaciaStanok simulacia = (SimulaciaStanok)this.getSimulacneJadro();
+        SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         Agent vykonavajuciAgent = this.getAgent();
@@ -43,5 +43,17 @@ public class UdalostPrichodZakaznika extends Udalost
         Agent dalsiPrichadzajuciAgent = new Agent(Identifikator.getID(), simulacia.getGeneratorTypuZakaznika().getTypAgenta());
         UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casDalsiehoPrichodu, dalsiPrichadzajuciAgent);
         simulacia.naplanujUdalost(dalsiPrichod);
+
+        if (simulacia.getObsluhaAutomatPrebieha())
+        {
+            // Niekto je obsluhovany, pridaj agenta do frontu pred automatom
+            simulacia.pridajAgentaDoFrontuAutomat(vykonavajuciAgent);
+        }
+        else
+        {
+            // Nikto nie je obsluhovany, mozno obsluzit zakaznika
+            UdalostZaciatokObsluhyAutomat zaciatokObsluhy = new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), vykonavajuciAgent);
+            simulacia.naplanujUdalost(zaciatokObsluhy);
+        }
     }
 }

@@ -4,18 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Zosuladenie projektov">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieDlzkyPlatenia.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieTypuZakaznika.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agenti/TypAgenta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="b7a16dc8-82b5-4bfe-9299-84e124b7a456" name="Changes" comment="Zaklad novej simulacie">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKoniecObsluhyAutomat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostZaciatokObsluhyAutomat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GUI/HlavneOkno.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GUI/HlavneOkno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Ostatne/Konstanty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Ostatne/Konstanty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieTypuZakaznika.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Generovania/GenerovanieTypuZakaznika.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Jadro/Udalost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Jadro/Udalost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agenti/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/SimulaciaStanok.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/SimulaciaStanok.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostKoniecObsluhy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostPrichodZakaznika.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostPrichodZakaznika.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostZaciatokObsluhy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agenti/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Agenti/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Agenti/TypAgenta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Agenti/TypAgenta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/SimulaciaStanok.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/SimulaciaSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostKomparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostKomparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/Stanok/Udalosti/UdalostPrichodZakaznika.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Simulacia/System/Udalosti/UdalostPrichodZakaznika.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +94,7 @@
       <workItem from="1710691895274" duration="5328000" />
       <workItem from="1710952454200" duration="19000" />
       <workItem from="1711106563566" duration="2912000" />
-      <workItem from="1711109478561" duration="298000" />
+      <workItem from="1711109478561" duration="1774000" />
     </task>
     <task id="LOCAL-00001" summary="Initial">
       <option name="closed" value="true" />
@@ -135,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711106975470</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Zaklad novej simulacie">
+      <option name="closed" value="true" />
+      <created>1711110052841</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1711110052841</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +156,7 @@
     <MESSAGE value="Nove testovanie generatorov" />
     <MESSAGE value="Zaklad pre dalsie generatory" />
     <MESSAGE value="Zosuladenie projektov" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zosuladenie projektov" />
+    <MESSAGE value="Zaklad novej simulacie" />
+    <option name="LAST_COMMIT_MESSAGE" value="Zaklad novej simulacie" />
   </component>
 </project>

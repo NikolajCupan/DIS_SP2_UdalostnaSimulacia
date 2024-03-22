@@ -1,4 +1,4 @@
-package org.example.Simulacia.Stanok.Agenti;
+package org.example.Simulacia.System.Agenti;
 
 public enum TypAgenta
 {

@@ -1,7 +1,7 @@
 package org.example.GUI;
 
 import org.example.Ostatne.Konstanty;
-import org.example.Simulacia.Stanok.SimulaciaStanok;
+import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
 
@@ -16,7 +16,7 @@ public class HlavneOkno extends JFrame
     private JButton buttonPauza;
     private JButton buttonStop;
 
-    private SimulaciaStanok simulacia;
+    private SimulaciaSystem simulacia;
 
     public HlavneOkno()
     {
@@ -34,7 +34,7 @@ public class HlavneOkno extends JFrame
                 boolean nasadaZadana = !this.inputNasada.getText().isEmpty();
                 int nasada = (nasadaZadana ? Integer.parseInt(this.inputNasada.getText()) : -1);
 
-                this.simulacia = new SimulaciaStanok(pocetReplikacii, Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND,
+                this.simulacia = new SimulaciaSystem(pocetReplikacii, Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND,
                     nasada, nasadaZadana);
                 new Thread(() ->  this.simulacia.simuluj()).start();
             }

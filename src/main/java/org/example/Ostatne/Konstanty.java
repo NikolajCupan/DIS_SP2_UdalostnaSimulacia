@@ -5,9 +5,9 @@ public class Konstanty
     public static final double EPSILON = 0.000001;
     public static final double ODSADENIE_HRANICNE_HODNOTY = 0.1;
 
-    // Od 9:00 do 17:00 v sekundach
+    // Od 9:00 do 17:30 v sekundach
     public static final double ZACIATOK_SEKUND = 9 * 60 * 60;
-    public static final double KONIEC_SEKUND = 17 * 60 * 60;
+    public static final double KONIEC_SEKUND = 17.50 * 60 * 60;
 
     public static final boolean DEBUG_VYPIS_AGENT = false;
     public static final boolean DEBUG_VYPIS_UDALOST = false;

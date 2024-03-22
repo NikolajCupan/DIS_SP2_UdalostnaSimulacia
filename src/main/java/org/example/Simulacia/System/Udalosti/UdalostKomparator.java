@@ -1,4 +1,4 @@
-package org.example.Simulacia.Stanok.Udalosti;
+package org.example.Simulacia.System.Udalosti;
 
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.Udalost;

@@ -2,7 +2,7 @@ package org.example.Simulacia.Generovania;
 
 import org.example.Generatory.DiskretnyRovnomernyGenerator;
 import org.example.Generatory.Ostatne.GeneratorNasad;
-import org.example.Simulacia.Stanok.Agenti.TypAgenta;
+import org.example.Simulacia.System.Agenti.TypAgenta;
 
 public class GenerovanieTypuZakaznika
 {
