@@ -34,20 +34,20 @@ public class UdalostPrichodZakaznika extends Udalost
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         Agent vykonavajuciAgent = this.getAgent();
-        vykonavajuciAgent.setCasPrichod(this.getCasVykonania());
+        vykonavajuciAgent.setCasPrichodSystem(this.getCasVykonania());
 
         // Naplanuj prichod dalsieho zakaznika
-        double dalsiPrichodPo = simulacia.getGeneratorDalsiehoVstupu().sample();
+        double dalsiPrichodPo = simulacia.getGeneratorDalsiVstup().sample();
         double casDalsiehoPrichodu = simulacia.getAktualnySimulacnyCas() + dalsiPrichodPo;
 
-        Agent dalsiPrichadzajuciAgent = new Agent(Identifikator.getID(), simulacia.getGeneratorTypuZakaznika().getTypAgenta());
+        Agent dalsiPrichadzajuciAgent = new Agent(Identifikator.getID(), simulacia.getGeneratorTypZakaznika().getTypAgenta());
         UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casDalsiehoPrichodu, dalsiPrichadzajuciAgent);
         simulacia.naplanujUdalost(dalsiPrichod);
 
         if (simulacia.getObsluhaAutomatPrebieha() || simulacia.getAutomatVypnuty())
         {
             // Niekto je obsluhovany alebo je automat vypnuty, pridaj agenta do frontu pred automatom
-            simulacia.pridajAgentaDoFrontuAutomat(vykonavajuciAgent);
+            simulacia.pridajFrontAutomat(vykonavajuciAgent);
         }
         else
         {

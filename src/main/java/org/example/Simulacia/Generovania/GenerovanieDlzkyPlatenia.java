@@ -15,6 +15,7 @@ public class GenerovanieDlzkyPlatenia
     public GenerovanieDlzkyPlatenia(GeneratorNasad generatorNasad)
     {
         this.validujStav();
+
         this.generatorTypuPlatenia = new DiskretnyRovnomernyGenerator(1, 100, generatorNasad);
         this.generatorDlzkyPlateniaHotovost = new DiskretnyRovnomernyGenerator(180, 480, generatorNasad);
         this.generatorDlzkyPlateniaKarta = new DiskretnyRovnomernyGenerator(180, 360, generatorNasad);

@@ -35,7 +35,7 @@ public class HlavneOkno extends JFrame
                 int nasada = (nasadaZadana ? Integer.parseInt(this.inputNasada.getText()) : -1);
 
                 this.simulacia = new SimulaciaSystem(pocetReplikacii, Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND,
-                    nasada, nasadaZadana);
+                3, nasada, nasadaZadana);
                 this.simulacia.simuluj();
                 //new Thread(() ->  this.simulacia.simuluj()).start();
             }

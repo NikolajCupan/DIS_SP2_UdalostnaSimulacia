@@ -4,7 +4,7 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.ObsluznyZamestnanec;
+import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 
@@ -41,7 +41,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         vykonavajuciAgent.setCasKoniecObsluhyAutomat(this.getCasVykonania());
 
         // Naplanovanie obsluhy u okienka
-        Queue<Agent> frontObsluha = simulacia.getFrontObsluha();
+        Queue<Agent> frontObsluha = simulacia.getFrontOkno();
         if (frontObsluha.size() >= Konstanty.KAPACITA_FRONT_OBSLUHA)
         {
             throw new RuntimeException("Doslo k vydaniu listka hoci je front pred obsluhou plny!");
@@ -51,10 +51,10 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         boolean obsluhaNaplanovana = false;
         if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE)
         {
-            ObsluznyZamestnanec[] oknaOnline = simulacia.getOknaOnline();
-            for (ObsluznyZamestnanec okno : oknaOnline)
+            Okno[] oknaOnline = simulacia.getOknaOnline();
+            for (Okno okno : oknaOnline)
             {
-                if (!okno.getObsadeny())
+                if (!okno.getObsadene())
                 {
                     obsluhaNaplanovana = true;
 
@@ -68,10 +68,10 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         }
         else
         {
-            ObsluznyZamestnanec[] oknaOstatne = simulacia.getOknaObycajni();
-            for (ObsluznyZamestnanec okno : oknaOstatne)
+            Okno[] oknaOstatne = simulacia.getOknaObycajni();
+            for (Okno okno : oknaOstatne)
             {
-                if (!okno.getObsadeny())
+                if (!okno.getObsadene())
                 {
                     obsluhaNaplanovana = true;
 
@@ -95,13 +95,13 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         }
 
         // Naplanovanie dalsej obsluhy u automatu
-        if (simulacia.getPocetAgentovVoFronteAutomat() == 0 || simulacia.getAutomatVypnuty())
+        if (simulacia.getPocetFrontAutomat() == 0 || simulacia.getAutomatVypnuty())
         {
             // Front je prazdny alebo automat je vypnuty, nemozno naplanovat dalsiu obsluhu u automatu
         }
         else
         {
-            Agent odobratyAgent = simulacia.odoberAgentaZFrontuAutomat();
+            Agent odobratyAgent = simulacia.odoberFrontAutomat();
             UdalostZaciatokObsluhyAutomat zaciatokObsluhy = new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }

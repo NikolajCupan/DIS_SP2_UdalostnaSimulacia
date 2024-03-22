@@ -4,15 +4,15 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.ObsluznyZamestnanec;
+import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 public class UdalostZaciatokObsluhy extends Udalost
 {
-    private final ObsluznyZamestnanec okno;
+    private final Okno okno;
 
-    public UdalostZaciatokObsluhy(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, ObsluznyZamestnanec okno)
+    public UdalostZaciatokObsluhy(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, Okno okno)
     {
         super(simulacneJadro, casVykonania, agent);
 
@@ -36,11 +36,11 @@ public class UdalostZaciatokObsluhy extends Udalost
     {
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
-        this.okno.setObsadeny(true);
+        this.okno.setObsadene(true);
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         Agent vykonavajuciAgent = this.getAgent();
-        vykonavajuciAgent.setCasZaciatokObsluhy(this.getCasVykonania());
+        vykonavajuciAgent.setCasZaciatokObsluhyOkno(this.getCasVykonania());
 
         // Naplanuj koniec obsluhy pri okne
         double dlzkaObsluhy;

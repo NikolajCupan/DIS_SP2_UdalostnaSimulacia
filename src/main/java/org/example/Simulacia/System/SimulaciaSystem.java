@@ -9,7 +9,7 @@ import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.ObsluznyZamestnanec;
+import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
@@ -27,14 +27,15 @@ public class SimulaciaSystem extends SimulacneJadro
     private boolean automatVypnuty;
     private Queue<Agent> frontAutomat;
 
-    // Obsluha
-    private Queue<Agent> frontObsluha;
-    private ObsluznyZamestnanec[] oknaObycajni;
-    private ObsluznyZamestnanec[] oknaOnline;
+    // Obsluha okno
+    private final int pocetObsluznychMiest;
+    private Queue<Agent> frontOkno;
+    private Okno[] oknaObycajni;
+    private Okno[] oknaOnline;
 
     // Generatory
-    private SpojityExponencialnyGenerator generatorDalsiehoVstupu;
-    private GenerovanieTypuZakaznika generatorTypuZakaznika;
+    private SpojityExponencialnyGenerator generatorDalsiVstup;
+    private GenerovanieTypuZakaznika generatorTypZakaznika;
     private SpojityRovnomernyGenerator generatorVydanieListka;
 
     private SpojityRovnomernyGenerator generatorObsluhaObycajni;
@@ -46,97 +47,23 @@ public class SimulaciaSystem extends SimulacneJadro
     // Celkove statistiky
     private DiskretnaStatistika celkovaStatistikaCasSystem;
 
-    public SimulaciaSystem(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int nasada, boolean pouziNasadu)
+    public SimulaciaSystem(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int pocetObsluznychMiest, int nasada, boolean pouziNasadu)
     {
         super(pocetReplikacii, dlzkaTrvaniaSimulacie);
+        this.validujVstupy(pocetObsluznychMiest);
 
         GeneratorNasad.inicializujGeneratorNasad(nasada, pouziNasadu);
         this.generatorNasad = new GeneratorNasad();
+
+        this.pocetObsluznychMiest = pocetObsluznychMiest;
     }
 
-    public void pridajAgentaDoFrontuAutomat(Agent agent)
+    private void validujVstupy(int pocetObsluznychMiest)
     {
-        this.frontAutomat.add(agent);
-    }
-
-    public Agent odoberAgentaZFrontuAutomat()
-    {
-        if (this.frontAutomat.isEmpty())
+        if (pocetObsluznychMiest < 3)
         {
-            throw new RuntimeException("Pokus o vybratie agenta z frontu pred automatom, ktory je prazdny!");
+            throw new RuntimeException("Pocet obsluznych miest nemoze byt mensi ako 3!");
         }
-
-        return this.frontAutomat.poll();
-    }
-
-    public int getPocetAgentovVoFronteAutomat()
-    {
-        return this.frontAutomat.size();
-    }
-
-    public boolean getObsluhaAutomatPrebieha()
-    {
-        return this.obsluhaAutomatPrebieha;
-    }
-
-    public boolean getAutomatVypnuty()
-    {
-        return this.automatVypnuty;
-    }
-
-    public Queue<Agent> getFrontObsluha()
-    {
-        return this.frontObsluha;
-    }
-
-    public ObsluznyZamestnanec[] getOknaObycajni()
-    {
-        return this.oknaObycajni;
-    }
-
-    public ObsluznyZamestnanec[] getOknaOnline()
-    {
-        return this.oknaOnline;
-    }
-
-    public SpojityExponencialnyGenerator getGeneratorDalsiehoVstupu()
-    {
-        return this.generatorDalsiehoVstupu;
-    }
-
-    public GenerovanieTypuZakaznika getGeneratorTypuZakaznika()
-    {
-        return this.generatorTypuZakaznika;
-    }
-
-    public SpojityRovnomernyGenerator getGeneratorVydanieListka()
-    {
-        return this.generatorVydanieListka;
-    }
-
-    public SpojityRovnomernyGenerator getGeneratorObsluhaObycajni()
-    {
-        return this.generatorObsluhaObycajni;
-    }
-
-    public SpojityTrojuholnikovyGenerator getGeneratorObsluhaOnline()
-    {
-        return this.generatorObsluhaOnline;
-    }
-
-    public DiskretnaStatistika getStatistikaCasSystem()
-    {
-        return this.statistikaCasSystem;
-    }
-
-    public void setObsluhaAutomatPrebieha(boolean obsluhaAutomatPrebieha)
-    {
-        this.obsluhaAutomatPrebieha = obsluhaAutomatPrebieha;
-    }
-
-    public void setAutomatVypnuty(boolean automatVypnuty)
-    {
-        this.automatVypnuty = automatVypnuty;
     }
 
     @Override
@@ -146,8 +73,8 @@ public class SimulaciaSystem extends SimulacneJadro
         this.nastavKomparator(komparator);
 
         // Generatory
-        this.generatorDalsiehoVstupu = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
-        this.generatorTypuZakaznika = new GenerovanieTypuZakaznika(this.generatorNasad);
+        this.generatorDalsiVstup = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
+        this.generatorTypZakaznika = new GenerovanieTypuZakaznika(this.generatorNasad);
         this.generatorVydanieListka = new SpojityRovnomernyGenerator(30.0, 180.0, this.generatorNasad);
 
         this.generatorObsluhaObycajni = new SpojityRovnomernyGenerator(60.0, 900.0, this.generatorNasad);
@@ -174,27 +101,36 @@ public class SimulaciaSystem extends SimulacneJadro
         this.obsluhaAutomatPrebieha = false;
         this.automatVypnuty = false;
         this.frontAutomat = new LinkedList<>();
+        // Koniec automat
+
 
         // Obsluha
-        this.frontObsluha = new LinkedList<>();
+        this.frontOkno = new LinkedList<>();
 
-        this.oknaObycajni = new ObsluznyZamestnanec[2];
+        int pocetOkienOnline = (int)Math.floor(this.pocetObsluznychMiest / 3.0);
+        int pocetOkienObycajni = this.pocetObsluznychMiest - pocetOkienOnline;
+
+        this.oknaObycajni = new Okno[pocetOkienObycajni];
         for (int i = 0; i < this.oknaObycajni.length; i++)
         {
-            this.oknaObycajni[i] = new ObsluznyZamestnanec();
+            this.oknaObycajni[i] = new Okno();
         }
 
-        this.oknaOnline = new ObsluznyZamestnanec[1];
+        this.oknaOnline = new Okno[pocetOkienOnline];
         for (int i = 0; i < this.oknaOnline.length; i++)
         {
-            this.oknaOnline[i] = new ObsluznyZamestnanec();
+            this.oknaOnline[i] = new Okno();
         }
+        // Koniec obsluha
+
 
         // Statistiky
         this.statistikaCasSystem = new DiskretnaStatistika();
+        // Koniec statistiky
+
 
         // Naplanovanie prichodu 1. zakaznika v case 0.0
-        Agent vykonavajuciAgent = new Agent(Identifikator.getID(), this.generatorTypuZakaznika.getTypAgenta());
+        Agent vykonavajuciAgent = new Agent(Identifikator.getID(), this.generatorTypZakaznika.getTypAgenta());
         UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0, vykonavajuciAgent);
         this.naplanujUdalost(prichod);
     }
@@ -206,7 +142,103 @@ public class SimulaciaSystem extends SimulacneJadro
         if (this.statistikaCasSystem.getStatistikyVypocitane())
         {
             this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
-            this.celkovaStatistikaCasSystem.skusPrepocitatStatistiky();
         }
     }
+
+
+    // Automat
+    public void pridajFrontAutomat(Agent agent)
+    {
+        this.frontAutomat.add(agent);
+    }
+
+    public Agent odoberFrontAutomat()
+    {
+        if (this.frontAutomat.isEmpty())
+        {
+            throw new RuntimeException("Pokus o vybratie agenta z frontu pred automatom, ktory je prazdny!");
+        }
+
+        return this.frontAutomat.poll();
+    }
+
+    public int getPocetFrontAutomat()
+    {
+        return this.frontAutomat.size();
+    }
+
+    public boolean getObsluhaAutomatPrebieha()
+    {
+        return this.obsluhaAutomatPrebieha;
+    }
+
+    public boolean getAutomatVypnuty()
+    {
+        return this.automatVypnuty;
+    }
+
+    public void setObsluhaAutomatPrebieha(boolean obsluhaAutomatPrebieha)
+    {
+        this.obsluhaAutomatPrebieha = obsluhaAutomatPrebieha;
+    }
+
+    public void setAutomatVypnuty(boolean automatVypnuty)
+    {
+        this.automatVypnuty = automatVypnuty;
+    }
+    // Koniec automat
+
+
+    // Okno
+    public Queue<Agent> getFrontOkno()
+    {
+        return this.frontOkno;
+    }
+
+    public Okno[] getOknaObycajni()
+    {
+        return this.oknaObycajni;
+    }
+
+    public Okno[] getOknaOnline()
+    {
+        return this.oknaOnline;
+    }
+    // Koniec okno
+
+
+    // Generatory
+    public GenerovanieTypuZakaznika getGeneratorTypZakaznika()
+    {
+        return this.generatorTypZakaznika;
+    }
+
+    public SpojityExponencialnyGenerator getGeneratorDalsiVstup()
+    {
+        return this.generatorDalsiVstup;
+    }
+
+    public SpojityRovnomernyGenerator getGeneratorVydanieListka()
+    {
+        return this.generatorVydanieListka;
+    }
+
+    public SpojityRovnomernyGenerator getGeneratorObsluhaObycajni()
+    {
+        return this.generatorObsluhaObycajni;
+    }
+
+    public SpojityTrojuholnikovyGenerator getGeneratorObsluhaOnline()
+    {
+        return this.generatorObsluhaOnline;
+    }
+    // Koniec generatory
+
+
+    // Statistiky
+    public DiskretnaStatistika getStatistikaCasSystem()
+    {
+        return this.statistikaCasSystem;
+    }
+    // Koniec statistiky
 }

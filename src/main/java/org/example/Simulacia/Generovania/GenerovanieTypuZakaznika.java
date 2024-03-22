@@ -15,6 +15,7 @@ public class GenerovanieTypuZakaznika
     public GenerovanieTypuZakaznika(GeneratorNasad generatorNasad)
     {
         this.validujStav();
+
         this.generatorTypuZakaznika = new DiskretnyRovnomernyGenerator(1, 100, generatorNasad);
     }
 

@@ -4,7 +4,7 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.ObsluznyZamestnanec;
+import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 
@@ -12,9 +12,9 @@ import java.util.Queue;
 
 public class UdalostKoniecObsluhy extends Udalost
 {
-    private final ObsluznyZamestnanec okno;
+    private final Okno okno;
 
-    public UdalostKoniecObsluhy(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, ObsluznyZamestnanec okno)
+    public UdalostKoniecObsluhy(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, Okno okno)
     {
         super(simulacneJadro, casVykonania, agent);
 
@@ -38,15 +38,15 @@ public class UdalostKoniecObsluhy extends Udalost
     {
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
-        this.okno.setObsadeny(false);
+        this.okno.setObsadene(false);
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         Agent vykonavajuciAgent = this.getAgent();
-        vykonavajuciAgent.setCasKoniecObsluhy(getCasVykonania());
+        vykonavajuciAgent.setCasKoniecObsluhyOkno(getCasVykonania());
         vykonavajuciAgent.vypis();
 
         // Naplanuj dalsi zaciatok obsluhy
-        Queue<Agent> frontObsluha = simulacia.getFrontObsluha();
+        Queue<Agent> frontObsluha = simulacia.getFrontOkno();
         if (frontObsluha.size() > Konstanty.KAPACITA_FRONT_OBSLUHA)
         {
             throw new RuntimeException("Front prekrocil maximalnu velkost!");

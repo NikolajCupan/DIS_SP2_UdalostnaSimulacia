@@ -7,28 +7,30 @@ public class Agent
     private final long ID;
     private final TypAgenta typAgenta;
 
+    private double casPrichodSystem;
+
     // Automat
-    private double casPrichod;
     private double casZaciatokObsluhyAutomat;
     private double casKoniecObsluhyAutomat;
 
-    // Obsluha
-    private double casZaciatokObsluhy;
-    private double casKoniecObsluhy;
+    // Okno
+    private double casZaciatokObsluhyOkno;
+    private double casKoniecObsluhyOkno;
 
     public Agent(long ID, TypAgenta typAgenta)
     {
         this.ID = ID;
         this.typAgenta = typAgenta;
 
+        this.casPrichodSystem = -1;
+
         // Automat
-        this.casPrichod = -1;
         this.casZaciatokObsluhyAutomat = -1;
         this.casKoniecObsluhyAutomat = -1;
 
-        // Obsluha
-        this.casZaciatokObsluhy = -1;
-        this.casKoniecObsluhy = -1;
+        // Okno
+        this.casZaciatokObsluhyOkno = -1;
+        this.casKoniecObsluhyOkno = -1;
     }
 
     public void vypis()
@@ -42,8 +44,8 @@ public class Agent
 
             System.out.print("    [AGENT ");
             System.out.format("%4s", this.ID);
-            System.out.format("%-39s", "]   Prichod");
-            System.out.format("%-20s%n", this.casPrichod);
+            System.out.format("%-39s", "]   Prichod system");
+            System.out.format("%-20s%n", this.casPrichodSystem);
 
             System.out.print("    [AGENT ");
             System.out.format("%4s", this.ID);
@@ -57,13 +59,13 @@ public class Agent
 
             System.out.print("    [AGENT ");
             System.out.format("%4s", this.ID);
-            System.out.format("%-39s", "]   Zaciatok obsluhy");
-            System.out.format("%-20s%n", this.casZaciatokObsluhy);
+            System.out.format("%-39s", "]   Zaciatok obsluhy okno");
+            System.out.format("%-20s%n", this.casZaciatokObsluhyOkno);
 
             System.out.print("    [AGENT ");
             System.out.format("%4s", this.ID);
-            System.out.format("%-39s", "]   Koniec obsluhy");
-            System.out.format("%-20s%n", this.casKoniecObsluhy);
+            System.out.format("%-39s", "]   Koniec obsluhy okno");
+            System.out.format("%-20s%n", this.casKoniecObsluhyOkno);
         }
     }
 
@@ -77,9 +79,9 @@ public class Agent
         return this.typAgenta;
     }
 
-    public double getCasPrichod()
+    public double getCasPrichodSystem()
     {
-        return this.casPrichod;
+        return this.casPrichodSystem;
     }
 
     public double getCasZaciatokObsluhyAutomat()
@@ -92,9 +94,19 @@ public class Agent
         return this.casKoniecObsluhyAutomat;
     }
 
-    public void setCasPrichod(double casPrichod)
+    public double getCasZaciatokObsluhyOkno()
     {
-        this.casPrichod = casPrichod;
+        return this.casZaciatokObsluhyOkno;
+    }
+
+    public double getCasKoniecObsluhyOkno()
+    {
+        return this.casKoniecObsluhyOkno;
+    }
+
+    public void setCasPrichodSystem(double casPrichodSystem)
+    {
+        this.casPrichodSystem = casPrichodSystem;
     }
 
     public void setCasZaciatokObsluhyAutomat(double casZaciatokObsluhyAutomat)
@@ -107,13 +119,13 @@ public class Agent
         this.casKoniecObsluhyAutomat = casKoniecObsluhyAutomat;
     }
 
-    public void setCasZaciatokObsluhy(double casZaciatokObsluhy)
+    public void setCasZaciatokObsluhyOkno(double casZaciatokObsluhyOkno)
     {
-        this.casZaciatokObsluhy = casZaciatokObsluhy;
+        this.casZaciatokObsluhyOkno = casZaciatokObsluhyOkno;
     }
 
-    public void setCasKoniecObsluhy(double casKoniecObsluhy)
+    public void setCasKoniecObsluhyOkno(double casKoniecObsluhyOkno)
     {
-        this.casKoniecObsluhy = casKoniecObsluhy;
+        this.casKoniecObsluhyOkno = casKoniecObsluhyOkno;
     }
 }
