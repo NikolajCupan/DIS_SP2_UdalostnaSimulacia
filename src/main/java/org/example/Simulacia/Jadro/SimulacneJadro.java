@@ -156,20 +156,37 @@ public abstract class SimulacneJadro
             return;
         }
 
-        if (rychlost >= Konstanty.MAX_RYCHLOST)
+        this.simulaciaPozastavena = true;
+        int pocetSystemovychUdalosti = 0;
+        for (Udalost udalost : this.kalendarUdalosti)
         {
-            // Nutnost opetovneho naplanovania systemovej udalosti
-            this.simulaciaPozastavena = true;
+            if (udalost instanceof SystemovaUdalost)
+            {
+                pocetSystemovychUdalosti++;
+            }
+        }
+
+        if (pocetSystemovychUdalosti > 1)
+        {
+            throw new RuntimeException("Kalendar udalosti obsahuje viac ako 1 systemovu udalost!");
+        }
+        else if (pocetSystemovychUdalosti == 1)
+        {
+            // Kalendar udalosti obsahuje systemovu udalost, staci zmenit rychlost
+            this.rychlost = rychlost;
+        }
+        else if (pocetSystemovychUdalosti == 0)
+        {
+            // Kalendar udalosti neobsahuje systemovu udalost je nutne ju naplanovat
             Udalost nasledujucaUdalost = this.kalendarUdalosti.peek();
             if (nasledujucaUdalost != null)
             {
                 SystemovaUdalost systemovaUdalost = new SystemovaUdalost(this, nasledujucaUdalost.getCasVykonania());
                 this.naplanujUdalost(systemovaUdalost);
             }
-            this.simulaciaPozastavena = false;
         }
 
-        this.rychlost = rychlost;
+        this.simulaciaPozastavena = false;
     }
 
     public int getRychlost()
