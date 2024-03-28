@@ -1,12 +1,17 @@
 package org.example.Simulacia.Jadro;
 
+import org.example.GUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public abstract class SimulacneJadro
 {
+    // Prepojenie s GUI
+    private final ArrayList<ISimulationDelegate> delegati;
+
     private final long pocetReplikacii;
     private int aktualnaReplikacia;
 
@@ -22,6 +27,7 @@ public abstract class SimulacneJadro
     {
         this.validujVstupy(pocetReplikacii);
 
+        this.delegati = new ArrayList<>();
         this.pocetReplikacii = pocetReplikacii;
         this.aktualnaReplikacia = -1;
     }
@@ -71,6 +77,8 @@ public abstract class SimulacneJadro
                 this.predVykonanimUdalosti();
                 aktualnaUdalost.vykonajUdalost();
                 this.poVykonaniUdalosti();
+
+                this.aktualizujGUI();
             }
 
             this.poReplikacii();
@@ -142,6 +150,24 @@ public abstract class SimulacneJadro
         catch (Exception ex)
         {
             throw new RuntimeException("Pri uspavani simulacia nastala chyba!");
+        }
+    }
+
+    public void pridajDelegata(ISimulationDelegate delegat)
+    {
+        this.delegati.add(delegat);
+    }
+
+    public void odoberDelegata(ISimulationDelegate delegat)
+    {
+        this.delegati.remove(delegat);
+    }
+
+    private void aktualizujGUI()
+    {
+        for (ISimulationDelegate delegat : this.delegati)
+        {
+            delegat.aktualizujSa(this);
         }
     }
 

@@ -35,26 +35,25 @@ public final class GeneratorNasad
 
     public static void inicializujGeneratorNasad(int nasada, boolean pouziNasadu)
     {
-        if (!GeneratorNasad.generatorInicializovany)
+        GeneratorNasad.vypisStatus();
+        GeneratorNasad.inicializacia(nasada, pouziNasadu);
+    }
+
+    private static void vypisStatus()
+    {
+        StringBuilder sprava = new StringBuilder();
+        sprava.append("Generator nasad uz bol inicializovany, ");
+
+        if (GeneratorNasad.pevneStanovenaNasada)
         {
-            GeneratorNasad.inicializacia(nasada, pouziNasadu);
+            sprava.append("bola pouzita pevna stanovena nasada: ").append(GeneratorNasad.nasada).append("!");
         }
         else
         {
-            StringBuilder chybovaSprava = new StringBuilder();
-            chybovaSprava.append("Generator nasad uz bol inicializovany, ");
-
-            if (GeneratorNasad.pevneStanovenaNasada)
-            {
-                chybovaSprava.append("bola pouzita pevna stanovena nasada: ").append(GeneratorNasad.nasada).append("!");
-            }
-            else
-            {
-                chybovaSprava.append("bola pouzita nahodna nasada!");
-            }
-
-            throw new RuntimeException(chybovaSprava.toString());
+            sprava.append("bola pouzita nahodna nasada!");
         }
+
+        System.out.println(sprava);
     }
 
     private static void inicializacia(int nasada, boolean pouziNasadu)

@@ -51,10 +51,11 @@ public class SimulaciaSystem extends SimulacneJadro
     // Celkove statistiky
     private DiskretnaStatistika celkovaStatistikaCasSystem;
 
-    public SimulaciaSystem(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int pocetObsluznychMiest, int nasada, boolean pouziNasadu)
+    public SimulaciaSystem(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int pocetObsluznychMiest, int pocetPokladni,
+                           int nasada, boolean pouziNasadu)
     {
         super(pocetReplikacii);
-        this.validujVstupy(pocetObsluznychMiest, dlzkaTrvaniaSimulacie);
+        this.validujVstupy(pocetObsluznychMiest, pocetPokladni, dlzkaTrvaniaSimulacie);
 
         GeneratorNasad.inicializujGeneratorNasad(nasada, pouziNasadu);
         this.generatorNasad = new GeneratorNasad();
@@ -66,11 +67,16 @@ public class SimulaciaSystem extends SimulacneJadro
         this.pocetObsluznychMiest = pocetObsluznychMiest;
     }
 
-    private void validujVstupy(int pocetObsluznychMiest, double dlzkaTrvaniaSimulacie)
+    private void validujVstupy(int pocetObsluznychMiest, int pocetPokladni, double dlzkaTrvaniaSimulacie)
     {
         if (pocetObsluznychMiest < 3)
         {
             throw new RuntimeException("Pocet obsluznych miest nemoze byt mensi ako 3!");
+        }
+
+        if (pocetPokladni < 1)
+        {
+            throw new RuntimeException("Pocet pokladni nemoze byt mensi ako 1!");
         }
 
         if (dlzkaTrvaniaSimulacie <= 0.0)
@@ -98,17 +104,7 @@ public class SimulaciaSystem extends SimulacneJadro
     }
 
     @Override
-    protected void poReplikaciach()
-    {
-        this.celkovaStatistikaCasSystem.skusPrepocitatStatistiky();
-
-        if (this.celkovaStatistikaCasSystem.getStatistikyVypocitane())
-        {
-            System.out.println("[STATISTIKA] Priemerna doba v systeme: "
-                + this.celkovaStatistikaCasSystem.getPriemer() + " [" + this.celkovaStatistikaCasSystem.getDolnaHranicaIS()
-                + ", " + this.celkovaStatistikaCasSystem.getHornaHranicaIS() + "]");
-        }
-    }
+    protected void poReplikaciach() {}
 
     @Override
     protected void predReplikaciou()
@@ -376,6 +372,11 @@ public class SimulaciaSystem extends SimulacneJadro
     public DiskretnaStatistika getStatistikaCasSystem()
     {
         return this.statistikaCasSystem;
+    }
+
+    public DiskretnaStatistika getCelkovaStatistikaCasSystem()
+    {
+        return this.celkovaStatistikaCasSystem;
     }
     // Koniec statistiky
 }
