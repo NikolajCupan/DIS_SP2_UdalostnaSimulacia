@@ -67,7 +67,10 @@ public abstract class SimulacneJadro
 
                 Udalost aktualnaUdalost = this.kalendarUdalosti.poll();
                 this.aktualnySimulacnyCas = aktualnaUdalost.getCasVykonania();
+
+                this.predVykonanimUdalosti();
                 aktualnaUdalost.vykonajUdalost();
+                this.poVykonaniUdalosti();
             }
 
             this.poReplikacii();
@@ -115,6 +118,11 @@ public abstract class SimulacneJadro
         this.simulaciaUkoncena = true;
     }
 
+    public PriorityQueue<Udalost> getKalendarUdalosti()
+    {
+        return this.kalendarUdalosti;
+    }
+
     public int getAktualnaReplikacia()
     {
         return this.aktualnaReplikacia;
@@ -141,4 +149,6 @@ public abstract class SimulacneJadro
     protected abstract void poReplikaciach();
     protected abstract void predReplikaciou();
     protected abstract void poReplikacii();
+    protected abstract void predVykonanimUdalosti();
+    protected abstract void poVykonaniUdalosti();
 }

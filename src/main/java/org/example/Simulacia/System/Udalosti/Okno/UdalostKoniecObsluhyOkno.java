@@ -41,8 +41,17 @@ public class UdalostKoniecObsluhyOkno extends Udalost
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
 
+
+        // Kontrola stavu simulacie
+        if (!this.okno.getObsadene())
+        {
+            throw new RuntimeException("Okno obsahuje agenta, hoci ma nastavene, ze nikoho neobsahuje!");
+        }
+
+
         // Zmena stavu simulacie
         this.okno.setObsadene(false);
+
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasKoniecObsluhyOkno(getCasVykonania());
@@ -90,7 +99,6 @@ public class UdalostKoniecObsluhyOkno extends Udalost
 
 
         // Statistiky
-        simulacia.getStatistikaCasSystem().pridajHodnotu(
-        vykonavajuciAgent.getCasKoniecObsluhyOkno() - vykonavajuciAgent.getCasPrichodSystem());
+        simulacia.getStatistikaCasSystem().pridajHodnotu(vykonavajuciAgent.getCasKoniecObsluhyOkno() - vykonavajuciAgent.getCasPrichodSystem());
     }
 }

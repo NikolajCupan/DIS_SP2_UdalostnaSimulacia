@@ -8,7 +8,7 @@ public class Konstanty
     // Otvaracia doba od 9:00 do 17:00
     private static final double ZACIATOK_SEKUND = 9 * 60 * 60;
     private static final double KONIEC_SEKUND = 17 * 60 * 60;
-    public static final double OTVRACIA_DOBA_SEKUND = Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND;
+    public static final double OTVARACIA_DOBA_SEKUND = Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND;
 
     public static final boolean DEBUG_VYPIS_AGENT = false;
     public static final boolean DEBUG_VYPIS_UDALOST = false;

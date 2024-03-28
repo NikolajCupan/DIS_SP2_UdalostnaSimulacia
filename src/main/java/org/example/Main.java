@@ -5,9 +5,10 @@ import org.example.Simulacia.System.SimulaciaSystem;
 
 public class Main
 {
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
-        SimulaciaSystem s = new SimulaciaSystem(1, Konstanty.OTVRACIA_DOBA_SEKUND, 3, 0, true);
+        SimulaciaSystem s = new SimulaciaSystem(10_000, Konstanty.OTVARACIA_DOBA_SEKUND,
+        3, 0, false);
         s.simuluj();
     }
 }

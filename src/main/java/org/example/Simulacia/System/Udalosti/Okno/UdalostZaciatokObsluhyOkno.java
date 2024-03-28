@@ -38,8 +38,17 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
 
+
+        // Kontrola stavu simulacie
+        if (this.okno.getObsadene())
+        {
+            throw new RuntimeException("Bola naplanovana obsluha u obsadeneho okna!");
+        }
+
+
         // Zmena stavu simulacie
         this.okno.setObsadene(true);
+
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasZaciatokObsluhyOkno(this.getCasVykonania());

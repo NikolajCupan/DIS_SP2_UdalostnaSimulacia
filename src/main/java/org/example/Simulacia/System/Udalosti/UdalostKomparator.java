@@ -10,6 +10,10 @@ public class UdalostKomparator implements Comparator<Udalost>
     @Override
     public int compare(Udalost udalost1, Udalost udalost2)
     {
+        return Double.compare(udalost1.getCasVykonania(), udalost2.getCasVykonania());
+
+        /*
+        // Povodny kod
         if (Math.abs(udalost1.getCasVykonania() - udalost2.getCasVykonania()) < Konstanty.EPSILON)
         {
             return 0;
@@ -22,5 +26,6 @@ public class UdalostKomparator implements Comparator<Udalost>
         {
             return 1;
         }
+        */
     }
 }

@@ -24,6 +24,7 @@ public class SimulaciaSystem extends SimulacneJadro
 {
     private final GeneratorNasad generatorNasad;
     private final double dlzkaTrvaniaSimulacie;
+    private boolean prichodyZrusene;
 
     // Automat
     private boolean obsluhaAutomatPrebieha;
@@ -55,9 +56,11 @@ public class SimulaciaSystem extends SimulacneJadro
         super(pocetReplikacii);
         this.validujVstupy(pocetObsluznychMiest, dlzkaTrvaniaSimulacie);
 
-        this.dlzkaTrvaniaSimulacie = dlzkaTrvaniaSimulacie;
         GeneratorNasad.inicializujGeneratorNasad(nasada, pouziNasadu);
         this.generatorNasad = new GeneratorNasad();
+
+        this.dlzkaTrvaniaSimulacie = dlzkaTrvaniaSimulacie;
+        this.prichodyZrusene = false;
 
         // Obsluha okno
         this.pocetObsluznychMiest = pocetObsluznychMiest;
@@ -99,14 +102,22 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         this.celkovaStatistikaCasSystem.skusPrepocitatStatistiky();
 
-        System.out.println("[STATISTIKA] Priemerna doba v systeme: "
-            + this.celkovaStatistikaCasSystem.getPriemer() + " [" + this.celkovaStatistikaCasSystem.getDolnaHranicaIS()
-            + ", " + this.celkovaStatistikaCasSystem.getHornaHranicaIS() + "]");
+        if (this.celkovaStatistikaCasSystem.getStatistikyVypocitane())
+        {
+            System.out.println("[STATISTIKA] Priemerna doba v systeme: "
+                + this.celkovaStatistikaCasSystem.getPriemer() + " [" + this.celkovaStatistikaCasSystem.getDolnaHranicaIS()
+                + ", " + this.celkovaStatistikaCasSystem.getHornaHranicaIS() + "]");
+        }
     }
 
     @Override
     protected void predReplikaciou()
     {
+        // Ostatne
+        this.prichodyZrusene = false;
+        // Koniec ostatne
+
+
         // Automat
         this.obsluhaAutomatPrebieha = false;
         this.automatVypnuty = false;
@@ -141,8 +152,13 @@ public class SimulaciaSystem extends SimulacneJadro
 
         // Naplanovanie prichodu 1. zakaznika
         Agent vykonavajuciAgent = new Agent(Identifikator.getID(), this.generatorTypZakaznika.getTypAgenta());
-        UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, this.generatorDalsiPrichod.sample(), vykonavajuciAgent);
-        this.naplanujUdalost(prichod);
+        double casPrichodu = this.generatorDalsiPrichod.sample();
+        if (casPrichodu <= this.dlzkaTrvaniaSimulacie)
+        {
+            // Udalost je naplanovana iba za predpokladu, ze nenastane po vyprsani simulacneho casu
+            UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, casPrichodu, vykonavajuciAgent);
+            this.naplanujUdalost(prichod);
+        }
     }
 
     @Override
@@ -152,6 +168,39 @@ public class SimulaciaSystem extends SimulacneJadro
         if (this.statistikaCasSystem.getStatistikyVypocitane())
         {
             this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
+        }
+    }
+
+    @Override
+    protected void predVykonanimUdalosti()
+    {
+        this.skontrolujVyprsanieSimulacnehoCasu();
+    }
+
+    @Override
+    protected void poVykonaniUdalosti()
+    {
+        this.skontrolujVyprsanieSimulacnehoCasu();
+    }
+
+    private void skontrolujVyprsanieSimulacnehoCasu()
+    {
+        if (this.getAktualnySimulacnyCas() > this.dlzkaTrvaniaSimulacie
+            && !this.prichodyZrusene)
+        {
+            this.prichodyZrusene = true;
+
+            // Doslo k prekroceniu simulacneho casu, vyprazdni front pred automatom
+            this.frontAutomat.clear();
+
+            // Kontrola stavu kalendara udalosti
+            for (Udalost udalost : this.getKalendarUdalosti())
+            {
+                if (udalost instanceof UdalostPrichodZakaznika)
+                {
+                    throw new RuntimeException("Doslo k naplanovaniu udalosti prichodu zakaznika po otvaracej dobe!");
+                }
+            }
         }
     }
 

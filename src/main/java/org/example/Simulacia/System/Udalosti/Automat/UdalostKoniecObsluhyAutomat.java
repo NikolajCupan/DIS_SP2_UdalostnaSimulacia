@@ -37,8 +37,17 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
 
+
+        // Kontrola stavu simulacie
+        if (!simulacia.getObsluhaAutomatPrebieha())
+        {
+            throw new RuntimeException("Automat obsluhuje agenta, hoci ma nastavene, ze nikoho neobsluhuje!");
+        }
+
+
         // Zmena stavu simulacie
         simulacia.setObsluhaAutomatPrebieha(false);
+
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasKoniecObsluhyAutomat(this.getCasVykonania());
@@ -72,8 +81,13 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
 
         if (!obsluhaNaplanovana)
         {
-            // Nebolo mozno agenta priradit ku ziadnemu oknu, agent je pridany do frontu pred oknami
+            // Nebolo mozne agenta priradit ku ziadnemu oknu, agent je pridany do frontu pred oknami
             frontOkno.add(vykonavajuciAgent);
+
+            if (frontOkno.size() > Konstanty.KAPACITA_FRONT_OKNO)
+            {
+                throw new RuntimeException("Pridanie agenta do frontu pred oknami zapricinilo prekrocenie maximalnej velkosti frontu!");
+            }
 
             if (frontOkno.size() == Konstanty.KAPACITA_FRONT_OKNO)
             {

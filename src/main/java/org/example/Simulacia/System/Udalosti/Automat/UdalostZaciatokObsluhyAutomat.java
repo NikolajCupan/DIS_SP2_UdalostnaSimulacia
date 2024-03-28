@@ -32,8 +32,21 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
 
+
+        // Kontrola stavu simulacie
+        if (simulacia.getAktualnySimulacnyCas() > simulacia.getDlzkaTrvaniaSimulacie())
+        {
+            throw new RuntimeException("Doslo k vykonaniu udalosti zaciatku obsluhy u automatu po vyprsani simulacneho casu!");
+        }
+        if (simulacia.getAutomatVypnuty() || simulacia.getObsluhaAutomatPrebieha())
+        {
+            throw new RuntimeException("Bol naplanovany zaciatok obsluhy u automatu, ktory je vypnuty alebo uz obsluha prebieha!");
+        }
+
+
         // Zmena stavu simulacie
         simulacia.setObsluhaAutomatPrebieha(true);
+
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasZaciatokObsluhyAutomat(this.getCasVykonania());
