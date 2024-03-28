@@ -5,6 +5,7 @@ import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Generatory.SpojityRovnomernyGenerator;
 import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
+import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
@@ -22,6 +23,7 @@ import java.util.Queue;
 public class SimulaciaSystem extends SimulacneJadro
 {
     private final GeneratorNasad generatorNasad;
+    private final double dlzkaTrvaniaSimulacie;
 
     // Automat
     private boolean obsluhaAutomatPrebieha;
@@ -50,20 +52,27 @@ public class SimulaciaSystem extends SimulacneJadro
 
     public SimulaciaSystem(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int pocetObsluznychMiest, int nasada, boolean pouziNasadu)
     {
-        super(pocetReplikacii, dlzkaTrvaniaSimulacie);
-        this.validujVstupy(pocetObsluznychMiest);
+        super(pocetReplikacii);
+        this.validujVstupy(pocetObsluznychMiest, dlzkaTrvaniaSimulacie);
 
+        this.dlzkaTrvaniaSimulacie = dlzkaTrvaniaSimulacie;
         GeneratorNasad.inicializujGeneratorNasad(nasada, pouziNasadu);
         this.generatorNasad = new GeneratorNasad();
 
+        // Obsluha okno
         this.pocetObsluznychMiest = pocetObsluznychMiest;
     }
 
-    private void validujVstupy(int pocetObsluznychMiest)
+    private void validujVstupy(int pocetObsluznychMiest, double dlzkaTrvaniaSimulacie)
     {
         if (pocetObsluznychMiest < 3)
         {
             throw new RuntimeException("Pocet obsluznych miest nemoze byt mensi ako 3!");
+        }
+
+        if (dlzkaTrvaniaSimulacie <= 0.0)
+        {
+            throw new RuntimeException("Dlzka trvania simulacie musi byt vacsia ako 0!");
         }
     }
 
@@ -82,7 +91,7 @@ public class SimulaciaSystem extends SimulacneJadro
         this.generatorObsluhaOnline = new SpojityTrojuholnikovyGenerator(60.0, 480.0, 120.0, this.generatorNasad);
 
         // Statistiky
-        this.celkovaStatistikaCasSystem = new DiskretnaStatistika();
+        this.celkovaStatistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
     }
 
     @Override
@@ -126,13 +135,13 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
         // Statistiky
-        this.statistikaCasSystem = new DiskretnaStatistika();
+        this.statistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         // Koniec statistiky
 
 
-        // Naplanovanie prichodu 1. zakaznika v case 0.0
+        // Naplanovanie prichodu 1. zakaznika
         Agent vykonavajuciAgent = new Agent(Identifikator.getID(), this.generatorTypZakaznika.getTypAgenta());
-        UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, 0.0, vykonavajuciAgent);
+        UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, this.generatorDalsiPrichod.sample(), vykonavajuciAgent);
         this.naplanujUdalost(prichod);
     }
 
@@ -145,6 +154,14 @@ public class SimulaciaSystem extends SimulacneJadro
             this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
         }
     }
+
+
+    // Ostatne
+    public double getDlzkaTrvaniaSimulacie()
+    {
+        return this.dlzkaTrvaniaSimulacie;
+    }
+    // Koniec ostatne
 
 
     // Automat
@@ -206,7 +223,7 @@ public class SimulaciaSystem extends SimulacneJadro
         return this.oknaOnline;
     }
 
-    public Agent vyberPrvehoOnlineAgent()
+    public Agent vyberPrvyOnlineAgent()
     {
         for (Agent agent : this.frontOkno)
         {
@@ -220,7 +237,7 @@ public class SimulaciaSystem extends SimulacneJadro
         throw new RuntimeException("Front pred oknami neobsahuje online agenta!");
     }
 
-    public Agent vyberPrvehoObycajnehoAgenta()
+    public Agent vyberPrvyObycajnyAgent()
     {
         boolean obsahujeZmluvneho = this.frontOknoObsahujeZmluvnehoAgenta();
         TypAgenta vyberanyTyp = (obsahujeZmluvneho ? TypAgenta.ZMLUVNY : TypAgenta.BEZNY);
@@ -234,7 +251,7 @@ public class SimulaciaSystem extends SimulacneJadro
             }
         }
 
-        throw new RuntimeException("Front pred oknami neobsahuje bezneho agenta!");
+        throw new RuntimeException("Front pred oknami neobsahuje obycajneho agenta!");
     }
 
     private boolean frontOknoObsahujeZmluvnehoAgenta()

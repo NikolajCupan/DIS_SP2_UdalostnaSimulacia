@@ -9,7 +9,6 @@ public abstract class SimulacneJadro
 {
     private final long pocetReplikacii;
     private int aktualnaReplikacia;
-    private final double dlzkaTrvaniaSimulacie;
 
     private double aktualnySimulacnyCas;
 
@@ -19,25 +18,19 @@ public abstract class SimulacneJadro
     private volatile boolean simulaciaPozastavena;
     private volatile boolean simulaciaUkoncena;
 
-    protected SimulacneJadro(int pocetReplikacii, double dlzkaTrvaniaSimulacie)
+    protected SimulacneJadro(int pocetReplikacii)
     {
-        this.validujVstupy(pocetReplikacii, dlzkaTrvaniaSimulacie);
+        this.validujVstupy(pocetReplikacii);
 
         this.pocetReplikacii = pocetReplikacii;
         this.aktualnaReplikacia = -1;
-        this.dlzkaTrvaniaSimulacie = dlzkaTrvaniaSimulacie;
     }
 
-    private void validujVstupy(int pocetReplikacii, double dlzkaTrvaniaSimulacie)
+    private void validujVstupy(int pocetReplikacii)
     {
         if (pocetReplikacii < 1)
         {
             throw new RuntimeException("Pocet replikacii nemoze byt mensi ako 1!");
-        }
-
-        if (dlzkaTrvaniaSimulacie <= 0.0)
-        {
-            throw new RuntimeException("Dlzka trvania simulacie musi byt vacsia ako 0!");
         }
     }
 
@@ -59,8 +52,7 @@ public abstract class SimulacneJadro
             this.predReplikaciouJadro();
             this.predReplikaciou();
 
-            while (!this.kalendarUdalosti.isEmpty()
-                   && this.aktualnySimulacnyCas <= this.dlzkaTrvaniaSimulacie)
+            while (!this.kalendarUdalosti.isEmpty())
             {
                 if (this.simulaciaUkoncena)
                 {
@@ -74,20 +66,8 @@ public abstract class SimulacneJadro
                 }
 
                 Udalost aktualnaUdalost = this.kalendarUdalosti.poll();
-                double casVykonaniaUdalosti = aktualnaUdalost.getCasVykonania();
-
-                if (casVykonaniaUdalosti <= this.dlzkaTrvaniaSimulacie)
-                {
-                    // Udalost mozno vykonat, nebol presiahnuty cas simulacie
-                    this.aktualnySimulacnyCas = casVykonaniaUdalosti;
-                    aktualnaUdalost.vykonajUdalost();
-                }
-                else
-                {
-                    // Presiahnuty cas trvania simulacie
-                    this.aktualnySimulacnyCas = this.dlzkaTrvaniaSimulacie;
-                    break;
-                }
+                this.aktualnySimulacnyCas = aktualnaUdalost.getCasVykonania();
+                aktualnaUdalost.vykonajUdalost();
             }
 
             this.poReplikacii();

@@ -59,7 +59,7 @@ public class UdalostKoniecObsluhyOkno extends Udalost
         if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE
             && simulacia.frontOknoObsahujeOnlineAgenta())
         {
-            Agent onlineAgent = simulacia.vyberPrvehoOnlineAgent();
+            Agent onlineAgent = simulacia.vyberPrvyOnlineAgent();
             UdalostZaciatokObsluhyOkno zaciatokObsluhy =
                 new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), onlineAgent, this.okno);
             simulacia.naplanujUdalost(zaciatokObsluhy);
@@ -67,7 +67,7 @@ public class UdalostKoniecObsluhyOkno extends Udalost
         else if ((vykonavajuciAgent.getTypAgenta() == TypAgenta.BEZNY || vykonavajuciAgent.getTypAgenta() == TypAgenta.ZMLUVNY)
                  && simulacia.frontOknoObsahujeObycajnehoAgenta())
         {
-            Agent obycajnyAgent = simulacia.vyberPrvehoObycajnehoAgenta();
+            Agent obycajnyAgent = simulacia.vyberPrvyObycajnyAgent();
             UdalostZaciatokObsluhyOkno zaciatokObsluhy =
                 new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), obycajnyAgent, this.okno);
             simulacia.naplanujUdalost(zaciatokObsluhy);
