@@ -22,6 +22,12 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
 
     private JLabel labelAktualnaReplikacia;
     private JLabel labelCelkovyPriemernyCasSystem;
+    private JLabel labelSimulacnyCas;
+
+    private JSlider sliderRychlost;
+    private JLabel labelRychlost;
+    private Thread simulacneVlakno;
+
     private SimulaciaSystem simulacia;
 
     public HlavneOkno()
@@ -32,6 +38,8 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         setLocationRelativeTo(null);
         setVisible(true);
         setContentPane(this.panel);
+
+        this.inicializujSlider();
 
         this.buttonStart.addActionListener(e -> {
             try
@@ -44,12 +52,35 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
             }
         });
 
-        this.buttonPauza.addActionListener(e -> this.simulacia.toggleSimulaciaPozastavena());
-        this.buttonStop.addActionListener(e -> this.simulacia.ukonciSimulaciu());
+        this.buttonPauza.addActionListener(e -> this.toggleSimulaciaPozastavena());
+        this.buttonStop.addActionListener(e -> this.ukonciSimulaciu());
+
+        this.sliderRychlost.addChangeListener(e -> {
+            int rychlost = this.getRychlost();
+            if (rychlost >= Konstanty.MAX_RYCHLOST)
+            {
+                this.labelRychlost.setText("MAX");
+            }
+            else
+            {
+                this.labelRychlost.setText(rychlost + "x");
+            }
+
+            if (this.simulacia != null)
+            {
+                this.simulacia.setRychlost(rychlost);
+            }
+        });
     }
 
     private void inicializujSimulaciu()
     {
+        if (this.simulacia != null)
+        {
+            this.ukonciSimulaciu();
+            this.resetujGUI();
+        }
+
         int pocetReplikacii = Integer.parseInt(this.inputPocetReplikacii.getText());
         boolean nasadaZadana = !this.inputNasada.getText().isEmpty();
         int nasada = (nasadaZadana ? Integer.parseInt(this.inputNasada.getText()) : -1);
@@ -62,15 +93,70 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
             throw new RuntimeException("Pocet okien nemoze byt mensi ako 3!");
         }
 
-        this.simulacia = new SimulaciaSystem(pocetReplikacii, Konstanty.OTVARACIA_DOBA_SEKUND,
+        this.simulacia = new SimulaciaSystem(pocetReplikacii, this.getRychlost(), Konstanty.OTVARACIA_DOBA_SEKUND,
         pocetObsluznychMiest, pocetPokladni, nasada, nasadaZadana);
         this.simulacia.pridajDelegata(this);
 
-        Thread vlakno = new Thread(() -> this.simulacia.simuluj());
-        vlakno.setName("Simulacia");
-        vlakno.setDaemon(true);
-        vlakno.setPriority(Thread.MAX_PRIORITY);
-        vlakno.start();
+        this.simulacneVlakno = new Thread(() -> this.simulacia.simuluj());
+        this.simulacneVlakno.setName("Simulacia");
+        this.simulacneVlakno.setDaemon(true);
+        this.simulacneVlakno.setPriority(Thread.MAX_PRIORITY);
+        this.simulacneVlakno.start();
+    }
+
+    private void ukonciSimulaciu()
+    {
+        if (this.simulacia != null)
+        {
+            this.simulacia.ukonciSimulaciu();
+        }
+
+        try
+        {
+            if (this.simulacneVlakno != null)
+            {
+                this.simulacneVlakno.join();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Chyba pri cakani na ukoncenie simulacneho vlakna!");
+        }
+    }
+
+    private void toggleSimulaciaPozastavena()
+    {
+        if (this.simulacia != null)
+        {
+           this.simulacia.toggleSimulaciaPozastavena();
+        }
+    }
+
+    private void resetujGUI()
+    {
+        this.labelAktualnaReplikacia.setText("n/a");
+        this.labelCelkovyPriemernyCasSystem.setText("n/a");
+        this.labelSimulacnyCas.setText("n/a");
+    }
+
+    private int getRychlost()
+    {
+        int zadanaRychlost = this.sliderRychlost.getValue();
+        if (zadanaRychlost == 0)
+        {
+            return 1;
+        }
+
+        return zadanaRychlost;
+    }
+
+    private void inicializujSlider()
+    {
+        this.sliderRychlost.setValueIsAdjusting(true);
+        this.sliderRychlost.setValue(Konstanty.DEFAULT_RYCHLOST);
+        this.sliderRychlost.setValueIsAdjusting(false);
+
+        this.labelRychlost.setText(Konstanty.DEFAULT_RYCHLOST + "x");
     }
 
     public void createUIComponents()
@@ -87,5 +173,6 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         this.labelCelkovyPriemernyCasSystem.setText(Prezenter.celkovaStatistikaSystem(simulacia));
 
         // Informacie aktualnej replikacie
+        this.labelSimulacnyCas.setText(Prezenter.simulacnyCas(simulacia));
     }
 }

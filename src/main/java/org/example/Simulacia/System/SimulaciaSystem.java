@@ -51,10 +51,10 @@ public class SimulaciaSystem extends SimulacneJadro
     // Celkove statistiky
     private DiskretnaStatistika celkovaStatistikaCasSystem;
 
-    public SimulaciaSystem(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int pocetObsluznychMiest, int pocetPokladni,
-                           int nasada, boolean pouziNasadu)
+    public SimulaciaSystem(int pocetReplikacii, int rychlost, double dlzkaTrvaniaSimulacie,
+                           int pocetObsluznychMiest, int pocetPokladni, int nasada, boolean pouziNasadu)
     {
-        super(pocetReplikacii);
+        super(pocetReplikacii, rychlost);
         this.validujVstupy(pocetObsluznychMiest, pocetPokladni, dlzkaTrvaniaSimulacie);
 
         GeneratorNasad.inicializujGeneratorNasad(nasada, pouziNasadu);

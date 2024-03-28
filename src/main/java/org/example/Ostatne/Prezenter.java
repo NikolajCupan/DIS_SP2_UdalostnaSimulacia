@@ -24,8 +24,13 @@ public class Prezenter
                Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]";
     }
 
-    private static double zaokruhli(double cislo)
+    public static String simulacnyCas(SimulaciaSystem simulacia)
     {
-        return Double.parseDouble(Prezenter.formatovac.format(cislo));
+        return Prezenter.zaokruhli(simulacia.getAktualnySimulacnyCas());
+    }
+
+    private static String zaokruhli(double cislo)
+    {
+        return Prezenter.formatovac.format(cislo);
     }
 }

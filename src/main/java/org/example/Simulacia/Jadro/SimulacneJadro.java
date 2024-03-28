@@ -23,12 +23,16 @@ public abstract class SimulacneJadro
     private volatile boolean simulaciaPozastavena;
     private volatile boolean simulaciaUkoncena;
 
-    protected SimulacneJadro(int pocetReplikacii)
+    // Rychlost rovna -1 znaci real time
+    private volatile int rychlost;
+
+    protected SimulacneJadro(int pocetReplikacii, int rychlost)
     {
         this.validujVstupy(pocetReplikacii);
 
         this.delegati = new ArrayList<>();
         this.pocetReplikacii = pocetReplikacii;
+        this.rychlost = rychlost;
         this.aktualnaReplikacia = -1;
     }
 
@@ -58,7 +62,7 @@ public abstract class SimulacneJadro
             this.predReplikaciouJadro();
             this.predReplikaciou();
 
-            while (!this.kalendarUdalosti.isEmpty())
+            while (!this.kalendarUdalostiPrazdny())
             {
                 if (this.simulaciaUkoncena)
                 {
@@ -88,6 +92,20 @@ public abstract class SimulacneJadro
         this.poReplikaciach();
     }
 
+    // Skontroluje, ci kalendar udalosti obsahuje inu udalost ako systemovu
+    private boolean kalendarUdalostiPrazdny()
+    {
+        for (Udalost udalost : this.kalendarUdalosti)
+        {
+            if (!(udalost instanceof SystemovaUdalost))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private void predReplikaciouJadro()
     {
         if (this.komparatorUdalosti == null)
@@ -97,6 +115,10 @@ public abstract class SimulacneJadro
 
         this.kalendarUdalosti = new PriorityQueue<>(this.komparatorUdalosti);
         this.aktualnySimulacnyCas = 0.0;
+
+        // Naplanovanie prvej systemovej udalosti v case 0
+        SystemovaUdalost systemovaUdalost = new SystemovaUdalost(this, 0.0);
+        this.naplanujUdalost(systemovaUdalost);
     }
 
     public void naplanujUdalost(Udalost udalost)
@@ -126,6 +148,35 @@ public abstract class SimulacneJadro
         this.simulaciaUkoncena = true;
     }
 
+    public void setRychlost(int rychlost)
+    {
+        if (this.simulaciaPozastavena)
+        {
+            // Rychlost nemozno menit ak je simulacia pozastavena
+            return;
+        }
+
+        if (rychlost >= Konstanty.MAX_RYCHLOST)
+        {
+            // Nutnost opetovneho naplanovania systemovej udalosti
+            this.simulaciaPozastavena = true;
+            Udalost nasledujucaUdalost = this.kalendarUdalosti.peek();
+            if (nasledujucaUdalost != null)
+            {
+                SystemovaUdalost systemovaUdalost = new SystemovaUdalost(this, nasledujucaUdalost.getCasVykonania());
+                this.naplanujUdalost(systemovaUdalost);
+            }
+            this.simulaciaPozastavena = false;
+        }
+
+        this.rychlost = rychlost;
+    }
+
+    public int getRychlost()
+    {
+        return this.rychlost;
+    }
+
     public PriorityQueue<Udalost> getKalendarUdalosti()
     {
         return this.kalendarUdalosti;
@@ -149,7 +200,7 @@ public abstract class SimulacneJadro
         }
         catch (Exception ex)
         {
-            throw new RuntimeException("Pri uspavani simulacia nastala chyba!");
+            throw new RuntimeException("Pri uspavani simulacie nastala chyba!");
         }
     }
 
