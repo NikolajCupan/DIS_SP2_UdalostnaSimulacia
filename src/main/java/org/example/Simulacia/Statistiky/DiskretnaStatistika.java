@@ -8,37 +8,56 @@ public class DiskretnaStatistika
 {
     private final ArrayList<Double> data;
 
+    private int pocetHodnot;
+    private double sucet;
+    private double sucetDruheMocniny;
+
     private double priemer;
     private double smerodajnaOdchylka;
 
+    private final double kvantil;
+    private final double kvantilHodnota;
     private double dolnaHranicaIS;
     private double hornaHranicaIS;
 
     private boolean statistikyVypocitane;
 
-    public DiskretnaStatistika()
+    public DiskretnaStatistika(double kvantil, double kvantilHodnota)
     {
         this.data = new ArrayList<>();
 
-        this.priemer = -1;
-        this.smerodajnaOdchylka = -1;
+        this.pocetHodnot = 0;
+        this.sucet = 0.0;
+        this.sucetDruheMocniny = 0.0;
 
-        this.dolnaHranicaIS = -1;
-        this.hornaHranicaIS = -1;
+        this.priemer = -1.0;
+        this.smerodajnaOdchylka = -1.0;
+
+        this.kvantil = kvantil;
+        this.kvantilHodnota = kvantilHodnota;
+        this.dolnaHranicaIS = -1.0;
+        this.hornaHranicaIS = -1.0;
 
         this.statistikyVypocitane = false;
     }
 
-    public void pridajHodnotu(double cas)
+    public void pridajHodnotu(double hodnota)
     {
-        this.data.add(cas);
+        this.pocetHodnot++;
+        this.sucet += hodnota;
+        this.sucetDruheMocniny += Math.pow(hodnota, 2);
+
+        if (Konstanty.STATISTIKY_ZOZNAM_DAT)
+        {
+            this.data.add(hodnota);
+        }
     }
 
     public void vypisHodnoty()
     {
-        if (!this.statistikyVypocitane)
+        if (!Konstanty.STATISTIKY_ZOZNAM_DAT)
         {
-            throw new RuntimeException("Statistiky neboli vypocitane!");
+            throw new RuntimeException("Nie je aktivovane zaznamenavanie jednotlivych hodnot!");
         }
 
         for (double hodnota : this.data)
@@ -49,8 +68,9 @@ public class DiskretnaStatistika
 
     public void skusPrepocitatStatistiky()
     {
-        if (this.data.isEmpty())
+        if (this.pocetHodnot < 2)
         {
+            // Nie je mozne vypocitat statistiky, nakolko nie je k dispozicii dostatok hodnot
             return;
         }
 
@@ -63,31 +83,19 @@ public class DiskretnaStatistika
 
     private void vypocitajPriemer()
     {
-        final int pocetZaznamov = this.data.size();
-        double sucetHodnot = 0.0;
-
-        for (double hodnota : this.data)
-        {
-            sucetHodnot += hodnota;
-        }
-
-        this.priemer = sucetHodnot / pocetZaznamov;
+        this.priemer = this.sucet / this.pocetHodnot;
     }
 
     private void vypocitajSmerodajnuOdchylku()
     {
         if (this.priemer == -1)
         {
-            throw new RuntimeException("Nie je mozne vypocitat smerodajnu odchylku ak nie je vypocitane priemer!");
+            throw new RuntimeException("Nie je mozne vypocitat smerodajnu odchylku ak nie je vypocitany priemer!");
         }
 
-        double citatel = 0.0;
-        for (Double hodnota : this.data)
-        {
-            citatel += Math.pow(hodnota - this.priemer, 2);
-        }
+        double citatel = this.sucetDruheMocniny - (Math.pow(this.sucet, 2) / this.pocetHodnot);
+        double menovatel = this.pocetHodnot - 1;
 
-        int menovatel = this.data.size() - 1;
         this.smerodajnaOdchylka = Math.sqrt(citatel / menovatel);
     }
 
@@ -95,13 +103,16 @@ public class DiskretnaStatistika
     {
         if (this.priemer == -1 || this.smerodajnaOdchylka == -1)
         {
-            throw new RuntimeException("Nie je mozne vypocitat IS ak nie je vypocitane priemer a smerodajna odchylka!");
+            throw new RuntimeException("Nie je mozne vypocitat interval spolahlivosti ak priemer a smerodajna odchylka nie su vypocitane!");
         }
 
-        this.dolnaHranicaIS = this.priemer - Konstanty.KVANTIL_99_PERCENT
-            * (this.smerodajnaOdchylka / Math.sqrt(this.data.size()));
-        this.hornaHranicaIS = this.priemer + Konstanty.KVANTIL_99_PERCENT
-            * (this.smerodajnaOdchylka / Math.sqrt(this.data.size()));
+        this.dolnaHranicaIS = this.priemer - (this.kvantilHodnota * this.smerodajnaOdchylka) / Math.sqrt(this.pocetHodnot);
+        this.hornaHranicaIS = this.priemer + (this.kvantilHodnota * this.smerodajnaOdchylka) / Math.sqrt(this.pocetHodnot);
+    }
+
+    public double getKvantil()
+    {
+        return this.kvantil;
     }
 
     public boolean getStatistikyVypocitane()

@@ -6,8 +6,8 @@ public class SpojitaStatistika
 {
     private static class Stav
     {
-        protected double vaha;
-        protected int hodnota;
+        private final double vaha;
+        private final int hodnota;
 
         protected Stav(double vaha, int hodnota)
         {
@@ -35,25 +35,18 @@ public class SpojitaStatistika
     {
         this.skontrolujData();
 
-        if (this.data.size() == 1)
+        double menovatel = this.data.getLast().vaha;
+        if (menovatel == 0.0)
         {
-            // Statistika neobsahuje ziadne zaznamy
-            return 0;
+            return 0.0;
         }
 
         double citatel = 0.0;
-        double menovatel = this.data.getLast().vaha;
-
         for (int i = 0; i < this.data.size() - 1; i++)
         {
             Stav curStav = this.data.get(i);
             Stav nextStav = this.data.get(i + 1);
             citatel += (nextStav.vaha - curStav.vaha) * curStav.hodnota;
-        }
-
-        if (menovatel == 0.0)
-        {
-            return 0.0;
         }
 
         return citatel / menovatel;
@@ -67,9 +60,9 @@ public class SpojitaStatistika
             throw new RuntimeException("Prvy element spojitej statistiky je neplatny!");
         }
 
-        if (this.data.size() == 1)
+        if (this.data.size() < 2)
         {
-            return;
+            throw new RuntimeException("Spojita statistika neobsahuje uzatvaraci element!");
         }
 
         Stav predposledny = this.data.get(this.data.size() - 2);

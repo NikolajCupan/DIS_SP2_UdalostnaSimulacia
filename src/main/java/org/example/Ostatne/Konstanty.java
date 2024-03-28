@@ -5,12 +5,14 @@ public class Konstanty
     public static final double EPSILON = 0.000001;
     public static final double ODSADENIE_HRANICNE_HODNOTY = 0.1;
 
-    // Od 9:00 do 17:30 v sekundach
-    public static final double ZACIATOK_SEKUND = 9 * 60 * 60;
-    public static final double KONIEC_SEKUND = 17.50 * 60 * 60;
+    // Otvaracia doba od 9:00 do 17:00
+    private static final double ZACIATOK_SEKUND = 9 * 60 * 60;
+    private static final double KONIEC_SEKUND = 17 * 60 * 60;
+    public static final double OTVRACIA_DOBA_SEKUND = Konstanty.KONIEC_SEKUND - Konstanty.ZACIATOK_SEKUND;
 
     public static final boolean DEBUG_VYPIS_AGENT = false;
     public static final boolean DEBUG_VYPIS_UDALOST = false;
+    public static final boolean STATISTIKY_ZOZNAM_DAT = true;
     public static final int DLZKA_PAUZY_MS = 1000;
 
     // Intervaly spolahlivosti
