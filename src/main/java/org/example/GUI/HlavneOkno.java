@@ -6,6 +6,7 @@ import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class HlavneOkno extends JFrame implements ISimulationDelegate
 {
@@ -26,9 +27,11 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
 
     private JSlider sliderRychlost;
     private JLabel labelRychlost;
-    private Thread simulacneVlakno;
+
+    private JTable tabulkaAgenti;
 
     private SimulaciaSystem simulacia;
+    private Thread simulacneVlakno;
 
     public HlavneOkno()
     {
@@ -161,6 +164,20 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
 
     public void createUIComponents()
     {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("A");
+        model.addColumn("B");
+        model.addColumn("C");
+        this.tabulkaAgenti = new JTable(model);
+
+        for (int stlpec = 0; stlpec < this.tabulkaAgenti.getColumnCount(); stlpec++)
+        {
+            Class<?> col_class = this.tabulkaAgenti.getColumnClass(stlpec);
+            this.tabulkaAgenti.setDefaultEditor(col_class, null);
+        }
+
+        DefaultTableModel m = (DefaultTableModel)this.tabulkaAgenti.getModel();
+        m.addRow(new Object[]{"Column 1", "Column 2", "Column 3"});
     }
 
     @Override

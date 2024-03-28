@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 
 public class Prezenter
 {
-    public static DecimalFormat formatovac = new DecimalFormat("#.##");
+    public static DecimalFormat FORMATOVAC = new DecimalFormat("#.##");
 
     public static String celkovaStatistikaSystem(SimulaciaSystem simulacia)
     {
@@ -31,6 +31,6 @@ public class Prezenter
 
     private static String zaokruhli(double cislo)
     {
-        return Prezenter.formatovac.format(cislo);
+        return Prezenter.FORMATOVAC.format(cislo);
     }
 }
