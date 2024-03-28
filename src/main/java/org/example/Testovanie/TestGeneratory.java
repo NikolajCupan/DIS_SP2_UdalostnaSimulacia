@@ -203,10 +203,10 @@ public class TestGeneratory
     {
         PrintWriter w = new PrintWriter("test_spojity_trojuholnikovy_generator.txt");
 
-        final int pocetGenerovani = 1000000;
-        final double minHodnota = 100.0;
-        final double maxHodnota = 400.0;
-        final double modus = 120.0;
+        final int pocetGenerovani = 10000000;
+        final double minHodnota = 0.0;
+        final double maxHodnota = 10.0;
+        final double modus = 5.0;
 
         SpojityTrojuholnikovyGenerator stg = new SpojityTrojuholnikovyGenerator(minHodnota, maxHodnota, modus, this.generatorNasad);
         for (int i = 0; i < pocetGenerovani; i++)

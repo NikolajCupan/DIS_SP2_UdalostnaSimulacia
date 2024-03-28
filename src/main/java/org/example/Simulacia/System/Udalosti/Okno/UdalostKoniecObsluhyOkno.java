@@ -7,6 +7,7 @@ import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
+import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutomat;
 
 import java.util.Queue;
 
@@ -72,10 +73,24 @@ public class UdalostKoniecObsluhyOkno extends Udalost
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }
 
-        if (frontOkno.size() < Konstanty.KAPACITA_FRONT_OKNO)
+        if (frontOkno.size() < Konstanty.KAPACITA_FRONT_OKNO
+            && simulacia.getAutomatVypnuty())
         {
-            // Uspesne doslo k naplanovaniu dalsej obsluhy u okna alebo front vobec nebol naplneny
+            // Naplanuj pouzitie automatu
             simulacia.setAutomatVypnuty(false);
+            
+            if (simulacia.getPocetFrontAutomat() != 0)
+            {
+                Agent odobratyAgent = simulacia.odoberFrontAutomat();
+                UdalostZaciatokObsluhyAutomat zaciatokObsluhyAutomat =
+                    new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
+                simulacia.naplanujUdalost(zaciatokObsluhyAutomat);
+            }
         }
+
+
+        // Statistiky
+        simulacia.getStatistikaCasSystem().pridajHodnotu(
+        vykonavajuciAgent.getCasKoniecObsluhyOkno() - vykonavajuciAgent.getCasPrichodSystem());
     }
 }

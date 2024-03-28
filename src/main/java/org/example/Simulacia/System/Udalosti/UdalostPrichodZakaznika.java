@@ -55,10 +55,19 @@ public class UdalostPrichodZakaznika extends Udalost
         }
         else
         {
-            // Nikto nie je obsluhovany, mozno obsluzit daneho agenta
-            UdalostZaciatokObsluhyAutomat zaciatokObsluhy =
-                new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), vykonavajuciAgent);
-            simulacia.naplanujUdalost(zaciatokObsluhy);
+            if (simulacia.getPocetFrontAutomat() == 0)
+            {
+                UdalostZaciatokObsluhyAutomat zaciatokObsluhy =
+                    new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), vykonavajuciAgent);
+                simulacia.naplanujUdalost(zaciatokObsluhy);
+            }
+            else
+            {
+                Agent odobratyAgent = simulacia.odoberFrontAutomat();
+                UdalostZaciatokObsluhyAutomat zaciatokObsluhy =
+                        new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
+                simulacia.naplanujUdalost(zaciatokObsluhy);
+            }
         }
     }
 }
