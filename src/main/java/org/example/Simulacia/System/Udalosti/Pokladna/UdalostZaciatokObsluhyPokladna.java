@@ -5,6 +5,7 @@ import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.Agenti.Pokladna;
+import org.example.Simulacia.System.SimulaciaSystem;
 
 public class UdalostZaciatokObsluhyPokladna extends Udalost
 {
@@ -33,5 +34,31 @@ public class UdalostZaciatokObsluhyPokladna extends Udalost
     public void vykonajUdalost()
     {
         this.vypis();
+        SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
+        Agent vykonavajuciAgent = this.getAgent();
+
+
+        // Kontrola stavu simulacie
+        if (this.pokladna.getObsadena())
+        {
+            throw new RuntimeException("Bola naplanovana obsluha u obsadenej pokladne!");
+        }
+
+
+        // Zmena stavu simulacie
+        this.pokladna.setObsadena(true);
+
+
+        // Nastavenia atributov agenta, ktory udalost vykonava
+        vykonavajuciAgent.setCasZaciatokObsluhyPokladna(this.getCasVykonania());
+
+
+        // Naplanuj koniec obsluhy pri pokladni
+        double dlzkaPlatenia = simulacia.getGeneratorDlzkaPlatenia().getDlzkaPlatenia();
+        double casUkonceniaPlatenia = simulacia.getAktualnySimulacnyCas() + dlzkaPlatenia;
+
+        UdalostKoniecObsluhyPokladna koniecPlatenia =
+            new UdalostKoniecObsluhyPokladna(simulacia, casUkonceniaPlatenia, vykonavajuciAgent, this.pokladna);
+        simulacia.naplanujUdalost(koniecPlatenia);
     }
 }

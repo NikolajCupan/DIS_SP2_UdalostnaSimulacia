@@ -6,8 +6,7 @@ import org.example.Generatory.SpojityRovnomernyGenerator;
 import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
-import org.example.Simulacia.Generovania.GenerovanieTrvaniaPripravy;
-import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
+import org.example.Simulacia.Generovania.*;
 import org.example.Simulacia.System.Agenti.*;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
@@ -50,13 +49,22 @@ public class SimulaciaSystem extends SimulacneJadro
     private SpojityTrojuholnikovyGenerator generatorObsluhaOnline;
 
     private GenerovanieTrvaniaPripravy generatorTrvaniePripravy;
+    private GenerovanieVelkostiTovaru generatorVelkostTovaru;
     // Koniec obsluha okno
 
 
     // Pokladna
     private final int pocetPokladni;
     private Pokladna[] pokladne;
+
+    private GenerovanieVyberFrontu generatorVyberFrontu;
+    private GenerovanieDlzkyPlatenia generatorDlzkaPlatenia;
     // Koniec pokladna
+
+
+    // Vyzdvihnutie tovaru
+    private SpojityRovnomernyGenerator generatorVyzdvihnutieTovaru;
+    // Koniec vyzdvihnutie tovaru
 
 
     // Statistiky 1 replikacie
@@ -121,6 +129,12 @@ public class SimulaciaSystem extends SimulacneJadro
         this.generatorObsluhaOnline = new SpojityTrojuholnikovyGenerator(60.0, 480.0, 120.0, this.generatorNasad);
 
         this.generatorTrvaniePripravy = new GenerovanieTrvaniaPripravy(this.generatorNasad);
+        this.generatorVelkostTovaru = new GenerovanieVelkostiTovaru(this.generatorNasad);
+
+        this.generatorVyberFrontu = new GenerovanieVyberFrontu(this.generatorNasad);
+        this.generatorDlzkaPlatenia = new GenerovanieDlzkyPlatenia(this.generatorNasad);
+
+        this.generatorVyzdvihnutieTovaru = new SpojityRovnomernyGenerator(30.0, 70.0, this.generatorNasad);
 
         // Statistiky
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
@@ -422,8 +436,104 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
     // Pokladne
+    public GenerovanieVelkostiTovaru getGeneratorVelkostTovaru()
+    {
+        return this.generatorVelkostTovaru;
+    }
 
+    public GenerovanieDlzkyPlatenia getGeneratorDlzkaPlatenia()
+    {
+        return this.generatorDlzkaPlatenia;
+    }
+
+    public Pokladna getPokladna()
+    {
+        int indexPokladne = this.getIndexPokladne();
+        return this.pokladne[indexPokladne];
+    }
+
+    private int getIndexPokladne()
+    {
+        int pocetVyhovujucichFrontov = this.getPocetNajmensieFrontyPokladne();
+        int vygenerovanyIndex = this.generatorVyberFrontu.getIndexFrontu(pocetVyhovujucichFrontov);
+
+        int dlzkaNajmensiehoFrontu = this.getNajmensiPocetFrontPokladne();
+        int curIndex = 0;
+        for (int i = 0; i < this.pokladne.length; i++)
+        {
+            if (this.pokladne[i].getPocetFront() > dlzkaNajmensiehoFrontu)
+            {
+                // Dlhsi front, preskoc ho
+            }
+            else if (this.pokladne[i].getPocetFront() == dlzkaNajmensiehoFrontu)
+            {
+                // Vyhovujuci front
+                if (curIndex < vygenerovanyIndex)
+                {
+                    curIndex++;
+                }
+                else
+                {
+                    // Najdeny spravny front
+                    return i;
+                }
+            }
+            else
+            {
+                throw new RuntimeException("Bol najdeny mensi front pred pokladnami!");
+            }
+        }
+
+        throw new RuntimeException("Chyba pri generovani indexu frontu pred pokladnami!");
+    }
+
+    private int getPocetNajmensieFrontyPokladne()
+    {
+        int najmensiFront = this.getNajmensiPocetFrontPokladne();
+
+        int pocetNajmensichFrontov = 0;
+        for (int i = 0; i < this.pokladne.length; i++)
+        {
+            if (this.pokladne[i].getPocetFront() < najmensiFront)
+            {
+                throw new RuntimeException("Bol najdeny mensi front pred pokladnami!");
+            }
+            else if (this.pokladne[i].getPocetFront() == najmensiFront)
+            {
+                pocetNajmensichFrontov++;
+            }
+        }
+
+        if (pocetNajmensichFrontov == 0)
+        {
+            throw new RuntimeException("Nebol najdeny front najmensej dlzky pred pokladnami!");
+        }
+
+        return pocetNajmensichFrontov;
+    }
+
+    private int getNajmensiPocetFrontPokladne()
+    {
+        int najmensiFront = Integer.MAX_VALUE;
+        for (int i = 0; i < this.pokladne.length; i++)
+        {
+            if (this.pokladne[i].getPocetFront() < najmensiFront)
+            {
+                najmensiFront = this.pokladne[i].getPocetFront();
+            }
+        }
+
+        return najmensiFront;
+    }
     // Koniec pokladne
+
+
+    // Vyzdvihnutie tovaru
+    public SpojityRovnomernyGenerator getGeneratorVyzdvihnutieTovaru()
+    {
+        return this.generatorVyzdvihnutieTovaru;
+    }
+    // Koniec vyzdvihnutie tovaru
 
 
     // Statistiky 1 replikacie

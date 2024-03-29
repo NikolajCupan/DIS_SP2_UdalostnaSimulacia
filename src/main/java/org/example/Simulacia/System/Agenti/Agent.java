@@ -17,6 +17,17 @@ public class Agent
     private double casZaciatokObsluhyOkno;
     private double casKoniecObsluhyOkno;
 
+    private boolean odlozenyTovar;
+    private Okno odlozenyTovarOkno;
+
+    // Pokladna
+    private double casZaciatokObsluhyPokladna;
+    private double casKoniecObsluhyPokladna;
+
+    // Vyzdvihnutie tovaru
+    private double casZaciatokVyzdvihnutie;
+    private double casKoniecVydzvihnutie;
+
     public Agent(long ID, TypAgenta typAgenta)
     {
         this.ID = ID;
@@ -31,6 +42,12 @@ public class Agent
         // Okno
         this.casZaciatokObsluhyOkno = -1;
         this.casKoniecObsluhyOkno = -1;
+        this.odlozenyTovar = false;
+        this.odlozenyTovarOkno = null;
+
+        // Pokladna
+        this.casZaciatokObsluhyPokladna = -1;
+        this.casKoniecObsluhyPokladna = -1;
     }
 
     public void vypis()
@@ -66,6 +83,26 @@ public class Agent
             System.out.format("%4s", this.ID);
             System.out.format("%-39s", "]   Koniec obsluhy okno");
             System.out.format("%-20s%n", this.casKoniecObsluhyOkno);
+
+            System.out.print("    [AGENT ");
+            System.out.format("%4s", this.ID);
+            System.out.format("%-39s", "]   Zaciatok obsluhy pokladna");
+            System.out.format("%-20s%n", this.casZaciatokObsluhyPokladna);
+
+            System.out.print("    [AGENT ");
+            System.out.format("%4s", this.ID);
+            System.out.format("%-39s", "]   Koniec obsluhy pokladna");
+            System.out.format("%-20s%n", this.casKoniecObsluhyPokladna);
+
+            System.out.print("    [AGENT ");
+            System.out.format("%4s", this.ID);
+            System.out.format("%-39s", "]   Zaciatok vyzdvihnutie tovaru");
+            System.out.format("%-20s%n", this.casZaciatokVyzdvihnutie);
+
+            System.out.print("    [AGENT ");
+            System.out.format("%4s", this.ID);
+            System.out.format("%-39s", "]   Koniec vyzdvihnutie tovaru");
+            System.out.format("%-20s%n", this.casKoniecVydzvihnutie);
         }
     }
 
@@ -104,6 +141,41 @@ public class Agent
         return this.casKoniecObsluhyOkno;
     }
 
+    public boolean getOdlozenyTovar()
+    {
+        return this.odlozenyTovar;
+    }
+
+    public Okno getOdlozenyTovarOkno()
+    {
+        if (!this.odlozenyTovarOkno.getObsadene())
+        {
+            throw new RuntimeException("Okno, pri ktorom agent zanechal tovar je oznacene ako neobsadene!");
+        }
+
+        return this.odlozenyTovarOkno;
+    }
+
+    public double getCasZaciatokObsluhyPokladna()
+    {
+        return this.casZaciatokObsluhyPokladna;
+    }
+
+    public double getCasKoniecObsluhyPokladna()
+    {
+        return this.casKoniecObsluhyPokladna;
+    }
+
+    public double getCasZaciatokVyzdvihnutie()
+    {
+        return casZaciatokVyzdvihnutie;
+    }
+
+    public double getCasKoniecVydzvihnutie()
+    {
+        return casKoniecVydzvihnutie;
+    }
+
     public void setCasPrichodSystem(double casPrichodSystem)
     {
         this.casPrichodSystem = casPrichodSystem;
@@ -127,5 +199,40 @@ public class Agent
     public void setCasKoniecObsluhyOkno(double casKoniecObsluhyOkno)
     {
         this.casKoniecObsluhyOkno = casKoniecObsluhyOkno;
+    }
+
+    public void setOdlozenyTovar(boolean odlozenyTovar)
+    {
+        this.odlozenyTovar = odlozenyTovar;
+    }
+
+    public void setOdlozenyTovarOkno(Okno odlozenyTovarOkno)
+    {
+        if (!odlozenyTovarOkno.getObsadene())
+        {
+            throw new RuntimeException("Okno, pri ktorom agent zanechal tovar je oznacene ako neobsadene!");
+        }
+
+        this.odlozenyTovarOkno = odlozenyTovarOkno;
+    }
+
+    public void setCasZaciatokObsluhyPokladna(double casZaciatokObsluhyPokladna)
+    {
+        this.casZaciatokObsluhyPokladna = casZaciatokObsluhyPokladna;
+    }
+
+    public void setCasKoniecObsluhyPokladna(double casKoniecObsluhyPokladna)
+    {
+        this.casKoniecObsluhyPokladna = casKoniecObsluhyPokladna;
+    }
+
+    public void setCasZaciatokVyzdvihnutie(double casZaciatokVyzdvihnutie)
+    {
+        this.casZaciatokVyzdvihnutie = casZaciatokVyzdvihnutie;
+    }
+
+    public void setCasKoniecVydzvihnutie(double casKoniecVydzvihnutie)
+    {
+        this.casKoniecVydzvihnutie = casKoniecVydzvihnutie;
     }
 }

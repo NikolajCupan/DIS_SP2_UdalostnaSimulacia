@@ -5,6 +5,7 @@ import org.example.Generatory.Ostatne.DeterministickyGenerator;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.Ostatne.SkupinaEmpirickyGenerator;
 import org.example.Ostatne.Konstanty;
+import org.example.Simulacia.Generovania.GenerovanieDlzkyPlatenia;
 import org.example.Simulacia.Generovania.GenerovanieTrvaniaPripravy;
 import org.example.Simulacia.Generovania.GenerovanieVelkostiTovaru;
 import org.example.Simulacia.Generovania.VelkostTovaru;
@@ -219,6 +220,25 @@ public class TestGeneratory
         }
 
         System.out.println("OK: Test spojity trojuholnikovy generator\n");
+
+        w.flush();
+        w.close();
+    }
+
+    public void testDlzkaPlatenia() throws Exception
+    {
+        PrintWriter w = new PrintWriter("test_dlzka_platenia.txt");
+
+        final int pocetGenerovani = 1000000;
+        GenerovanieDlzkyPlatenia gdp = new GenerovanieDlzkyPlatenia(this.generatorNasad);
+
+        for (int i = 0; i < pocetGenerovani; i++)
+        {
+            int sample = gdp.getDlzkaPlatenia();
+            w.println(sample);
+        }
+
+        System.out.println("OK: Test dlzka platenia\n");
 
         w.flush();
         w.close();

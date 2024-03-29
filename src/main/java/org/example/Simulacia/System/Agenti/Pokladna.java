@@ -14,6 +14,11 @@ public class Pokladna
         this.front = new LinkedList<>();
     }
 
+    public int getPocetFront()
+    {
+        return this.front.size();
+    }
+
     public void pridajDoFrontu(Agent agent)
     {
         if (this.front.contains(agent))
@@ -34,7 +39,7 @@ public class Pokladna
         return this.front.poll();
     }
 
-    public boolean isObsadena()
+    public boolean getObsadena()
     {
         return this.obsadena;
     }
