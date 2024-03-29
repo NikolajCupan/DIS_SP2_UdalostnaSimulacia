@@ -32,6 +32,9 @@ public class SimulaciaSystem extends SimulacneJadro
     private boolean obsluhaAutomatPrebieha;
     private boolean automatVypnuty;
     private Queue<Agent> frontAutomat;
+
+    private SpojityExponencialnyGenerator generatorDalsiPrichod;
+    private SpojityRovnomernyGenerator generatorVydanieListka;
     // Koniec automat
 
 
@@ -44,9 +47,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
     // Generatory
-    private SpojityExponencialnyGenerator generatorDalsiPrichod;
     private GenerovanieTypuZakaznika generatorTypZakaznika;
-    private SpojityRovnomernyGenerator generatorVydanieListka;
 
     private SpojityRovnomernyGenerator generatorObsluhaObycajni;
     private SpojityTrojuholnikovyGenerator generatorObsluhaOnline;
@@ -98,8 +99,8 @@ public class SimulaciaSystem extends SimulacneJadro
         this.nastavKomparator(komparator);
 
         // Generatory
-        this.generatorDalsiPrichod = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
         this.generatorTypZakaznika = new GenerovanieTypuZakaznika(this.generatorNasad);
+        this.generatorDalsiPrichod = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
         this.generatorVydanieListka = new SpojityRovnomernyGenerator(30.0, 180.0, this.generatorNasad);
 
         this.generatorObsluhaObycajni = new SpojityRovnomernyGenerator(60.0, 900.0, this.generatorNasad);

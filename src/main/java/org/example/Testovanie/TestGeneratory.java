@@ -5,6 +5,7 @@ import org.example.Generatory.Ostatne.DeterministickyGenerator;
 import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.Ostatne.SkupinaEmpirickyGenerator;
 import org.example.Ostatne.Konstanty;
+import org.example.Simulacia.Generovania.GenerovanieTrvaniaPripravy;
 
 import java.io.PrintWriter;
 
@@ -216,6 +217,25 @@ public class TestGeneratory
         }
 
         System.out.println("OK: Test spojity trojuholnikovy generator\n");
+
+        w.flush();
+        w.close();
+    }
+
+    public void testTrvaniePripravyObjednavky() throws Exception
+    {
+        PrintWriter w = new PrintWriter("test_trvanie_pripravy_objednavky.txt");
+
+        final int pocetGenerovani = 2000000;
+        GenerovanieTrvaniaPripravy g = new GenerovanieTrvaniaPripravy(this.generatorNasad);
+
+        for (int i = 0; i < pocetGenerovani; i++)
+        {
+            double sample = g.getDlzkaPriravy();
+            w.println(sample);
+        }
+
+        System.out.println("OK: Test trvanie pripravy objednavky\n");
 
         w.flush();
         w.close();
