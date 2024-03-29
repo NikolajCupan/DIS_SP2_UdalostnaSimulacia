@@ -6,6 +6,8 @@ import org.example.Generatory.Ostatne.GeneratorNasad;
 import org.example.Generatory.Ostatne.SkupinaEmpirickyGenerator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.GenerovanieTrvaniaPripravy;
+import org.example.Simulacia.Generovania.GenerovanieVelkostiTovaru;
+import org.example.Simulacia.Generovania.VelkostTovaru;
 
 import java.io.PrintWriter;
 
@@ -227,11 +229,11 @@ public class TestGeneratory
         PrintWriter w = new PrintWriter("test_trvanie_pripravy_objednavky.txt");
 
         final int pocetGenerovani = 2000000;
-        GenerovanieTrvaniaPripravy g = new GenerovanieTrvaniaPripravy(this.generatorNasad);
+        GenerovanieTrvaniaPripravy gtp = new GenerovanieTrvaniaPripravy(this.generatorNasad);
 
         for (int i = 0; i < pocetGenerovani; i++)
         {
-            double sample = g.getDlzkaPriravy();
+            double sample = gtp.getDlzkaPripravy();
             w.println(sample);
         }
 
@@ -239,5 +241,31 @@ public class TestGeneratory
 
         w.flush();
         w.close();
+    }
+
+    public void testVelkostTovaru()
+    {
+        final int pocetGenerovani = 2000000;
+        GenerovanieVelkostiTovaru gvt = new GenerovanieVelkostiTovaru(this.generatorNasad);
+
+        int pocetVelky = 0;
+        int pocetMaly = 0;
+        for (int i = 0; i < pocetGenerovani; i++)
+        {
+            VelkostTovaru velkostTovaru = gvt.getVelkostTovaru();
+            if (velkostTovaru == VelkostTovaru.VELKY)
+            {
+                pocetVelky++;
+            }
+            else
+            {
+                pocetMaly++;
+            }
+        }
+
+        System.out.println("Velky: " + (double)pocetVelky / pocetGenerovani);
+        System.out.println("Maly: " + (double)pocetMaly / pocetGenerovani);
+
+        System.out.println("OK: Test velkost tovaru\n");
     }
 }

@@ -55,8 +55,20 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
 
 
         // Naplanuj koniec obsluhy pri okne
-        double dlzkaObsluhy = (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE
-            ? simulacia.getGeneratorObsluhaOnline().sample() : simulacia.getGeneratorObsluhaObycajni().sample());
+
+        double dlzkaObsluhy;
+        if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE)
+        {
+            // Online zakaznik iba nadiktuje objednavku
+            dlzkaObsluhy = simulacia.getGeneratorObsluhaOnline().sample();
+        }
+        else
+        {
+            // Nadiktovanie objednavky plus pripravanie objednavky
+            dlzkaObsluhy = simulacia.getGeneratorObsluhaObycajni().sample();
+            dlzkaObsluhy += simulacia.getGeneratorTrvaniePripravy().getDlzkaPripravy();
+        }
+
         double casKoncaObsluhy = simulacia.getAktualnySimulacnyCas() + dlzkaObsluhy;
 
         UdalostKoniecObsluhyOkno koniecObsluhy = new UdalostKoniecObsluhyOkno(simulacia, casKoncaObsluhy, vykonavajuciAgent, this.okno);

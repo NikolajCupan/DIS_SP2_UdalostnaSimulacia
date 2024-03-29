@@ -6,6 +6,7 @@ import org.example.Generatory.SpojityRovnomernyGenerator;
 import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
+import org.example.Simulacia.Generovania.GenerovanieTrvaniaPripravy;
 import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
 import org.example.Simulacia.System.Agenti.AgentKomparator;
 import org.example.Simulacia.Jadro.SimulacneJadro;
@@ -22,10 +23,12 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 public class SimulaciaSystem extends SimulacneJadro
 {
+    // Ostatne
     private final GeneratorNasad generatorNasad;
     private final double dlzkaTrvaniaSimulacie;
     private boolean prichodyZrusene;
     private ConcurrentSkipListSet<Agent> agenti;
+    // Koniec ostatne
 
 
     // Automat
@@ -33,7 +36,9 @@ public class SimulaciaSystem extends SimulacneJadro
     private boolean automatVypnuty;
     private Queue<Agent> frontAutomat;
 
+    private GenerovanieTypuZakaznika generatorTypZakaznika;
     private SpojityExponencialnyGenerator generatorDalsiPrichod;
+
     private SpojityRovnomernyGenerator generatorVydanieListka;
     // Koniec automat
 
@@ -43,20 +48,23 @@ public class SimulaciaSystem extends SimulacneJadro
     private Queue<Agent> frontOkno;
     private Okno[] oknaObycajni;
     private Okno[] oknaOnline;
-    // Koniec obsluha okno
-
-
-    // Generatory
-    private GenerovanieTypuZakaznika generatorTypZakaznika;
 
     private SpojityRovnomernyGenerator generatorObsluhaObycajni;
     private SpojityTrojuholnikovyGenerator generatorObsluhaOnline;
 
-    // Statistiky jednej replikacie
+    private GenerovanieTrvaniaPripravy generatorTrvaniePripravy;
+    // Koniec obsluha okno
+
+
+    // Statistiky 1 replikacie
     private DiskretnaStatistika statistikaCasSystem;
+    // Koniec statistiky 1 replikacie
+
 
     // Celkove statistiky
     private DiskretnaStatistika celkovaStatistikaCasSystem;
+    // Koniec celkove statistiky
+
 
     public SimulaciaSystem(int pocetReplikacii, int rychlost, double dlzkaTrvaniaSimulacie,
                            int pocetObsluznychMiest, int pocetPokladni, int nasada, boolean pouziNasadu)
@@ -105,6 +113,8 @@ public class SimulaciaSystem extends SimulacneJadro
 
         this.generatorObsluhaObycajni = new SpojityRovnomernyGenerator(60.0, 900.0, this.generatorNasad);
         this.generatorObsluhaOnline = new SpojityTrojuholnikovyGenerator(60.0, 480.0, 120.0, this.generatorNasad);
+
+        this.generatorTrvaniePripravy = new GenerovanieTrvaniaPripravy(this.generatorNasad);
 
         // Statistiky
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
@@ -275,6 +285,21 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         this.automatVypnuty = automatVypnuty;
     }
+
+    public GenerovanieTypuZakaznika getGeneratorTypZakaznika()
+    {
+        return this.generatorTypZakaznika;
+    }
+
+    public SpojityExponencialnyGenerator getGeneratorDalsiPrichod()
+    {
+        return this.generatorDalsiPrichod;
+    }
+
+    public SpojityRovnomernyGenerator getGeneratorVydanieListka()
+    {
+        return this.generatorVydanieListka;
+    }
     // Koniec automat
 
 
@@ -363,23 +388,10 @@ public class SimulaciaSystem extends SimulacneJadro
 
         return false;
     }
-    // Koniec okno
 
-
-    // Generatory
-    public GenerovanieTypuZakaznika getGeneratorTypZakaznika()
+    public GenerovanieTrvaniaPripravy getGeneratorTrvaniePripravy()
     {
-        return this.generatorTypZakaznika;
-    }
-
-    public SpojityExponencialnyGenerator getGeneratorDalsiPrichod()
-    {
-        return this.generatorDalsiPrichod;
-    }
-
-    public SpojityRovnomernyGenerator getGeneratorVydanieListka()
-    {
-        return this.generatorVydanieListka;
+        return this.generatorTrvaniePripravy;
     }
 
     public SpojityRovnomernyGenerator getGeneratorObsluhaObycajni()
@@ -391,18 +403,21 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         return this.generatorObsluhaOnline;
     }
-    // Koniec generatory
+    // Koniec okno
 
 
-    // Statistiky
+    // Statistiky 1 replikacie
     public DiskretnaStatistika getStatistikaCasSystem()
     {
         return this.statistikaCasSystem;
     }
+    // Koniec statistiky 1 replikacie
 
+
+    // Celkove statistiky
     public DiskretnaStatistika getCelkovaStatistikaCasSystem()
     {
         return this.celkovaStatistikaCasSystem;
     }
-    // Koniec statistiky
+    // Koniec celkove statistiky
 }

@@ -49,7 +49,7 @@ public class GenerovanieTrvaniaPripravy
         }
     }
 
-    public double getDlzkaPriravy()
+    public double getDlzkaPripravy()
     {
         int zlozitost = this.generatorZlozitostiObjednavky.sample();
 
