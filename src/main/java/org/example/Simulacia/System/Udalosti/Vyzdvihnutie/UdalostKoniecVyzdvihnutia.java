@@ -80,5 +80,10 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
                     new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), obycajnyAgent, okno);
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }
+
+
+        // Statistiky
+        simulacia.getStatistikaCasSystem().pridajHodnotu(
+        vykonavajuciAgent.getCasKoniecVyzdvihnutie() - vykonavajuciAgent.getCasPrichodSystem());
     }
 }

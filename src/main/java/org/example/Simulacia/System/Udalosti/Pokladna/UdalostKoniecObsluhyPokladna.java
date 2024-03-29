@@ -82,5 +82,14 @@ public class UdalostKoniecObsluhyPokladna extends Udalost
                 new UdalostZaciatokObsluhyPokladna(simulacia, this.getCasVykonania(), odobratyAgent, this.pokladna);
             simulacia.naplanujUdalost(zaciatokObsluhyPokladna);
         }
+
+
+        // Statistiky
+        // Pridaj iba za predpokladu, ze agent nema odlozeny tovar
+        if (!vykonavajuciAgent.getOdlozenyTovar())
+        {
+            simulacia.getStatistikaCasSystem().pridajHodnotu(
+            vykonavajuciAgent.getCasKoniecObsluhyPokladna() - vykonavajuciAgent.getCasPrichodSystem());
+        }
     }
 }

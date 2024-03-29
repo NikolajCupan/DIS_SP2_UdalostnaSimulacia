@@ -41,19 +41,26 @@ public final class GeneratorNasad
 
     private static void vypisStatus()
     {
-        StringBuilder sprava = new StringBuilder();
-        sprava.append("Generator nasad uz bol inicializovany, ");
-
-        if (GeneratorNasad.pevneStanovenaNasada)
+        if (GeneratorNasad.generatorInicializovany)
         {
-            sprava.append("bola pouzita pevna stanovena nasada: ").append(GeneratorNasad.nasada).append("!");
+            StringBuilder sprava = new StringBuilder();
+            sprava.append("Generator nasad uz bol inicializovany, ");
+
+            if (GeneratorNasad.pevneStanovenaNasada)
+            {
+                sprava.append("bola pouzita pevna stanovena nasada: ").append(GeneratorNasad.nasada).append("!");
+            }
+            else
+            {
+                sprava.append("bola pouzita nahodna nasada!");
+            }
+
+            System.out.println(sprava);
         }
         else
         {
-            sprava.append("bola pouzita nahodna nasada!");
+            System.out.println("Prva inicializacia generatora nasad!");
         }
-
-        System.out.println(sprava);
     }
 
     private static void inicializacia(int nasada, boolean pouziNasadu)
