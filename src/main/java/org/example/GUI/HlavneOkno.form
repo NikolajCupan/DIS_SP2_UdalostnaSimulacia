@@ -212,7 +212,7 @@
       </component>
       <component id="fc033" class="javax.swing.JLabel">
         <constraints>
-          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Aktualna replikacia:"/>
@@ -225,7 +225,7 @@
       </vspacer>
       <component id="33b8a" class="javax.swing.JLabel" binding="labelAktualnaReplikacia">
         <constraints>
-          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="n/a"/>
@@ -233,7 +233,7 @@
       </component>
       <component id="971ed" class="javax.swing.JLabel">
         <constraints>
-          <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Priemerny cas v systeme:"/>
@@ -241,7 +241,7 @@
       </component>
       <component id="95595" class="javax.swing.JLabel" binding="labelCelkovyPriemernyCasSystem">
         <constraints>
-          <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="n/a"/>
@@ -259,7 +259,7 @@
       </hspacer>
       <component id="228be" class="javax.swing.JLabel">
         <constraints>
-          <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Simulacny cas:"/>
@@ -267,7 +267,7 @@
       </component>
       <component id="43cd7" class="javax.swing.JLabel" binding="labelSimulacnyCas">
         <constraints>
-          <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="n/a"/>
@@ -335,20 +335,20 @@
           </component>
         </children>
       </scrollpane>
-      <component id="41cbb" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="20" column="6" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Tabulka obsluzni zamestnanci:"/>
-        </properties>
-      </component>
       <component id="3af67" class="javax.swing.JLabel">
         <constraints>
           <grid row="20" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Tabulka pokladne:"/>
+        </properties>
+      </component>
+      <component id="41cbb" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="20" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Tabulka obsluzni zamestnanci:"/>
         </properties>
       </component>
     </children>
