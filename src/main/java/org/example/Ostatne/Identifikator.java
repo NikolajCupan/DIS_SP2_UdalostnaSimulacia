@@ -8,4 +8,9 @@ public class Identifikator
     {
         return Identifikator.curID++;
     }
+
+    public static synchronized void resetID()
+    {
+        Identifikator.curID = 0;
+    }
 }

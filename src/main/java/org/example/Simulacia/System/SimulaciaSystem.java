@@ -113,6 +113,7 @@ public class SimulaciaSystem extends SimulacneJadro
         // Ostatne
         this.prichodyZrusene = false;
         this.agenti = new ConcurrentSkipListSet<>(new AgentKomparator());
+        Identifikator.resetID();
         // Koniec ostatne
 
 

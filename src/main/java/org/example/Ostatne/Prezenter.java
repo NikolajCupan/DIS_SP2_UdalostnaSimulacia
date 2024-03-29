@@ -38,7 +38,7 @@ public class Prezenter
 
     public static void simulacnyCas(SimulaciaSystem simulacia, JLabel label)
     {
-        label.setText(String.valueOf(simulacia.getAktualnaReplikacia()));
+        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAktualnySimulacnyCas())));
     }
 
     public static void tabulkaAgentov(SimulaciaSystem simulacia, JTable tabulka)

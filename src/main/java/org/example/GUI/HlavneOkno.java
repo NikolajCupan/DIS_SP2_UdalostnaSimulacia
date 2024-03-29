@@ -124,18 +124,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         if (this.simulacia != null)
         {
             this.simulacia.ukonciSimulaciu();
-        }
-
-        try
-        {
-            if (this.simulacneVlakno != null)
-            {
-                this.simulacneVlakno.join();
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new RuntimeException("Chyba pri cakani na ukoncenie simulacneho vlakna!");
+            this.simulacia = null;
         }
     }
 
