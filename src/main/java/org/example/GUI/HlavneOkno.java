@@ -193,34 +193,11 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
 
         // Celkove informacie
-        this.labelAktualnaReplikacia.setText(String.valueOf(simulacia.getAktualnaReplikacia()));
-        this.labelCelkovyPriemernyCasSystem.setText(Prezenter.celkovaStatistikaSystem(simulacia));
+        Prezenter.aktualnaReplikacia(simulacia, this.labelAktualnaReplikacia);
+        Prezenter.celkovyPriemernyCasSystem(simulacia, this.labelCelkovyPriemernyCasSystem);
 
         // Informacie aktualnej replikacie
-        this.labelSimulacnyCas.setText(Prezenter.simulacnyCas(simulacia));
-
-        try
-        {
-            EventQueue.invokeAndWait(() -> {
-                SortedSet<Agent> agenti = simulacia.getAgenti();
-                DefaultTableModel model = (DefaultTableModel) HlavneOkno.this.tabulkaAgenti.getModel();
-                model.setRowCount(0);
-                for (Agent agent : agenti)
-                {
-                    model.addRow(new Object[]{
-                        agent.getID(),
-                        agent.getCasPrichodSystem(),
-                        agent.getCasZaciatokObsluhyAutomat(),
-                        agent.getCasKoniecObsluhyAutomat(),
-                        agent.getCasZaciatokObsluhyOkno(),
-                        agent.getCasKoniecObsluhyOkno()
-                    });
-                }
-            });
-        }
-        catch (Exception ex)
-        {
-            throw new RuntimeException("Chyba pri aktualizacii tabulky agentov!");
-        }
+        Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
+        Prezenter.tabulkaAgentov(simulacia, this.tabulkaAgenti);
     }
 }
