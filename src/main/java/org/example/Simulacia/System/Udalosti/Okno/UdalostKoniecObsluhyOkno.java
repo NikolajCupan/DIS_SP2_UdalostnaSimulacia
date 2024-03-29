@@ -82,6 +82,8 @@ public class UdalostKoniecObsluhyOkno extends Udalost
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }
 
+
+        // Pokus o naplanovanie dalsej oblushy zakaznika u automatu
         if (frontOkno.size() < Konstanty.KAPACITA_FRONT_OKNO
             && simulacia.getAutomatVypnuty())
         {

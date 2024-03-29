@@ -8,12 +8,9 @@ import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.GenerovanieTrvaniaPripravy;
 import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
-import org.example.Simulacia.System.Agenti.AgentKomparator;
+import org.example.Simulacia.System.Agenti.*;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
-import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.Okno;
-import org.example.Simulacia.System.Agenti.TypAgenta;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
@@ -56,6 +53,12 @@ public class SimulaciaSystem extends SimulacneJadro
     // Koniec obsluha okno
 
 
+    // Pokladna
+    private final int pocetPokladni;
+    private Pokladna[] pokladne;
+    // Koniec pokladna
+
+
     // Statistiky 1 replikacie
     private DiskretnaStatistika statistikaCasSystem;
     // Koniec statistiky 1 replikacie
@@ -80,6 +83,9 @@ public class SimulaciaSystem extends SimulacneJadro
 
         // Obsluha okno
         this.pocetObsluznychMiest = pocetObsluznychMiest;
+
+        // Obsluha pokladne
+        this.pocetPokladni = pocetPokladni;
     }
 
     private void validujVstupy(int pocetObsluznychMiest, int pocetPokladni, double dlzkaTrvaniaSimulacie)
@@ -158,6 +164,15 @@ public class SimulaciaSystem extends SimulacneJadro
             this.oknaOnline[i] = new Okno();
         }
         // Koniec obsluha
+
+
+        // Pokladna
+        this.pokladne = new Pokladna[this.pocetPokladni];
+        for (int i = 0; i < this.pokladne.length; i++)
+        {
+            this.pokladne[i] = new Pokladna();
+        }
+        // Koniec pokladna
 
 
         // Statistiky
@@ -404,6 +419,11 @@ public class SimulaciaSystem extends SimulacneJadro
         return this.generatorObsluhaOnline;
     }
     // Koniec okno
+
+
+    // Pokladne
+
+    // Koniec pokladne
 
 
     // Statistiky 1 replikacie

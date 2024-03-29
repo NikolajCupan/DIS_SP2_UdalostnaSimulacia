@@ -55,7 +55,6 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
 
 
         // Naplanuj koniec obsluhy pri okne
-
         double dlzkaObsluhy;
         if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE)
         {
