@@ -3,10 +3,17 @@ package org.example.GUI;
 import org.example.Ostatne.Konstanty;
 import org.example.Ostatne.Prezenter;
 import org.example.Simulacia.Jadro.SimulacneJadro;
+import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.SortedSet;
+import java.util.Vector;
 
 public class HlavneOkno extends JFrame implements ISimulationDelegate
 {
@@ -28,8 +35,10 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     private JSlider sliderRychlost;
     private JLabel labelRychlost;
 
+    private DefaultTableModel dataModel;
     private JTable tabulkaAgenti;
 
+    private JScrollPane paneTabulka;
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
 
@@ -58,20 +67,27 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         this.buttonPauza.addActionListener(e -> this.toggleSimulaciaPozastavena());
         this.buttonStop.addActionListener(e -> this.ukonciSimulaciu());
 
-        this.sliderRychlost.addChangeListener(e -> {
-            int rychlost = this.getRychlost();
-            if (rychlost >= Konstanty.MAX_RYCHLOST)
+        this.sliderRychlost.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseReleased(MouseEvent e)
             {
-                this.labelRychlost.setText("MAX");
-            }
-            else
-            {
-                this.labelRychlost.setText(rychlost + "x");
-            }
+                super.mouseReleased(e);;
 
-            if (this.simulacia != null)
-            {
-                this.simulacia.setRychlost(rychlost);
+                int rychlost = HlavneOkno.this.getRychlost();
+                if (rychlost >= Konstanty.MAX_RYCHLOST)
+                {
+                    HlavneOkno.this.labelRychlost.setText("MAX");
+                }
+                else
+                {
+                    HlavneOkno.this.labelRychlost.setText(rychlost + "x");
+                }
+
+                if (HlavneOkno.this.simulacia != null)
+                {
+                    HlavneOkno.this.simulacia.setRychlost(rychlost);
+                }
             }
         });
     }
@@ -140,6 +156,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         this.labelAktualnaReplikacia.setText("n/a");
         this.labelCelkovyPriemernyCasSystem.setText("n/a");
         this.labelSimulacnyCas.setText("n/a");
+        ((DefaultTableModel)this.tabulkaAgenti.getModel()).setRowCount(0);
     }
 
     private int getRychlost()
@@ -165,19 +182,27 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     public void createUIComponents()
     {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("A");
-        model.addColumn("B");
-        model.addColumn("C");
-        this.tabulkaAgenti = new JTable(model);
+        model.addColumn("ID");
+        model.addColumn("Prichod system");
+        model.addColumn("Zaciatok automat");
+        model.addColumn("Koniec automat");
+        model.addColumn("Zaciatok obsluha");
+        model.addColumn("Koniec obsluha");
 
-        for (int stlpec = 0; stlpec < this.tabulkaAgenti.getColumnCount(); stlpec++)
+        TableModelListener[] tml = model.getListeners(TableModelListener.class);
+        for (int i = 0; i < tml.length; i++)
         {
-            Class<?> col_class = this.tabulkaAgenti.getColumnClass(stlpec);
-            this.tabulkaAgenti.setDefaultEditor(col_class, null);
+            model.removeTableModelListener(tml[i]);
         }
 
-        DefaultTableModel m = (DefaultTableModel)this.tabulkaAgenti.getModel();
-        m.addRow(new Object[]{"Column 1", "Column 2", "Column 3"});
+        this.tabulkaAgenti = new JTable(model);
+        this.tabulkaAgenti.getTableHeader().setReorderingAllowed(false);
+        this.tabulkaAgenti.getTableHeader().setResizingAllowed(false);
+        MouseListener[] mls = this.tabulkaAgenti.getListeners(MouseListener.class);
+        for (int i = 0; i < mls.length; i++)
+        {
+            this.tabulkaAgenti.removeMouseListener(mls[i]);
+        }
     }
 
     @Override
@@ -190,6 +215,30 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         this.labelCelkovyPriemernyCasSystem.setText(Prezenter.celkovaStatistikaSystem(simulacia));
 
         // Informacie aktualnej replikacie
+        if (simulacia.getRychlost() >= Konstanty.MAX_RYCHLOST)
+        {
+            return;
+        }
+
         this.labelSimulacnyCas.setText(Prezenter.simulacnyCas(simulacia));
+
+        SortedSet<Agent> agenti = simulacia.getAgenti();
+        this.tabulkaAgenti.setVisible(false);
+        DefaultTableModel model = (DefaultTableModel)this.tabulkaAgenti.getModel();
+        model.setRowCount(0);
+        this.tabulkaAgenti.setVisible(true);
+
+        for (Agent agent : agenti)
+        {
+            model.addRow(new Object[] {
+                agent.getID(),
+                agent.getCasPrichodSystem(),
+                agent.getCasZaciatokObsluhyAutomat(),
+                agent.getCasKoniecObsluhyAutomat(),
+                agent.getCasZaciatokObsluhyOkno(),
+                agent.getCasKoniecObsluhyOkno()
+            });
+        }
+        //Prezenter.tabulkaAgentov(simulacia, this.tabulkaAgenti);
     }
 }

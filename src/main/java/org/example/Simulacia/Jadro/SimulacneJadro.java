@@ -4,8 +4,11 @@ import org.example.GUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public abstract class SimulacneJadro
 {
@@ -17,11 +20,12 @@ public abstract class SimulacneJadro
 
     private double aktualnySimulacnyCas;
 
-    private PriorityQueue<Udalost> kalendarUdalosti;
+    private PriorityBlockingQueue<Udalost> kalendarUdalosti;
     private Comparator komparatorUdalosti;
 
     private volatile boolean simulaciaPozastavena;
     private volatile boolean simulaciaUkoncena;
+    private volatile boolean udalostPrebieha;
 
     // Rychlost rovna -1 znaci real time
     private volatile int rychlost;
@@ -46,6 +50,21 @@ public abstract class SimulacneJadro
 
     public void simuluj()
     {
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            System.out.println("hi");
+            if (!t.getName().startsWith("AWT-EventQueue-"))
+            {
+                try
+                {
+                    throw e;
+                }
+                catch (Throwable ex)
+                {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         this.simulaciaPozastavena = false;
         this.simulaciaUkoncena = false;
         this.aktualnaReplikacia = 1;
@@ -75,6 +94,9 @@ public abstract class SimulacneJadro
                     continue;
                 }
 
+                // Pribeh 1 udalosti
+                this.udalostPrebieha = true;
+
                 Udalost aktualnaUdalost = this.kalendarUdalosti.poll();
                 this.aktualnySimulacnyCas = aktualnaUdalost.getCasVykonania();
 
@@ -83,6 +105,8 @@ public abstract class SimulacneJadro
                 this.poVykonaniUdalosti();
 
                 this.aktualizujGUI();
+
+                this.udalostPrebieha = false;
             }
 
             this.poReplikacii();
@@ -113,7 +137,7 @@ public abstract class SimulacneJadro
             throw new RuntimeException("Komparator udalosti nebol nastaveny!");
         }
 
-        this.kalendarUdalosti = new PriorityQueue<>(this.komparatorUdalosti);
+        this.kalendarUdalosti = new PriorityBlockingQueue<Udalost>(1, this.komparatorUdalosti);
         this.aktualnySimulacnyCas = 0.0;
 
         // Naplanovanie prvej systemovej udalosti v case 0
@@ -150,13 +174,14 @@ public abstract class SimulacneJadro
 
     public void setRychlost(int rychlost)
     {
-        if (this.simulaciaPozastavena)
-        {
-            // Rychlost nemozno menit ak je simulacia pozastavena
-            return;
-        }
+        boolean predoslyStav = this.simulaciaPozastavena;
 
         this.simulaciaPozastavena = true;
+        while (this.udalostPrebieha)
+        {
+            // Pockaj kym skonci vykonavanie aktualnej udalosti
+        }
+
         int pocetSystemovychUdalosti = 0;
         for (Udalost udalost : this.kalendarUdalosti)
         {
@@ -170,11 +195,6 @@ public abstract class SimulacneJadro
         {
             throw new RuntimeException("Kalendar udalosti obsahuje viac ako 1 systemovu udalost!");
         }
-        else if (pocetSystemovychUdalosti == 1)
-        {
-            // Kalendar udalosti obsahuje systemovu udalost, staci zmenit rychlost
-            this.rychlost = rychlost;
-        }
         else if (pocetSystemovychUdalosti == 0)
         {
             // Kalendar udalosti neobsahuje systemovu udalost je nutne ju naplanovat
@@ -185,8 +205,9 @@ public abstract class SimulacneJadro
                 this.naplanujUdalost(systemovaUdalost);
             }
         }
+        this.rychlost = rychlost;
 
-        this.simulaciaPozastavena = false;
+        this.simulaciaPozastavena = predoslyStav;
     }
 
     public int getRychlost()
@@ -194,7 +215,7 @@ public abstract class SimulacneJadro
         return this.rychlost;
     }
 
-    public PriorityQueue<Udalost> getKalendarUdalosti()
+    public BlockingQueue<Udalost> getKalendarUdalosti()
     {
         return this.kalendarUdalosti;
     }
@@ -231,7 +252,7 @@ public abstract class SimulacneJadro
         this.delegati.remove(delegat);
     }
 
-    private void aktualizujGUI()
+    public void aktualizujGUI()
     {
         for (ISimulationDelegate delegat : this.delegati)
         {

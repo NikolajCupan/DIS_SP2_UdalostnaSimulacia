@@ -7,6 +7,7 @@ import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
+import org.example.Simulacia.Jadro.AgentKomparator;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Agent;
@@ -16,15 +17,15 @@ import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class SimulaciaSystem extends SimulacneJadro
 {
     private final GeneratorNasad generatorNasad;
     private final double dlzkaTrvaniaSimulacie;
     private boolean prichodyZrusene;
+    private ConcurrentSkipListSet<Agent> agenti;
 
     // Automat
     private boolean obsluhaAutomatPrebieha;
@@ -111,6 +112,7 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         // Ostatne
         this.prichodyZrusene = false;
+        this.agenti = new ConcurrentSkipListSet<>(new AgentKomparator());
         // Koniec ostatne
 
 
@@ -152,6 +154,7 @@ public class SimulaciaSystem extends SimulacneJadro
         if (casPrichodu <= this.dlzkaTrvaniaSimulacie)
         {
             // Udalost je naplanovana iba za predpokladu, ze nenastane po vyprsani simulacneho casu
+            this.pridajAgenta(vykonavajuciAgent);
             UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, casPrichodu, vykonavajuciAgent);
             this.naplanujUdalost(prichod);
         }
@@ -205,6 +208,22 @@ public class SimulaciaSystem extends SimulacneJadro
     public double getDlzkaTrvaniaSimulacie()
     {
         return this.dlzkaTrvaniaSimulacie;
+    }
+
+    public void pridajAgenta(Agent agent)
+    {
+        boolean obsahujeAgenta = this.agenti.contains(agent);
+        if (obsahujeAgenta)
+        {
+            throw new RuntimeException("Zoznam uz daneho agenta obsahuje!");
+        }
+
+        this.agenti.add(agent);
+    }
+
+    public SortedSet<Agent> getAgenti()
+    {
+        return this.agenti;
     }
     // Koniec ostatne
 
