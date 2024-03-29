@@ -2,6 +2,7 @@ package org.example.Ostatne;
 
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.Okno;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
@@ -41,23 +42,60 @@ public class Prezenter
         label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAktualnySimulacnyCas())));
     }
 
-    public static void tabulkaAgentov(SimulaciaSystem simulacia, JTable tabulka)
+    public static void tabulkaAgenti(SimulaciaSystem simulacia, JTable tabulka)
     {
         try
         {
             EventQueue.invokeAndWait(() -> {
-                SortedSet<Agent> agenti = simulacia.getAgenti();
                 DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
                 model.setRowCount(0);
+
+                SortedSet<Agent> agenti = simulacia.getAgenti();
                 for (Agent agent : agenti)
                 {
                     model.addRow(new Object[]{
                         agent.getID(),
+                        agent.getTypAgenta(),
                         Prezenter.zaokruhli(agent.getCasPrichodSystem()),
                         Prezenter.zaokruhli(agent.getCasZaciatokObsluhyAutomat()),
                         Prezenter.zaokruhli(agent.getCasKoniecObsluhyAutomat()),
                         Prezenter.zaokruhli(agent.getCasZaciatokObsluhyOkno()),
                         Prezenter.zaokruhli(agent.getCasKoniecObsluhyOkno())
+                    });
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Chyba pri aktualizacii tabulky agentov!");
+        }
+    }
+
+    public static void tabulkaOkna(SimulaciaSystem simulacia, JTable tabulka)
+    {
+        try
+        {
+            EventQueue.invokeAndWait(() -> {
+                DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
+                model.setRowCount(0);
+
+                Okno[] oknaObycajni = simulacia.getOknaObycajni();
+                for (Okno okno : oknaObycajni)
+                {
+                    model.addRow(new Object[]{
+                        "Obycajne",
+                        okno.getObsadene(),
+                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()))
+                    });
+                }
+
+                Okno[] oknaOnline = simulacia.getOknaOnline();
+                for (Okno okno : oknaOnline)
+                {
+                    model.addRow(new Object[]{
+                        "Online",
+                        okno.getObsadene(),
+                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()))
                     });
                 }
             });

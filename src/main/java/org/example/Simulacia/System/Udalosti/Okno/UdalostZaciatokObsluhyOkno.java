@@ -47,7 +47,7 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
 
 
         // Zmena stavu simulacie
-        this.okno.setObsadene(true);
+        this.okno.setObsadene(true, this.getCasVykonania());
 
 
         // Nastavenie atributov agenta, ktory udalost vykonava

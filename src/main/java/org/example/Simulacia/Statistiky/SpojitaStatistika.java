@@ -31,8 +31,9 @@ public class SpojitaStatistika
         this.data.add(new Stav(vaha, hodnota));
     }
 
-    public double getPriemer()
+    public double getPriemer(double vaha, int hodnota)
     {
+        this.data.add(new Stav(vaha, hodnota));
         this.skontrolujData();
 
         double menovatel = this.data.getLast().vaha;

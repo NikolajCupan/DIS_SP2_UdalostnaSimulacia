@@ -7,7 +7,7 @@ import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.GenerovanieTypuZakaznika;
-import org.example.Simulacia.Jadro.AgentKomparator;
+import org.example.Simulacia.System.Agenti.AgentKomparator;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Agent;
@@ -27,16 +27,21 @@ public class SimulaciaSystem extends SimulacneJadro
     private boolean prichodyZrusene;
     private ConcurrentSkipListSet<Agent> agenti;
 
+
     // Automat
     private boolean obsluhaAutomatPrebieha;
     private boolean automatVypnuty;
     private Queue<Agent> frontAutomat;
+    // Koniec automat
+
 
     // Obsluha okno
     private final int pocetObsluznychMiest;
     private Queue<Agent> frontOkno;
     private Okno[] oknaObycajni;
     private Okno[] oknaOnline;
+    // Koniec obsluha okno
+
 
     // Generatory
     private SpojityExponencialnyGenerator generatorDalsiPrichod;

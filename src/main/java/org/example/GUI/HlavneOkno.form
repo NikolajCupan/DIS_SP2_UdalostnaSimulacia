@@ -313,6 +313,7 @@
           <component id="981e7" class="javax.swing.JTable" binding="tabulkaOkna" custom-create="true">
             <constraints/>
             <properties>
+              <enabled value="false"/>
               <preferredScrollableViewportSize width="700" height="300"/>
             </properties>
           </component>

@@ -166,6 +166,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     {
         DefaultTableModel modelTabulkaAgenti = new DefaultTableModel();
         modelTabulkaAgenti.addColumn("ID");
+        modelTabulkaAgenti.addColumn("Typ");
         modelTabulkaAgenti.addColumn("Prichod system");
         modelTabulkaAgenti.addColumn("Zaciatok automat");
         modelTabulkaAgenti.addColumn("Koniec automat");
@@ -191,6 +192,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
 
         // Informacie aktualnej replikacie
         Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
-        Prezenter.tabulkaAgentov(simulacia, this.tabulkaAgenti);
+        Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
+        Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
     }
 }

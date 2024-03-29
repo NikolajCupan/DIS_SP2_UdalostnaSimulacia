@@ -1,6 +1,4 @@
-package org.example.Simulacia.Jadro;
-
-import org.example.Simulacia.System.Agenti.Agent;
+package org.example.Simulacia.System.Agenti;
 
 import java.util.Comparator;
 

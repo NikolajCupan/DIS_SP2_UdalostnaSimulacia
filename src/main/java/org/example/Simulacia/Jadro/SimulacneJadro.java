@@ -4,9 +4,7 @@ import org.example.GUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.PriorityQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -27,7 +25,6 @@ public abstract class SimulacneJadro
     private volatile boolean simulaciaUkoncena;
     private volatile boolean udalostPrebieha;
 
-    // Rychlost rovna -1 znaci real time
     private volatile int rychlost;
 
     protected SimulacneJadro(int pocetReplikacii, int rychlost)
