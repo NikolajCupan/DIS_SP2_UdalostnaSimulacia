@@ -32,6 +32,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
 
     private JTable tabulkaAgenti;
     private JTable tabulkaOkna;
+    private JTable tabulkaPokladne;
 
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
@@ -40,7 +41,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     {
         setTitle("Aplikácia - Nikolaj Cupan");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1550, 950);
+        setSize(1920, 1080);
         setLocationRelativeTo(null);
         setVisible(true);
         setContentPane(this.panel);
@@ -179,6 +180,12 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         modelTabulkaOkna.addColumn("Obsadenost");
         modelTabulkaOkna.addColumn("Vytazenie");
         this.tabulkaOkna = new JTable(modelTabulkaOkna);
+
+        DefaultTableModel modelTabulkaPokladne = new DefaultTableModel();
+        modelTabulkaPokladne.addColumn("ID");
+        modelTabulkaPokladne.addColumn("Obsadenost");
+        modelTabulkaPokladne.addColumn("Vytazenie");
+        this.tabulkaPokladne = new JTable(modelTabulkaPokladne);
     }
 
     @Override
