@@ -3,15 +3,12 @@ package org.example.GUI;
 import org.example.Ostatne.Konstanty;
 import org.example.Ostatne.Prezenter;
 import org.example.Simulacia.Jadro.SimulacneJadro;
-import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.SortedSet;
 
 public class HlavneOkno extends JFrame implements ISimulationDelegate
 {
@@ -34,6 +31,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     private JLabel labelRychlost;
 
     private JTable tabulkaAgenti;
+    private JTable tabulkaOkna;
 
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
@@ -42,7 +40,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     {
         setTitle("Aplikácia - Nikolaj Cupan");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1550, 750);
+        setSize(1550, 950);
         setLocationRelativeTo(null);
         setVisible(true);
         setContentPane(this.panel);
@@ -166,14 +164,20 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
 
     public void createUIComponents()
     {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("Prichod system");
-        model.addColumn("Zaciatok automat");
-        model.addColumn("Koniec automat");
-        model.addColumn("Zaciatok obsluha");
-        model.addColumn("Koniec obsluha");
-        this.tabulkaAgenti = new JTable(model);
+        DefaultTableModel modelTabulkaAgenti = new DefaultTableModel();
+        modelTabulkaAgenti.addColumn("ID");
+        modelTabulkaAgenti.addColumn("Prichod system");
+        modelTabulkaAgenti.addColumn("Zaciatok automat");
+        modelTabulkaAgenti.addColumn("Koniec automat");
+        modelTabulkaAgenti.addColumn("Zaciatok obsluha");
+        modelTabulkaAgenti.addColumn("Koniec obsluha");
+        this.tabulkaAgenti = new JTable(modelTabulkaAgenti);
+
+        DefaultTableModel modelTabulkaOkna = new DefaultTableModel();
+        modelTabulkaOkna.addColumn("Typ");
+        modelTabulkaOkna.addColumn("Obsadenost");
+        modelTabulkaOkna.addColumn("Vytazenie");
+        this.tabulkaOkna = new JTable(modelTabulkaOkna);
     }
 
     @Override
