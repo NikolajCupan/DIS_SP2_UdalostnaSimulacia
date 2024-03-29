@@ -50,21 +50,6 @@ public abstract class SimulacneJadro
 
     public void simuluj()
     {
-        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            System.out.println("hi");
-            if (!t.getName().startsWith("AWT-EventQueue-"))
-            {
-                try
-                {
-                    throw e;
-                }
-                catch (Throwable ex)
-                {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-
         this.simulaciaPozastavena = false;
         this.simulaciaUkoncena = false;
         this.aktualnaReplikacia = 1;
@@ -104,9 +89,8 @@ public abstract class SimulacneJadro
                 aktualnaUdalost.vykonajUdalost();
                 this.poVykonaniUdalosti();
 
-                this.aktualizujGUI();
-
                 this.udalostPrebieha = false;
+                this.aktualizujGUI();
             }
 
             this.poReplikacii();

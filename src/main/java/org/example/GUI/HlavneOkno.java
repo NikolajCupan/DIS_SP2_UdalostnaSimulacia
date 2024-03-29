@@ -7,13 +7,11 @@ import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.SortedSet;
-import java.util.Vector;
 
 public class HlavneOkno extends JFrame implements ISimulationDelegate
 {
@@ -35,10 +33,8 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     private JSlider sliderRychlost;
     private JLabel labelRychlost;
 
-    private DefaultTableModel dataModel;
     private JTable tabulkaAgenti;
 
-    private JScrollPane paneTabulka;
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
 
@@ -188,21 +184,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         model.addColumn("Koniec automat");
         model.addColumn("Zaciatok obsluha");
         model.addColumn("Koniec obsluha");
-
-        TableModelListener[] tml = model.getListeners(TableModelListener.class);
-        for (int i = 0; i < tml.length; i++)
-        {
-            model.removeTableModelListener(tml[i]);
-        }
-
         this.tabulkaAgenti = new JTable(model);
-        this.tabulkaAgenti.getTableHeader().setReorderingAllowed(false);
-        this.tabulkaAgenti.getTableHeader().setResizingAllowed(false);
-        MouseListener[] mls = this.tabulkaAgenti.getListeners(MouseListener.class);
-        for (int i = 0; i < mls.length; i++)
-        {
-            this.tabulkaAgenti.removeMouseListener(mls[i]);
-        }
     }
 
     @Override
@@ -215,30 +197,30 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         this.labelCelkovyPriemernyCasSystem.setText(Prezenter.celkovaStatistikaSystem(simulacia));
 
         // Informacie aktualnej replikacie
-        if (simulacia.getRychlost() >= Konstanty.MAX_RYCHLOST)
-        {
-            return;
-        }
-
         this.labelSimulacnyCas.setText(Prezenter.simulacnyCas(simulacia));
 
-        SortedSet<Agent> agenti = simulacia.getAgenti();
-        this.tabulkaAgenti.setVisible(false);
-        DefaultTableModel model = (DefaultTableModel)this.tabulkaAgenti.getModel();
-        model.setRowCount(0);
-        this.tabulkaAgenti.setVisible(true);
-
-        for (Agent agent : agenti)
+        try
         {
-            model.addRow(new Object[] {
-                agent.getID(),
-                agent.getCasPrichodSystem(),
-                agent.getCasZaciatokObsluhyAutomat(),
-                agent.getCasKoniecObsluhyAutomat(),
-                agent.getCasZaciatokObsluhyOkno(),
-                agent.getCasKoniecObsluhyOkno()
+            EventQueue.invokeAndWait(() -> {
+                SortedSet<Agent> agenti = simulacia.getAgenti();
+                DefaultTableModel model = (DefaultTableModel) HlavneOkno.this.tabulkaAgenti.getModel();
+                model.setRowCount(0);
+                for (Agent agent : agenti)
+                {
+                    model.addRow(new Object[]{
+                        agent.getID(),
+                        agent.getCasPrichodSystem(),
+                        agent.getCasZaciatokObsluhyAutomat(),
+                        agent.getCasKoniecObsluhyAutomat(),
+                        agent.getCasZaciatokObsluhyOkno(),
+                        agent.getCasKoniecObsluhyOkno()
+                    });
+                }
             });
         }
-        //Prezenter.tabulkaAgentov(simulacia, this.tabulkaAgenti);
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Chyba pri aktualizacii tabulky agentov!");
+        }
     }
 }
