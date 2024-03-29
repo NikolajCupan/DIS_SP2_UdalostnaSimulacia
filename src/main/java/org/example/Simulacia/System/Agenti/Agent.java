@@ -26,7 +26,7 @@ public class Agent
 
     // Vyzdvihnutie tovaru
     private double casZaciatokVyzdvihnutie;
-    private double casKoniecVydzvihnutie;
+    private double casKoniecVyzdvihnutie;
 
     public Agent(long ID, TypAgenta typAgenta)
     {
@@ -48,6 +48,10 @@ public class Agent
         // Pokladna
         this.casZaciatokObsluhyPokladna = -1;
         this.casKoniecObsluhyPokladna = -1;
+
+        // Vyzdvihnutie tovaru
+        this.casZaciatokVyzdvihnutie = -1;
+        this.casKoniecVyzdvihnutie = -1;
     }
 
     public void vypis()
@@ -102,7 +106,7 @@ public class Agent
             System.out.print("    [AGENT ");
             System.out.format("%4s", this.ID);
             System.out.format("%-39s", "]   Koniec vyzdvihnutie tovaru");
-            System.out.format("%-20s%n", this.casKoniecVydzvihnutie);
+            System.out.format("%-20s%n", this.casKoniecVyzdvihnutie);
         }
     }
 
@@ -171,9 +175,9 @@ public class Agent
         return casZaciatokVyzdvihnutie;
     }
 
-    public double getCasKoniecVydzvihnutie()
+    public double getCasKoniecVyzdvihnutie()
     {
-        return casKoniecVydzvihnutie;
+        return casKoniecVyzdvihnutie;
     }
 
     public void setCasPrichodSystem(double casPrichodSystem)
@@ -231,8 +235,8 @@ public class Agent
         this.casZaciatokVyzdvihnutie = casZaciatokVyzdvihnutie;
     }
 
-    public void setCasKoniecVydzvihnutie(double casKoniecVydzvihnutie)
+    public void setCasKoniecVyzdvihnutie(double casKoniecVyzdvihnutie)
     {
-        this.casKoniecVydzvihnutie = casKoniecVydzvihnutie;
+        this.casKoniecVyzdvihnutie = casKoniecVyzdvihnutie;
     }
 }

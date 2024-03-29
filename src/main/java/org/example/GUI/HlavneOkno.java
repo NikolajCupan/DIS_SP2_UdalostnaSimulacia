@@ -168,11 +168,15 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         DefaultTableModel modelTabulkaAgenti = new DefaultTableModel();
         modelTabulkaAgenti.addColumn("ID");
         modelTabulkaAgenti.addColumn("Typ");
-        modelTabulkaAgenti.addColumn("Prichod system");
-        modelTabulkaAgenti.addColumn("Zaciatok automat");
-        modelTabulkaAgenti.addColumn("Koniec automat");
-        modelTabulkaAgenti.addColumn("Zaciatok obsluha");
-        modelTabulkaAgenti.addColumn("Koniec obsluha");
+        modelTabulkaAgenti.addColumn("S. system");
+        modelTabulkaAgenti.addColumn("S. automat");
+        modelTabulkaAgenti.addColumn("K. automat");
+        modelTabulkaAgenti.addColumn("S. obsluha");
+        modelTabulkaAgenti.addColumn("K. obsluha");
+        modelTabulkaAgenti.addColumn("S. pokladna");
+        modelTabulkaAgenti.addColumn("K. pokladna");
+        modelTabulkaAgenti.addColumn("S. vyzdvihnutie");
+        modelTabulkaAgenti.addColumn("K. vyzdvihnutie");
         this.tabulkaAgenti = new JTable(modelTabulkaAgenti);
 
         DefaultTableModel modelTabulkaOkna = new DefaultTableModel();
@@ -201,5 +205,6 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
         Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
         Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
+        Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
     }
 }

@@ -3,6 +3,7 @@ package org.example.Ostatne;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.Agenti.Okno;
+import org.example.Simulacia.System.Agenti.Pokladna;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
@@ -60,7 +61,11 @@ public class Prezenter
                         Prezenter.zaokruhli(agent.getCasZaciatokObsluhyAutomat()),
                         Prezenter.zaokruhli(agent.getCasKoniecObsluhyAutomat()),
                         Prezenter.zaokruhli(agent.getCasZaciatokObsluhyOkno()),
-                        Prezenter.zaokruhli(agent.getCasKoniecObsluhyOkno())
+                        Prezenter.zaokruhli(agent.getCasKoniecObsluhyOkno()),
+                        Prezenter.zaokruhli(agent.getCasZaciatokObsluhyPokladna()),
+                        Prezenter.zaokruhli(agent.getCasKoniecObsluhyPokladna()),
+                        Prezenter.zaokruhli(agent.getCasZaciatokVyzdvihnutie()),
+                        Prezenter.zaokruhli(agent.getCasKoniecVyzdvihnutie())
                     });
                 }
             });
@@ -102,7 +107,35 @@ public class Prezenter
         }
         catch (Exception ex)
         {
-            throw new RuntimeException("Chyba pri aktualizacii tabulky agentov!");
+            throw new RuntimeException("Chyba pri aktualizacii tabulky okien!");
+        }
+    }
+
+    public static void tabulkaPokladne(SimulaciaSystem simulacia, JTable tabulka)
+    {
+        try
+        {
+            EventQueue.invokeAndWait(() -> {
+                DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
+                model.setRowCount(0);
+
+                int pocitadlo = 0;
+                Pokladna[] pokladne = simulacia.getPokladne();
+                for (Pokladna pokladna : pokladne)
+                {
+                    model.addRow(new Object[]{
+                        pocitadlo,
+                        pokladna.getObsadena(),
+                        "TODO"
+                    });
+
+                    pocitadlo++;
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Chyba pri aktualizacii tabulky pokladni!");
         }
     }
 

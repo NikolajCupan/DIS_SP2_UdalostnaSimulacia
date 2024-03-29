@@ -446,6 +446,11 @@ public class SimulaciaSystem extends SimulacneJadro
         return this.generatorDlzkaPlatenia;
     }
 
+    public Pokladna[] getPokladne()
+    {
+        return this.pokladne;
+    }
+
     public Pokladna getPokladna()
     {
         int indexPokladne = this.getIndexPokladne();

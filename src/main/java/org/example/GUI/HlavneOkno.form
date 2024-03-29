@@ -164,9 +164,9 @@
       <scrollpane id="d49db">
         <constraints>
           <grid row="21" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false">
-            <minimum-size width="600" height="200"/>
-            <preferred-size width="600" height="200"/>
-            <maximum-size width="600" height="200"/>
+            <minimum-size width="900" height="200"/>
+            <preferred-size width="900" height="200"/>
+            <maximum-size width="900" height="200"/>
           </grid>
         </constraints>
         <properties/>
@@ -177,7 +177,7 @@
             <properties>
               <enabled value="false"/>
               <focusable value="false"/>
-              <preferredScrollableViewportSize width="600" height="200"/>
+              <preferredScrollableViewportSize width="900" height="200"/>
               <requestFocusEnabled value="false"/>
               <rowSelectionAllowed value="false"/>
               <updateSelectionOnSort value="false"/>
@@ -294,9 +294,9 @@
       <scrollpane id="5406d">
         <constraints>
           <grid row="21" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false">
-            <minimum-size width="600" height="200"/>
-            <preferred-size width="600" height="200"/>
-            <maximum-size width="600" height="200"/>
+            <minimum-size width="400" height="200"/>
+            <preferred-size width="400" height="200"/>
+            <maximum-size width="400" height="200"/>
           </grid>
         </constraints>
         <properties/>
@@ -306,6 +306,7 @@
             <constraints/>
             <properties>
               <enabled value="false"/>
+              <preferredScrollableViewportSize width="400" height="200"/>
             </properties>
           </component>
         </children>
@@ -318,9 +319,9 @@
       <scrollpane id="13d53">
         <constraints>
           <grid row="21" column="6" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false">
-            <minimum-size width="600" height="200"/>
-            <preferred-size width="600" height="200"/>
-            <maximum-size width="600" height="200"/>
+            <minimum-size width="400" height="200"/>
+            <preferred-size width="400" height="200"/>
+            <maximum-size width="400" height="200"/>
           </grid>
         </constraints>
         <properties/>
@@ -330,7 +331,7 @@
             <constraints/>
             <properties>
               <enabled value="false"/>
-              <preferredScrollableViewportSize width="600" height="200"/>
+              <preferredScrollableViewportSize width="400" height="200"/>
             </properties>
           </component>
         </children>

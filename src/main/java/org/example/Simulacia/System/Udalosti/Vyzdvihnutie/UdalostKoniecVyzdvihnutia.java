@@ -51,7 +51,7 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
 
 
         // Nastavenia atributov agenta, ktory udalost vykonava
-        vykonavajuciAgent.setCasKoniecVydzvihnutie(this.getCasVykonania());
+        vykonavajuciAgent.setCasKoniecVyzdvihnutie(this.getCasVykonania());
         vykonavajuciAgent.setOdlozenyTovar(false);
 
 
