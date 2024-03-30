@@ -10,7 +10,7 @@ public class UdalostZaciatokVyzdvihnutia extends Udalost
 {
     public UdalostZaciatokVyzdvihnutia(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
     {
-        super(simulacneJadro, casVykonania, agent);
+        super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_ZACIATOK_VYZDVIHNUTIA);
     }
 
     private void vypis()

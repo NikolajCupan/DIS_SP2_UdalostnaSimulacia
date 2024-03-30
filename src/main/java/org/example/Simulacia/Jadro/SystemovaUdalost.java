@@ -9,7 +9,7 @@ public class SystemovaUdalost extends Udalost
 
     public SystemovaUdalost(SimulacneJadro simulacneJadro, double casVykonania)
     {
-        super(simulacneJadro, casVykonania, SystemovaUdalost.DUMMY_AGENT);
+        super(simulacneJadro, casVykonania, SystemovaUdalost.DUMMY_AGENT, Konstanty.PRIORITA_SYSTEMOVA_UDALOST);
     }
 
     @Override

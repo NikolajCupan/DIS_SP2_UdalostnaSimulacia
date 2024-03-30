@@ -14,7 +14,7 @@ public class UdalostKoniecObsluhyPokladna extends Udalost
 
     public UdalostKoniecObsluhyPokladna(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, Pokladna pokladna)
     {
-        super(simulacneJadro, casVykonania, agent);
+        super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_OBSLUHY_POKLADNA);
 
         this.pokladna = pokladna;
     }

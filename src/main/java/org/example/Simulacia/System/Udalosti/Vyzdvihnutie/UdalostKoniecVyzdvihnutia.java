@@ -15,7 +15,7 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
 {
     public UdalostKoniecVyzdvihnutia(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
     {
-        super(simulacneJadro, casVykonania, agent);
+        super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_VYZDVIHNUTIA);
     }
 
     private void vypis()

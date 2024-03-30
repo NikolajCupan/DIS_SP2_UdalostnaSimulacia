@@ -20,7 +20,7 @@ public class UdalostKoniecObsluhyOkno extends Udalost
 
     public UdalostKoniecObsluhyOkno(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, Okno okno)
     {
-        super(simulacneJadro, casVykonania, agent);
+        super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_OBSLUHY_OKNO);
 
         this.okno = okno;
     }

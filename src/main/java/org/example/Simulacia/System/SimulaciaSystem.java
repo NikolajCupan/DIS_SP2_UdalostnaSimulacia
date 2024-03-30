@@ -85,9 +85,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
         GeneratorNasad.inicializujGeneratorNasad(nasada, pouziNasadu);
         this.generatorNasad = new GeneratorNasad();
-
         this.dlzkaTrvaniaSimulacie = dlzkaTrvaniaSimulacie;
-        this.prichodyZrusene = false;
 
         // Obsluha okno
         this.pocetObsluznychMiest = pocetObsluznychMiest;
@@ -136,7 +134,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
         this.generatorVyzdvihnutieTovaru = new SpojityRovnomernyGenerator(30.0, 70.0, this.generatorNasad);
 
-        // Statistiky
+        // Celkove statistiky
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
     }
 
@@ -189,9 +187,9 @@ public class SimulaciaSystem extends SimulacneJadro
         // Koniec pokladna
 
 
-        // Statistiky
+        // Statistiky 1 replikacie
         this.statistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
-        // Koniec statistiky
+        // Koniec statistiky 1 replikacie
 
 
         // Naplanovanie prichodu 1. zakaznika

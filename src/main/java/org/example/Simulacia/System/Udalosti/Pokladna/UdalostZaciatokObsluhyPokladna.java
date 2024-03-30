@@ -13,7 +13,7 @@ public class UdalostZaciatokObsluhyPokladna extends Udalost
 
     public UdalostZaciatokObsluhyPokladna(SimulacneJadro simulacneJadro, double casVykonania, Agent agent, Pokladna pokladna)
     {
-        super(simulacneJadro, casVykonania, agent);
+        super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_ZACIATOK_OBSLUHY_POKLADNA);
 
         this.pokladna = pokladna;
     }

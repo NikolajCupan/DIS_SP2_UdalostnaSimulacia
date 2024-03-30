@@ -12,7 +12,7 @@ public class UdalostPrichodZakaznika extends Udalost
 {
     public UdalostPrichodZakaznika(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
     {
-        super(simulacneJadro, casVykonania, agent);
+        super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_PRICHOD_ZAKAZNIKA);
     }
 
     private void vypis()

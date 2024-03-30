@@ -10,7 +10,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
 {
     public UdalostZaciatokObsluhyAutomat(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
     {
-        super(simulacneJadro, casVykonania, agent);
+        super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_ZACIATOK_OBSLUHY_AUTOMAT);
     }
 
     private void vypis()
