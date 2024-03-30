@@ -17,6 +17,10 @@ public class UdalostKoniecObsluhyPokladna extends Udalost
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_OBSLUHY_POKLADNA);
 
         this.pokladna = pokladna;
+        if (!this.pokladna.getObsadena())
+        {
+            throw new RuntimeException("Pokladna obsahuje agenta, hoci ma nastavene, ze nikoho neobsahuje!");
+        }
     }
 
     private void vypis()
@@ -60,6 +64,10 @@ public class UdalostKoniecObsluhyPokladna extends Udalost
             if (vykonavajuciAgent.getOdlozenyTovarOkno() == null)
             {
                 throw new RuntimeException("Okno, pri ktorom agent nechal tovar je null!");
+            }
+            if (!vykonavajuciAgent.getOdlozenyTovarOkno().getObsadene())
+            {
+                throw new RuntimeException("Okno, pri ktorom agent nechal tovar nie je obsadene!");
             }
 
             // Agent ma odlozeny tovar pri okne, naplanuj jeho vyzdvihnutie

@@ -6,6 +6,8 @@ import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
+import java.util.Queue;
+
 public class UdalostZaciatokObsluhyAutomat extends Udalost
 {
     public UdalostZaciatokObsluhyAutomat(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
@@ -41,6 +43,12 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
         if (simulacia.getAutomatVypnuty() || simulacia.getObsluhaAutomatPrebieha())
         {
             throw new RuntimeException("Bol naplanovany zaciatok obsluhy u automatu, ktory je vypnuty alebo uz obsluha prebieha!");
+        }
+
+        Queue<Agent> frontOkno = simulacia.getFrontOkno();
+        if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
+        {
+            throw new RuntimeException("Doslo k vydaniu listka hoci je front pred oknom plny!");
         }
 
 

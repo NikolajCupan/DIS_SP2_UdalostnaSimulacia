@@ -16,6 +16,12 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
     public UdalostKoniecObsluhyAutomat(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
     {
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_OBSLUHY_AUTOMAT);
+
+        Queue<Agent> frontOkno = ((SimulaciaSystem)simulacneJadro).getFrontOkno();
+        if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
+        {
+            throw new RuntimeException("Doslo k vydaniu listka hoci je front pred oknom plny!");
+        }
     }
 
     private void vypis()

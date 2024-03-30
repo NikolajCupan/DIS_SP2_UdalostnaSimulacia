@@ -11,6 +11,15 @@ public class UdalostZaciatokVyzdvihnutia extends Udalost
     public UdalostZaciatokVyzdvihnutia(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
     {
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_ZACIATOK_VYZDVIHNUTIA);
+
+        if (!agent.getOdlozenyTovar() || agent.getOdlozenyTovarOkno() == null)
+        {
+            throw new RuntimeException("Agent vyzdvihujuci tovar nema odlozeny tovar!");
+        }
+        if (!agent.getOdlozenyTovarOkno().getObsadene())
+        {
+            throw new RuntimeException("Okno, pri ktorom agent nechal tovar nie je obsadene!");
+        }
     }
 
     private void vypis()

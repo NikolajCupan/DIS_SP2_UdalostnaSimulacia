@@ -16,6 +16,15 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
     public UdalostKoniecVyzdvihnutia(SimulacneJadro simulacneJadro, double casVykonania, Agent agent)
     {
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_VYZDVIHNUTIA);
+
+        if (!agent.getOdlozenyTovar() || agent.getOdlozenyTovarOkno() == null)
+        {
+            throw new RuntimeException("Agent vyzdvihujuci tovar nema odlozeny tovar!");
+        }
+        if (!agent.getOdlozenyTovarOkno().getObsadene())
+        {
+            throw new RuntimeException("Okno, pri ktorom agent nechal tovar nie je obsadene!");
+        }
     }
 
     private void vypis()
@@ -55,7 +64,7 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
         vykonavajuciAgent.setOdlozenyTovar(false);
 
 
-        // Pokus o naplanovanie dalsej oblushy u uvolneneho okna
+        // Pokus o naplanovanie dalsej obsluhy u uvolneneho okna
         Queue<Agent> frontOkno = simulacia.getFrontOkno();
         if (frontOkno.size() > Konstanty.KAPACITA_FRONT_OKNO)
         {

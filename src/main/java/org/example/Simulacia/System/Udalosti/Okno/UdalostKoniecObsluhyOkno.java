@@ -23,6 +23,10 @@ public class UdalostKoniecObsluhyOkno extends Udalost
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_OBSLUHY_OKNO);
 
         this.okno = okno;
+        if (!this.okno.getObsadene())
+        {
+            throw new RuntimeException("Okno obsahuje agenta, hoci ma nastavene, ze nikoho neobsahuje!");
+        }
     }
 
     private void vypis()

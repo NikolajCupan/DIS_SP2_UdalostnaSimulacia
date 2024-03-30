@@ -16,6 +16,10 @@ public class UdalostZaciatokObsluhyPokladna extends Udalost
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_ZACIATOK_OBSLUHY_POKLADNA);
 
         this.pokladna = pokladna;
+        if (this.pokladna.getObsadena())
+        {
+            throw new RuntimeException("Bola naplanovana obsluha u obsadenej pokladne!");
+        }
     }
 
     private void vypis()
@@ -28,6 +32,11 @@ public class UdalostZaciatokObsluhyPokladna extends Udalost
             System.out.format("%-35s", "Zaciatok obsluhy pokladna");
             System.out.println(this.getCasVykonania());
         }
+    }
+
+    public Pokladna getPokladna()
+    {
+        return this.pokladna;
     }
 
     @Override

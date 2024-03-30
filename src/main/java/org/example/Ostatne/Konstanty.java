@@ -44,9 +44,11 @@ public class Konstanty
     public static final int PRIORITA_KONIEC_OBSLUHY_AUTOMAT    = 100;
 
     public static final int PRIORITA_ZACIATOK_OBSLUHY_OKNO     = 10;
-    public static final int PRIORITA_KONIEC_OBSLUHY_OKNO       = Integer.MAX_VALUE;
-    public static final int PRIORITA_ZACIATOK_OBSLUHY_POKLADNA = Integer.MAX_VALUE;
-    public static final int PRIORITA_KONIEC_OBSLUHY_POKLADNA   = Integer.MAX_VALUE;
-    public static final int PRIORITA_ZACIATOK_VYZDVIHNUTIA     = Integer.MAX_VALUE;
-    public static final int PRIORITA_KONIEC_VYZDVIHNUTIA       = Integer.MAX_VALUE;
+    public static final int PRIORITA_KONIEC_OBSLUHY_OKNO       = 10;
+
+    public static final int PRIORITA_ZACIATOK_OBSLUHY_POKLADNA = 5;
+    public static final int PRIORITA_KONIEC_OBSLUHY_POKLADNA   = 200;
+
+    public static final int PRIORITA_ZACIATOK_VYZDVIHNUTIA     = 200;
+    public static final int PRIORITA_KONIEC_VYZDVIHNUTIA       = 1;
 }

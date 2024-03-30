@@ -17,6 +17,10 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_ZACIATOK_OBSLUHY_OKNO);
 
         this.okno = okno;
+        if (this.okno.getObsadene())
+        {
+            throw new RuntimeException("Bola naplanovana obsluha u obsadeneho okna!");
+        }
     }
 
     private void vypis()
