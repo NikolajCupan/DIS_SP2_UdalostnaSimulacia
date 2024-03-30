@@ -91,6 +91,7 @@ public abstract class SimulacneJadro
             }
 
             this.poReplikacii();
+            this.aktualizujGUI();
             this.aktualnaReplikacia++;
         }
 
