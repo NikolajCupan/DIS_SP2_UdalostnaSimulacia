@@ -43,6 +43,10 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         {
             throw new RuntimeException("Automat obsluhuje agenta, hoci ma nastavene, ze nikoho neobsluhuje!");
         }
+        if (simulacia.getAutomatVypnuty())
+        {
+            throw new RuntimeException("Agent bol obsluhovany u vypnuteho automatu!");
+        }
 
 
         // Zmena stavu simulacie

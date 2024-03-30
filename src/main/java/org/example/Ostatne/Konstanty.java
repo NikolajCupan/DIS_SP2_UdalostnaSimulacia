@@ -37,10 +37,13 @@ public class Konstanty
     // Priority udalosti,
     // mensia hodnota priority => vacsia priorita
     public static final int PRIORITA_SYSTEMOVA_UDALOST         = 0;
+
     public static final int PRIORITA_PRICHOD_ZAKAZNIKA         = Integer.MAX_VALUE;
-    public static final int PRIORITA_ZACIATOK_OBSLUHY_AUTOMAT  = Integer.MAX_VALUE;
-    public static final int PRIORITA_KONIEC_OBSLUHY_AUTOMAT    = Integer.MAX_VALUE;
-    public static final int PRIORITA_ZACIATOK_OBSLUHY_OKNO     = Integer.MAX_VALUE;
+
+    public static final int PRIORITA_ZACIATOK_OBSLUHY_AUTOMAT  = 10;
+    public static final int PRIORITA_KONIEC_OBSLUHY_AUTOMAT    = 100;
+
+    public static final int PRIORITA_ZACIATOK_OBSLUHY_OKNO     = 10;
     public static final int PRIORITA_KONIEC_OBSLUHY_OKNO       = Integer.MAX_VALUE;
     public static final int PRIORITA_ZACIATOK_OBSLUHY_POKLADNA = Integer.MAX_VALUE;
     public static final int PRIORITA_KONIEC_OBSLUHY_POKLADNA   = Integer.MAX_VALUE;

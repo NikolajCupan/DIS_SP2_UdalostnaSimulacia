@@ -2,7 +2,7 @@ package org.example;
 
 import org.example.Simulacia.Jadro.SystemovaUdalost;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.Jadro.UdalostKomparator;
+import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 
 import java.util.PriorityQueue;

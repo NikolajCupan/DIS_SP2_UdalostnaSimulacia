@@ -78,7 +78,7 @@ public class UdalostPrichodZakaznika extends Udalost
             }
             else
             {
-                throw new RuntimeException("Tato vetva by nemala nastat!");
+                throw new RuntimeException("Nikto nepouziva automat a front pred nim nie je prazdny!");
 
                 /*
                 // Povodny kod
