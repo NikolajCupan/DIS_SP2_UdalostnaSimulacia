@@ -1,6 +1,5 @@
 package org.example.Simulacia.System.Udalosti;
 
-import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.Udalost;
 
 import java.util.Comparator;
