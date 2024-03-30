@@ -29,7 +29,7 @@ public abstract class SimulacneJadro
 
     protected SimulacneJadro(int pocetReplikacii, int rychlost)
     {
-        this.validujVstupy(pocetReplikacii);
+        this.validujVstupy(pocetReplikacii, rychlost);
 
         this.delegati = new ArrayList<>();
         this.pocetReplikacii = pocetReplikacii;
@@ -37,11 +37,16 @@ public abstract class SimulacneJadro
         this.aktualnaReplikacia = -1;
     }
 
-    private void validujVstupy(int pocetReplikacii)
+    private void validujVstupy(int pocetReplikacii, int rychlost)
     {
         if (pocetReplikacii < 1)
         {
             throw new RuntimeException("Pocet replikacii nemoze byt mensi ako 1!");
+        }
+
+        if (rychlost < 1)
+        {
+            throw new RuntimeException("Rychlost nemoze byt mensia ako 1!");
         }
     }
 
@@ -76,11 +81,11 @@ public abstract class SimulacneJadro
                     continue;
                 }
 
-                // Pribeh 1 udalosti
+                // Priebeh 1 udalosti
                 this.udalostPrebieha = true;
 
                 Udalost aktualnaUdalost = this.kalendarUdalosti.poll();
-                this.aktualnySimulacnyCas = aktualnaUdalost.getCasVykonania();
+                this.aktualizujSimulacnyCas(aktualnaUdalost);
 
                 this.predVykonanimUdalosti();
                 aktualnaUdalost.vykonajUdalost();
@@ -127,9 +132,26 @@ public abstract class SimulacneJadro
         this.naplanujUdalost(systemovaUdalost);
     }
 
-    public void naplanujUdalost(Udalost udalost)
+    private void aktualizujSimulacnyCas(Udalost vykonavanaUdalost)
     {
-        this.kalendarUdalosti.add(udalost);
+        // Kontrola podmienky, ze simulacny cas nemoze klesat
+        if (vykonavanaUdalost.getCasVykonania() < this.aktualnySimulacnyCas)
+        {
+            throw new RuntimeException("Vykonanie udalosti sposobilo pokles simulacneho casu!");
+        }
+
+        this.aktualnySimulacnyCas = vykonavanaUdalost.getCasVykonania();
+    }
+
+    public void naplanujUdalost(Udalost planovanaUdalost)
+    {
+        // Kontrola podmienky, ze simulacny cas nemoze klesat
+        if (planovanaUdalost.getCasVykonania() < this.aktualnySimulacnyCas)
+        {
+            throw new RuntimeException("Planovana udalost ma mensi cas vykonania ako aktualny siulacny cas!");
+        }
+
+        this.kalendarUdalosti.add(planovanaUdalost);
     }
 
     public void nastavKomparator(Comparator komparator)
@@ -156,7 +178,7 @@ public abstract class SimulacneJadro
 
     public void setRychlost(int rychlost)
     {
-        boolean predoslyStav = this.simulaciaPozastavena;
+        boolean simulaciaBolaZastavena = this.simulaciaPozastavena;
 
         this.simulaciaPozastavena = true;
         while (this.udalostPrebieha)
@@ -189,7 +211,7 @@ public abstract class SimulacneJadro
         }
         this.rychlost = rychlost;
 
-        this.simulaciaPozastavena = predoslyStav;
+        this.simulaciaPozastavena = simulaciaBolaZastavena;
     }
 
     public int getRychlost()

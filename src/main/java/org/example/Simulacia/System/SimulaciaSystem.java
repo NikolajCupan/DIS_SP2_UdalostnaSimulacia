@@ -10,7 +10,7 @@ import org.example.Simulacia.Generovania.*;
 import org.example.Simulacia.System.Agenti.*;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
-import org.example.Simulacia.System.Udalosti.UdalostKomparator;
+import org.example.Simulacia.Jadro.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
 
