@@ -2,25 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package org.example.NewGUI;
+package org.example.NewGUI.Okno;
 
-import org.example.GUI.ISimulationDelegate;
+import org.example.NewGUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 import org.example.Ostatne.Prezenter;
 import org.example.Simulacia.Jadro.SimulacneJadro;
-import org.example.Simulacia.System.Agenti.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.util.SortedSet;
 
 /**
  *
  * @author Niko
  */
-public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegate {
+public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegate
+{
 
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
@@ -405,24 +403,24 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         }
         catch (Exception ex)
         {
-            JOptionPane.showMessageDialog(org.example.NewGUI.HlavneOkno.this, "Neplatne zadane parametre simulacie!");
+            JOptionPane.showMessageDialog(HlavneOkno.this, "Neplatne zadane parametre simulacie!");
         }
     }//GEN-LAST:event_buttonStartMouseClicked
 
     private void sliderRychlostMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderRychlostMouseReleased
-        int rychlost = org.example.NewGUI.HlavneOkno.this.getRychlost();
+        int rychlost = HlavneOkno.this.getRychlost();
         if (rychlost >= Konstanty.MAX_RYCHLOST)
         {
-            org.example.NewGUI.HlavneOkno.this.labelRychlost.setText("MAX");
+            HlavneOkno.this.labelRychlost.setText("MAX");
         }
         else
         {
-            org.example.NewGUI.HlavneOkno.this.labelRychlost.setText(rychlost + "x");
+            HlavneOkno.this.labelRychlost.setText(rychlost + "x");
         }
 
-        if (org.example.NewGUI.HlavneOkno.this.simulacia != null)
+        if (HlavneOkno.this.simulacia != null)
         {
-            org.example.NewGUI.HlavneOkno.this.simulacia.setRychlost(rychlost);
+            HlavneOkno.this.simulacia.setRychlost(rychlost);
         }
     }//GEN-LAST:event_sliderRychlostMouseReleased
 

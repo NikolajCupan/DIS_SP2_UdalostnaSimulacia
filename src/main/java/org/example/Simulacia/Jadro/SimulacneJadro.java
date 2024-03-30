@@ -1,6 +1,6 @@
 package org.example.Simulacia.Jadro;
 
-import org.example.GUI.ISimulationDelegate;
+import org.example.NewGUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 
 import java.util.ArrayList;

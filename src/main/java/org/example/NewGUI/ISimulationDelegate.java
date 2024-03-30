@@ -1,4 +1,4 @@
-package org.example.GUI;
+package org.example.NewGUI;
 
 import org.example.Simulacia.Jadro.SimulacneJadro;
 

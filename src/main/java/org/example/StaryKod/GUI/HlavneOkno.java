@@ -1,5 +1,6 @@
-package org.example.GUI;
+package org.example.StaryKod.GUI;
 
+import org.example.NewGUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 import org.example.Ostatne.Prezenter;
 import org.example.Simulacia.Jadro.SimulacneJadro;
