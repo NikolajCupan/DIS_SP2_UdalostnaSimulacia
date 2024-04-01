@@ -72,10 +72,10 @@ public class Automat
         return this.statistikaCakanieFront.forceGetPriemer();
     }
 
-    public void vyprazdniAutomat(double simulacnyCas)
+    public void vyprazdniAutomat()
     {
         this.front.clear();
-        this.statistikaDlzkaFront.pridajHodnotu(simulacnyCas, this.front.size());
+        this.statistikaDlzkaFront.pridajHodnotu(Konstanty.OTVARACIA_DOBA_SEKUND, 0);
     }
 
     public int getPocetFront()

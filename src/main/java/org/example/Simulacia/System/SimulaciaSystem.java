@@ -325,7 +325,7 @@ public class SimulaciaSystem extends SimulacneJadro
             this.prichodyZrusene = true;
 
             // Doslo k prekroceniu simulacneho casu, vyprazdni front pred automatom
-            this.automat.vyprazdniAutomat(this.getAktualnySimulacnyCas());
+            this.automat.vyprazdniAutomat();
 
             // Kontrola stavu kalendara udalosti
             for (Udalost udalost : this.getKalendarUdalosti())
