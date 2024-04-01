@@ -114,12 +114,12 @@ public class TestGeneratory
         final int pocetGenerovani = 1000000;
 
         SkupinaEmpirickyGenerator[] skupiny = new SkupinaEmpirickyGenerator[]{
-                new SkupinaEmpirickyGenerator(0.10, 0.30, 0.10),
-                new SkupinaEmpirickyGenerator(0.30, 0.80, 0.35),
-                new SkupinaEmpirickyGenerator(0.80, 1.20, 0.20),
-                new SkupinaEmpirickyGenerator(1.20, 2.50, 0.15),
-                new SkupinaEmpirickyGenerator(2.50, 3.80, 0.15),
-                new SkupinaEmpirickyGenerator(3.80, 4.80, 0.05)
+            new SkupinaEmpirickyGenerator(0.10, 0.30, 0.30),
+            new SkupinaEmpirickyGenerator(0.30, 0.80, 0.15),
+            new SkupinaEmpirickyGenerator(0.80, 1.20, 0.20),
+            new SkupinaEmpirickyGenerator(1.20, 2.50, 0.15),
+            new SkupinaEmpirickyGenerator(2.50, 3.80, 0.15),
+            new SkupinaEmpirickyGenerator(3.80, 4.80, 0.05)
         };
         SpojityEmpirickyGenerator seg = new SpojityEmpirickyGenerator(skupiny, this.generatorNasad);
 
@@ -209,8 +209,8 @@ public class TestGeneratory
 
         final int pocetGenerovani = 10000000;
         final double minHodnota = 0.0;
-        final double maxHodnota = 10.0;
-        final double modus = 5.0;
+        final double maxHodnota = 100.0;
+        final double modus = 25.0;
 
         SpojityTrojuholnikovyGenerator stg = new SpojityTrojuholnikovyGenerator(minHodnota, maxHodnota, modus, this.generatorNasad);
         for (int i = 0; i < pocetGenerovani; i++)
