@@ -11,6 +11,7 @@ import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Objekty.Automat;
 import org.example.Simulacia.System.Agenti.Objekty.ObsluhaOkna;
+import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Zakaznik.AgentKomparator;
@@ -43,7 +44,8 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
     // Obsluha okno
-    private final int pocetObsluznychMiest;
+    private final int pocetObycajnychObsluznychMiest;
+    private final int pocetOnlineObsluznychMiest;
     private ObsluhaOkna obsluhaOkna;
 
     private SpojityRovnomernyGenerator generatorObsluhaObycajni;
@@ -81,6 +83,12 @@ public class SimulaciaSystem extends SimulacneJadro
 
     private DiskretnaStatistika celkovaStatistikaCasPoslednyOdchod;
     private DiskretnaStatistika celkovaStatistikaPocetObsluzenychAgentov;
+
+    private DiskretnaStatistika celkovaStatistikaDlzkaFrontOkno;
+    private DiskretnaStatistika celkovaStatistikaCasFrontOkno;
+
+    private DiskretnaStatistika[] celkovaStatistikaVytazenieObycajneOkna;
+    private DiskretnaStatistika[] celkovaStatistikaVytazenieOnlineOkna;
     // Koniec celkove statistiky
 
 
@@ -95,7 +103,8 @@ public class SimulaciaSystem extends SimulacneJadro
         this.dlzkaTrvaniaSimulacie = dlzkaTrvaniaSimulacie;
 
         // Obsluha okno
-        this.pocetObsluznychMiest = pocetObsluznychMiest;
+        this.pocetOnlineObsluznychMiest = (int)Math.floor(pocetObsluznychMiest / 3.0);
+        this.pocetObycajnychObsluznychMiest = pocetObsluznychMiest - this.pocetOnlineObsluznychMiest;
 
         // Obsluha pokladne
         this.pocetPokladni = pocetPokladni;
@@ -143,10 +152,26 @@ public class SimulaciaSystem extends SimulacneJadro
 
         // Celkove statistiky
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+
         this.celkovaStatistikaDlzkaFrontAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         this.celkovaStatistikaCasFrontAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         this.celkovaStatistikaCasPoslednyOdchod = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         this.celkovaStatistikaPocetObsluzenychAgentov = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+
+        this.celkovaStatistikaDlzkaFrontOkno = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.celkovaStatistikaCasFrontOkno = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+
+        this.celkovaStatistikaVytazenieObycajneOkna = new DiskretnaStatistika[this.pocetObycajnychObsluznychMiest];
+        for (int i = 0; i < this.pocetObycajnychObsluznychMiest; i++)
+        {
+            this.celkovaStatistikaVytazenieObycajneOkna[i] = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        }
+
+        this.celkovaStatistikaVytazenieOnlineOkna = new DiskretnaStatistika[this.pocetOnlineObsluznychMiest];
+        for (int i = 0; i < this.pocetOnlineObsluznychMiest; i++)
+        {
+            this.celkovaStatistikaVytazenieOnlineOkna[i] = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        }
     }
 
     @Override
@@ -168,7 +193,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
         // Obsluha
-        this.obsluhaOkna = new ObsluhaOkna(this.pocetObsluznychMiest);
+        this.obsluhaOkna = new ObsluhaOkna(this.pocetOnlineObsluznychMiest, this.pocetObycajnychObsluznychMiest);
         // Koniec obsluha
 
 
@@ -207,13 +232,19 @@ public class SimulaciaSystem extends SimulacneJadro
             this.celkovaStatistikaCasSystem.pridajHodnotu(casSystem);
         }
 
-        double casFront = this.automat.getPriemerneCakenieFront();
-        if (casFront != -1)
+        double casFrontAutomat = this.automat.getPriemerneCakenieFront();
+        if (casFrontAutomat != -1)
         {
-            this.celkovaStatistikaCasFrontAutomat.pridajHodnotu(casFront);
+            this.celkovaStatistikaCasFrontAutomat.pridajHodnotu(casFrontAutomat);
         }
-
         this.celkovaStatistikaDlzkaFrontAutomat.pridajHodnotu(this.automat.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
+
+        double casFrontOkno = this.obsluhaOkna.getPriemerneCakenieFront();
+        if (casFrontOkno != -1)
+        {
+            this.celkovaStatistikaCasFrontOkno.pridajHodnotu(casFrontOkno);
+        }
+        this.celkovaStatistikaDlzkaFrontOkno.pridajHodnotu(this.obsluhaOkna.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
 
         // Cas posledneho odchodu
         if (!this.agenti.isEmpty())
@@ -250,6 +281,19 @@ public class SimulaciaSystem extends SimulacneJadro
             }
         }
         this.celkovaStatistikaPocetObsluzenychAgentov.pridajHodnotu(pocetObsluzenychAgentov);
+
+        // Vytazenie obsluznych okien
+        Okno[] oknaObycajni = this.obsluhaOkna.getOknaObycajni();
+        for (int i = 0; i < oknaObycajni.length; i++)
+        {
+            this.celkovaStatistikaVytazenieObycajneOkna[i].pridajHodnotu(oknaObycajni[i].getVytazenie(this.getAktualnySimulacnyCas()));
+        }
+
+        Okno[] oknaOnline = this.obsluhaOkna.getOknaOnline();
+        for (int i = 0; i < oknaOnline.length; i++)
+        {
+            this.celkovaStatistikaVytazenieOnlineOkna[i].pridajHodnotu(oknaOnline[i].getVytazenie(this.getAktualnySimulacnyCas()));
+        }
     }
 
     @Override
@@ -530,5 +574,25 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         return this.celkovaStatistikaPocetObsluzenychAgentov;
     }
-    // Koniec celkove statistiky
+
+    public DiskretnaStatistika getCelkovaStatistikaDlzkaFrontOkno()
+    {
+        return this.celkovaStatistikaDlzkaFrontOkno;
+    }
+
+    public DiskretnaStatistika getCelkovaStatistikaCasFrontOkno()
+    {
+        return this.celkovaStatistikaCasFrontOkno;
+    }
+
+    public DiskretnaStatistika[] getCelkovaStatistikaVytazenieObycajneOkna()
+    {
+        return this.celkovaStatistikaVytazenieObycajneOkna;
+    }
+
+    public DiskretnaStatistika[] getCelkovaStatistikaVytazenieOnlineOkna()
+    {
+        return this.celkovaStatistikaVytazenieOnlineOkna;
+    }
+// Koniec celkove statistiky
 }

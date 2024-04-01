@@ -103,6 +103,83 @@ public class Prezenter
         }
     }
 
+    public static void celkovyCasFrontOkno(SimulaciaSystem simulacia, JLabel label)
+    {
+        DiskretnaStatistika statistika = simulacia.getCelkovaStatistikaCasFrontOkno();
+
+        statistika.skusPrepocitatStatistiky();
+        if (!statistika.getStatistikyVypocitane())
+        {
+            label.setText("n/a");
+        }
+        else
+        {
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+                    Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
+                    Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+        }
+    }
+
+    public static void celkovaDlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
+    {
+        DiskretnaStatistika statistika = simulacia.getCelkovaStatistikaDlzkaFrontOkno();
+
+        statistika.skusPrepocitatStatistiky();
+        if (!statistika.getStatistikyVypocitane())
+        {
+            label.setText("n/a");
+        }
+        else
+        {
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+                    Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
+                    Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+        }
+    }
+
+    public static void tabulkaCelkoveOkna(SimulaciaSystem simulacia, JTable tabulka)
+    {
+        try
+        {
+            EventQueue.invokeAndWait(() -> {
+                DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
+                model.setRowCount(0);
+
+                DiskretnaStatistika[] obycajneOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieObycajneOkna();
+                for (DiskretnaStatistika statistika : obycajneOknaStatistiky)
+                {
+                    statistika.skusPrepocitatStatistiky();
+
+                    if (statistika.getStatistikyVypocitane())
+                    {
+                        model.addRow(new Object[]{
+                            "Obycajne",
+                            Prezenter.zaokruhli(statistika.getPriemer())
+                        });
+                    }
+                }
+
+                DiskretnaStatistika[] onlineOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieOnlineOkna();
+                for (DiskretnaStatistika statistika : onlineOknaStatistiky)
+                {
+                    statistika.skusPrepocitatStatistiky();
+
+                    if (statistika.getStatistikyVypocitane())
+                    {
+                        model.addRow(new Object[]{
+                            "Online",
+                            Prezenter.zaokruhli(statistika.getPriemer())
+                        });
+                    }
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Chyba pri aktualizacii celkovej tabulky okien!");
+        }
+    }
+
     public static void aktualnaReplikacia(SimulaciaSystem simulacia, JLabel label)
     {
         label.setText(String.valueOf(simulacia.getAktualnaReplikacia()));

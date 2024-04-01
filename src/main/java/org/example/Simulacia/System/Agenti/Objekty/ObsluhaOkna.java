@@ -18,20 +18,17 @@ public class ObsluhaOkna
     private final SpojitaStatistika statistikaDlzkaFront;
     private final DiskretnaStatistika statistikaCakanieFront;
 
-    public ObsluhaOkna(int pocetObsluznychMiest)
+    public ObsluhaOkna(int pocetOnlineObsluznychMiest, int pocetObycajnychObsluznychMiest)
     {
         this.front = new LinkedList<>();
 
-        int pocetOkienOnline = (int)Math.floor(pocetObsluznychMiest / 3.0);
-        int pocetOkienObycajni = pocetObsluznychMiest - pocetOkienOnline;
-
-        this.oknaObycajni = new Okno[pocetOkienObycajni];
+        this.oknaObycajni = new Okno[pocetObycajnychObsluznychMiest];
         for (int i = 0; i < this.oknaObycajni.length; i++)
         {
             this.oknaObycajni[i] = new Okno();
         }
 
-        this.oknaOnline = new Okno[pocetOkienOnline];
+        this.oknaOnline = new Okno[pocetOnlineObsluznychMiest];
         for (int i = 0; i < this.oknaOnline.length; i++)
         {
             this.oknaOnline[i] = new Okno();
