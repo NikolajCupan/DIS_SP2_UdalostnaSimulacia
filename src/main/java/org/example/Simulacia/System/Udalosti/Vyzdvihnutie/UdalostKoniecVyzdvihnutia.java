@@ -3,6 +3,7 @@ package org.example.Simulacia.System.Udalosti.Vyzdvihnutie;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
+import org.example.Simulacia.System.Agenti.Objekty.ObsluhaOkna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
@@ -46,6 +47,7 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
         Okno okno = vykonavajuciAgent.getOdlozenyTovarOkno();
+        ObsluhaOkna obsluhaOkna = simulacia.getObsluhaOkna();
 
 
         // Kontrola stavu simulacie
@@ -65,25 +67,25 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
 
 
         // Pokus o naplanovanie dalsej obsluhy u uvolneneho okna
-        Queue<Agent> frontOkno = simulacia.getFrontOkno();
+        Queue<Agent> frontOkno = obsluhaOkna.getFront();
         if (frontOkno.size() > Konstanty.KAPACITA_FRONT_OKNO)
         {
             throw new RuntimeException("Front pred oknami prekrocil maximalnu velkost!");
         }
 
         if (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE
-            && simulacia.frontOknoObsahujeOnlineAgenta())
+            && obsluhaOkna.frontOknoObsahujeOnlineAgenta())
         {
-            Agent onlineAgent = simulacia.vyberPrvyOnlineAgent();
+            Agent onlineAgent = obsluhaOkna.vyberPrvyOnlineAgent();
 
             UdalostZaciatokObsluhyOkno zaciatokObsluhy =
                 new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), onlineAgent, okno);
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }
         else if ((vykonavajuciAgent.getTypAgenta() == TypAgenta.BEZNY || vykonavajuciAgent.getTypAgenta() == TypAgenta.ZMLUVNY)
-                 && simulacia.frontOknoObsahujeObycajnehoAgenta())
+                 && obsluhaOkna.frontOknoObsahujeObycajnehoAgenta())
         {
-            Agent obycajnyAgent = simulacia.vyberPrvyObycajnyAgent();
+            Agent obycajnyAgent = obsluhaOkna.vyberPrvyObycajnyAgent();
 
             UdalostZaciatokObsluhyOkno zaciatokObsluhy =
                     new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), obycajnyAgent, okno);

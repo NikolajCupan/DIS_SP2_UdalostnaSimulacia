@@ -140,7 +140,7 @@ public class Prezenter
 
     public static void aktualnaDlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
     {
-        Queue<Agent> front = simulacia.getFrontOkno();
+        Queue<Agent> front = simulacia.getObsluhaOkna().getFront();
         StringBuilder stavFront = new StringBuilder("]");
 
         for (Agent agent : front)
@@ -214,7 +214,7 @@ public class Prezenter
                 DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
                 model.setRowCount(0);
 
-                Okno[] oknaObycajni = simulacia.getOknaObycajni();
+                Okno[] oknaObycajni = simulacia.getObsluhaOkna().getOknaObycajni();
                 for (Okno okno : oknaObycajni)
                 {
                     model.addRow(new Object[]{
@@ -224,7 +224,7 @@ public class Prezenter
                     });
                 }
 
-                Okno[] oknaOnline = simulacia.getOknaOnline();
+                Okno[] oknaOnline = simulacia.getObsluhaOkna().getOknaOnline();
                 for (Okno okno : oknaOnline)
                 {
                     model.addRow(new Object[]{

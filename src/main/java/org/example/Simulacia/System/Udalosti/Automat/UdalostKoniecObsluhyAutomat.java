@@ -4,6 +4,7 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Objekty.Automat;
+import org.example.Simulacia.System.Agenti.Objekty.ObsluhaOkna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
@@ -18,7 +19,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
     {
         super(simulacneJadro, casVykonania, agent, Konstanty.PRIORITA_KONIEC_OBSLUHY_AUTOMAT);
 
-        Queue<Agent> frontOkno = ((SimulaciaSystem)simulacneJadro).getFrontOkno();
+        Queue<Agent> frontOkno = ((SimulaciaSystem)simulacneJadro).getObsluhaOkna().getFront();
         if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
         {
             throw new RuntimeException("Doslo k vydaniu listka hoci je front pred oknom plny!");
@@ -44,6 +45,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
         Automat automat = simulacia.getAutomat();
+        ObsluhaOkna obsluhaOkna = simulacia.getObsluhaOkna();
 
 
         // Kontrola stavu simulacie
@@ -66,7 +68,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
 
 
         // Pokus o naplanovanie obsluhy vykonavajuceho agenta u okienka
-        Queue<Agent> frontOkno = simulacia.getFrontOkno();
+        Queue<Agent> frontOkno = obsluhaOkna.getFront();
         if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
         {
             throw new RuntimeException("Doslo k vydaniu listka hoci je front pred oknom plny!");
@@ -74,7 +76,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
 
         boolean obsluhaNaplanovana = false;
         Okno[] okna = (vykonavajuciAgent.getTypAgenta() == TypAgenta.ONLINE
-            ? simulacia.getOknaOnline() : simulacia.getOknaObycajni());
+            ? obsluhaOkna.getOknaOnline() : obsluhaOkna.getOknaObycajni());
 
         for (Okno okno : okna)
         {

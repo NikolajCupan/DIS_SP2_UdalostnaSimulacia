@@ -4,6 +4,7 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Objekty.Automat;
+import org.example.Simulacia.System.Agenti.Objekty.ObsluhaOkna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
@@ -35,6 +36,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
         Automat automat = simulacia.getAutomat();
+        ObsluhaOkna obsluhaOkna = simulacia.getObsluhaOkna();
 
 
         // Kontrola stavu simulacie
@@ -47,7 +49,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
             throw new RuntimeException("Bol naplanovany zaciatok obsluhy u automatu, ktory je vypnuty alebo uz obsluha prebieha!");
         }
 
-        Queue<Agent> frontOkno = simulacia.getFrontOkno();
+        Queue<Agent> frontOkno = obsluhaOkna.getFront();
         if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
         {
             throw new RuntimeException("Doslo k naplanovaniu vydaniu listka hoci je front pred oknom plny!");

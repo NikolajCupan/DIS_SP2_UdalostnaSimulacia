@@ -10,11 +10,10 @@ import org.example.Simulacia.Generovania.*;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Objekty.Automat;
-import org.example.Simulacia.System.Agenti.Objekty.Okno;
+import org.example.Simulacia.System.Agenti.Objekty.ObsluhaOkna;
 import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Zakaznik.AgentKomparator;
-import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
 import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutomat;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
@@ -45,9 +44,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
     // Obsluha okno
     private final int pocetObsluznychMiest;
-    private Queue<Agent> frontOkno;
-    private Okno[] oknaObycajni;
-    private Okno[] oknaOnline;
+    private ObsluhaOkna obsluhaOkna;
 
     private SpojityRovnomernyGenerator generatorObsluhaObycajni;
     private SpojityTrojuholnikovyGenerator generatorObsluhaOnline;
@@ -171,22 +168,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
         // Obsluha
-        this.frontOkno = new LinkedList<>();
-
-        int pocetOkienOnline = (int)Math.floor(this.pocetObsluznychMiest / 3.0);
-        int pocetOkienObycajni = this.pocetObsluznychMiest - pocetOkienOnline;
-
-        this.oknaObycajni = new Okno[pocetOkienObycajni];
-        for (int i = 0; i < this.oknaObycajni.length; i++)
-        {
-            this.oknaObycajni[i] = new Okno();
-        }
-
-        this.oknaOnline = new Okno[pocetOkienOnline];
-        for (int i = 0; i < this.oknaOnline.length; i++)
-        {
-            this.oknaOnline[i] = new Okno();
-        }
+        this.obsluhaOkna = new ObsluhaOkna(this.pocetObsluznychMiest);
         // Koniec obsluha
 
 
@@ -286,7 +268,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
     private void kontrola()
     {
-        boolean frontOknoPlny = this.frontOkno.size() == Konstanty.KAPACITA_FRONT_OKNO;
+        boolean frontOknoPlny = this.obsluhaOkna.getPocetFront() == Konstanty.KAPACITA_FRONT_OKNO;
         if (frontOknoPlny)
         {
             return;
@@ -387,89 +369,9 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
     // Okno
-    public Queue<Agent> getFrontOkno()
+    public ObsluhaOkna getObsluhaOkna()
     {
-        return this.frontOkno;
-    }
-
-    public Okno[] getOknaObycajni()
-    {
-        return this.oknaObycajni;
-    }
-
-    public Okno[] getOknaOnline()
-    {
-        return this.oknaOnline;
-    }
-
-    public Agent vyberPrvyOnlineAgent()
-    {
-        for (Agent agent : this.frontOkno)
-        {
-            if (agent.getTypAgenta() == TypAgenta.ONLINE)
-            {
-                this.frontOkno.remove(agent);
-                return agent;
-            }
-        }
-
-        throw new RuntimeException("Front pred oknami neobsahuje online agenta!");
-    }
-
-    public Agent vyberPrvyObycajnyAgent()
-    {
-        boolean obsahujeZmluvneho = this.frontOknoObsahujeZmluvnehoAgenta();
-        TypAgenta vyberanyTyp = (obsahujeZmluvneho ? TypAgenta.ZMLUVNY : TypAgenta.BEZNY);
-
-        for (Agent agent : this.frontOkno)
-        {
-            if (agent.getTypAgenta() == vyberanyTyp)
-            {
-                this.frontOkno.remove(agent);
-                return agent;
-            }
-        }
-
-        throw new RuntimeException("Front pred oknami neobsahuje obycajneho agenta!");
-    }
-
-    private boolean frontOknoObsahujeZmluvnehoAgenta()
-    {
-        for (Agent agent : this.frontOkno)
-        {
-            if (agent.getTypAgenta() == TypAgenta.ZMLUVNY)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean frontOknoObsahujeObycajnehoAgenta()
-    {
-        for (Agent agent : this.frontOkno)
-        {
-            if (agent.getTypAgenta() == TypAgenta.ZMLUVNY || agent.getTypAgenta() == TypAgenta.BEZNY)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean frontOknoObsahujeOnlineAgenta()
-    {
-        for (Agent agent : this.frontOkno)
-        {
-            if (agent.getTypAgenta() == TypAgenta.ONLINE)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return this.obsluhaOkna;
     }
 
     public GenerovanieTrvaniaPripravy getGeneratorTrvaniePripravy()
