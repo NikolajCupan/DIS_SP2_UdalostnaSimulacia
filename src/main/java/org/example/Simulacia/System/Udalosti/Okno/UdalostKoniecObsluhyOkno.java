@@ -4,10 +4,11 @@ import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.VelkostTovaru;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.Okno;
-import org.example.Simulacia.System.Agenti.Pokladna;
-import org.example.Simulacia.System.Agenti.TypAgenta;
+import org.example.Simulacia.System.Agenti.Objekty.Automat;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
+import org.example.Simulacia.System.Agenti.Objekty.Okno;
+import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
+import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutomat;
 import org.example.Simulacia.System.Udalosti.Pokladna.UdalostZaciatokObsluhyPokladna;
@@ -47,6 +48,7 @@ public class UdalostKoniecObsluhyOkno extends Udalost
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
+        Automat automat = simulacia.getAutomat();
 
 
         // Kontrola stavu simulacie
@@ -109,14 +111,14 @@ public class UdalostKoniecObsluhyOkno extends Udalost
 
         // Pokus o naplanovanie dalsej obsluhy zakaznika u automatu
         if (frontOkno.size() < Konstanty.KAPACITA_FRONT_OKNO
-            && simulacia.getAutomatVypnuty())
+            && automat.getVypnuty())
         {
             // Naplanuj pouzitie automatu
-            simulacia.setAutomatVypnuty(false);
+            automat.setVypnuty(false);
             
-            if (simulacia.getPocetFrontAutomat() != 0)
+            if (automat.getPocetFront() != 0)
             {
-                Agent odobratyAgent = simulacia.odoberFrontAutomat();
+                Agent odobratyAgent = automat.odoberFront();
                 UdalostZaciatokObsluhyAutomat zaciatokObsluhyAutomat =
                     new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
                 simulacia.naplanujUdalost(zaciatokObsluhyAutomat);

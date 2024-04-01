@@ -3,9 +3,10 @@ package org.example.Simulacia.System.Udalosti.Automat;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.Okno;
-import org.example.Simulacia.System.Agenti.TypAgenta;
+import org.example.Simulacia.System.Agenti.Objekty.Automat;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
+import org.example.Simulacia.System.Agenti.Objekty.Okno;
+import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 import org.example.Simulacia.System.Udalosti.Okno.UdalostZaciatokObsluhyOkno;
 
@@ -42,21 +43,22 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
+        Automat automat = simulacia.getAutomat();
 
 
         // Kontrola stavu simulacie
-        if (!simulacia.getObsluhaAutomatPrebieha())
+        if (!automat.getObsluhaPrebieha())
         {
             throw new RuntimeException("Automat obsluhuje agenta, hoci ma nastavene, ze nikoho neobsluhuje!");
         }
-        if (simulacia.getAutomatVypnuty())
+        if (automat.getVypnuty())
         {
             throw new RuntimeException("Agent bol obsluhovany u vypnuteho automatu!");
         }
 
 
         // Zmena stavu simulacie
-        simulacia.setObsluhaAutomatPrebieha(false);
+        automat.setObsluhaPrebieha(false);
 
 
         // Nastavenie atributov agenta, ktory udalost vykonava
@@ -102,19 +104,19 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
             if (frontOkno.size() == Konstanty.KAPACITA_FRONT_OKNO)
             {
                 // Front sa naplnil, vypni automat
-                simulacia.setAutomatVypnuty(true);
+                automat.setVypnuty(true);
             }
         }
 
 
         // Pokus o naplanovanie dalsej obsluhy u automatu
-        if (simulacia.getPocetFrontAutomat() == 0 || simulacia.getAutomatVypnuty())
+        if (automat.getPocetFront() == 0 || automat.getVypnuty())
         {
             // Front je prazdny alebo automat je vypnuty, nemozno naplanovat dalsiu obsluhu u automatu
         }
         else
         {
-            Agent odobratyAgent = simulacia.odoberFrontAutomat();
+            Agent odobratyAgent = automat.odoberFront();
             UdalostZaciatokObsluhyAutomat zaciatokObsluhy = new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }

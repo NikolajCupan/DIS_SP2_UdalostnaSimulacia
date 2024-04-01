@@ -3,7 +3,8 @@ package org.example.Simulacia.System.Udalosti.Automat;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.Objekty.Automat;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import java.util.Queue;
@@ -33,6 +34,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
+        Automat automat = simulacia.getAutomat();
 
 
         // Kontrola stavu simulacie
@@ -40,7 +42,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
         {
             throw new RuntimeException("Doslo k vykonaniu udalosti zaciatku obsluhy u automatu po vyprsani simulacneho casu!");
         }
-        if (simulacia.getAutomatVypnuty() || simulacia.getObsluhaAutomatPrebieha())
+        if (automat.getVypnuty() || automat.getObsluhaPrebieha())
         {
             throw new RuntimeException("Bol naplanovany zaciatok obsluhy u automatu, ktory je vypnuty alebo uz obsluha prebieha!");
         }
@@ -53,7 +55,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
 
 
         // Zmena stavu simulacie
-        simulacia.setObsluhaAutomatPrebieha(true);
+        automat.setObsluhaPrebieha(true);
 
 
         // Nastavenie atributov agenta, ktory udalost vykonava

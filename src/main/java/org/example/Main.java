@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 
 import java.util.LinkedList;
 import java.util.Queue;

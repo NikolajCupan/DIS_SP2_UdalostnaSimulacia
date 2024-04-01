@@ -7,10 +7,14 @@ import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.*;
-import org.example.Simulacia.Statistiky.SpojitaStatistika;
-import org.example.Simulacia.System.Agenti.*;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
+import org.example.Simulacia.System.Agenti.Objekty.Automat;
+import org.example.Simulacia.System.Agenti.Objekty.Okno;
+import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
+import org.example.Simulacia.System.Agenti.Zakaznik.AgentKomparator;
+import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
@@ -29,17 +33,12 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
     // Automat
-    private boolean obsluhaAutomatPrebieha;
-    private boolean automatVypnuty;
-    private Queue<Agent> frontAutomat;
+    private Automat automat;
 
     private GenerovanieTypuZakaznika generatorTypZakaznika;
     private SpojityExponencialnyGenerator generatorDalsiPrichod;
 
     private SpojityRovnomernyGenerator generatorVydanieListka;
-
-    private SpojitaStatistika statistikaDlzkaAutomat;
-    private DiskretnaStatistika statistikaCasAutomat;
     // Koniec automat
 
 
@@ -156,12 +155,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
         // Automat
-        this.obsluhaAutomatPrebieha = false;
-        this.automatVypnuty = false;
-        this.frontAutomat = new LinkedList<>();
-
-        this.statistikaDlzkaAutomat = new SpojitaStatistika();
-        this.statistikaCasAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.automat = new Automat();
         // Koniec automat
 
 
@@ -241,7 +235,7 @@ public class SimulaciaSystem extends SimulacneJadro
             this.prichodyZrusene = true;
 
             // Doslo k prekroceniu simulacneho casu, vyprazdni front pred automatom
-            this.frontAutomat.clear();
+            this.automat.vyprazdniAutomat();
 
             // Kontrola stavu kalendara udalosti
             for (Udalost udalost : this.getKalendarUdalosti())
@@ -280,44 +274,9 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
     // Automat
-    public void pridajFrontAutomat(Agent agent)
+    public Automat getAutomat()
     {
-        this.frontAutomat.add(agent);
-    }
-
-    public Agent odoberFrontAutomat()
-    {
-        if (this.frontAutomat.isEmpty())
-        {
-            throw new RuntimeException("Pokus o vybratie agenta z frontu pred automatom, ktory je prazdny!");
-        }
-
-        return this.frontAutomat.poll();
-    }
-
-    public int getPocetFrontAutomat()
-    {
-        return this.frontAutomat.size();
-    }
-
-    public boolean getObsluhaAutomatPrebieha()
-    {
-        return this.obsluhaAutomatPrebieha;
-    }
-
-    public boolean getAutomatVypnuty()
-    {
-        return this.automatVypnuty;
-    }
-
-    public void setObsluhaAutomatPrebieha(boolean obsluhaAutomatPrebieha)
-    {
-        this.obsluhaAutomatPrebieha = obsluhaAutomatPrebieha;
-    }
-
-    public void setAutomatVypnuty(boolean automatVypnuty)
-    {
-        this.automatVypnuty = automatVypnuty;
+        return this.automat;
     }
 
     public GenerovanieTypuZakaznika getGeneratorTypZakaznika()

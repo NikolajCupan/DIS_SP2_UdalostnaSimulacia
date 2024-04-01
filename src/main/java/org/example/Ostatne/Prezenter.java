@@ -1,9 +1,9 @@
 package org.example.Ostatne;
 
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
-import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.Okno;
-import org.example.Simulacia.System.Agenti.Pokladna;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
+import org.example.Simulacia.System.Agenti.Objekty.Okno;
+import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;

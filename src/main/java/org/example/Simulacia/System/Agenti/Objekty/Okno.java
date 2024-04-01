@@ -1,4 +1,4 @@
-package org.example.Simulacia.System.Agenti;
+package org.example.Simulacia.System.Agenti.Objekty;
 
 import org.example.Simulacia.Statistiky.SpojitaStatistika;
 

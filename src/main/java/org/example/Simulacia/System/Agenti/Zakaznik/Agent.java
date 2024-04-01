@@ -1,6 +1,7 @@
-package org.example.Simulacia.System.Agenti;
+package org.example.Simulacia.System.Agenti.Zakaznik;
 
 import org.example.Ostatne.Konstanty;
+import org.example.Simulacia.System.Agenti.Objekty.Okno;
 
 public class Agent
 {

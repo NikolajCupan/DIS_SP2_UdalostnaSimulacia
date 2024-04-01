@@ -3,7 +3,7 @@ package org.example.Simulacia.System.Udalosti.Vyzdvihnutie;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 public class UdalostZaciatokVyzdvihnutia extends Udalost

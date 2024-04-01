@@ -1,6 +1,7 @@
-package org.example.Simulacia.System.Agenti;
+package org.example.Simulacia.System.Agenti.Objekty;
 
 import org.example.Simulacia.Statistiky.SpojitaStatistika;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 
 import java.util.LinkedList;
 import java.util.Queue;

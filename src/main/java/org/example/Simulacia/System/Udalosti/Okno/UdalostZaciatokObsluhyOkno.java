@@ -3,9 +3,9 @@ package org.example.Simulacia.System.Udalosti.Okno;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.System.Agenti.Agent;
-import org.example.Simulacia.System.Agenti.Okno;
-import org.example.Simulacia.System.Agenti.TypAgenta;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
+import org.example.Simulacia.System.Agenti.Objekty.Okno;
+import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 public class UdalostZaciatokObsluhyOkno extends Udalost

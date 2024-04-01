@@ -3,9 +3,10 @@ package org.example.Simulacia.System.Udalosti;
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
+import org.example.Simulacia.System.Agenti.Objekty.Automat;
 import org.example.Simulacia.System.SimulaciaSystem;
 import org.example.Simulacia.Jadro.Udalost;
-import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutomat;
 
 public class UdalostPrichodZakaznika extends Udalost
@@ -33,6 +34,7 @@ public class UdalostPrichodZakaznika extends Udalost
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
+        Automat automat = simulacia.getAutomat();
 
 
         // Kontrola stavu simulacie
@@ -61,15 +63,15 @@ public class UdalostPrichodZakaznika extends Udalost
 
 
         // Naplanuj zaciatok obsluhy u automatu, ak je to mozne
-        if (simulacia.getObsluhaAutomatPrebieha() || simulacia.getAutomatVypnuty())
+        if (automat.getObsluhaPrebieha() || automat.getVypnuty())
         {
             // Niekto je obsluhovany alebo je automat vypnuty, pridaj agenta do frontu pred automatom
-            simulacia.pridajFrontAutomat(vykonavajuciAgent);
+            automat.pridajFront(vykonavajuciAgent);
         }
         else
         {
             // Obsluha u automatu moze byt naplanovana
-            if (simulacia.getPocetFrontAutomat() == 0)
+            if (automat.getPocetFront() == 0)
             {
                 // Front pred automatom je prazdny, vykonavajuci agent bude obsluhovany
                 UdalostZaciatokObsluhyAutomat zaciatokObsluhy =

@@ -1,7 +1,7 @@
 package org.example.Simulacia.Jadro;
 
 import org.example.Ostatne.Konstanty;
-import org.example.Simulacia.System.Agenti.Agent;
+import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 
 public class SystemovaUdalost extends Udalost
 {
