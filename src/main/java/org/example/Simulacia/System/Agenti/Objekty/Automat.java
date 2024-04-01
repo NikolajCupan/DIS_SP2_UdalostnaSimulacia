@@ -57,13 +57,13 @@ public class Automat
 
     public void pridajCakanieAgent(Agent agent)
     {
-        if (agent.getCasZaciatokObsluhyAutomat() == -1
-            || agent.getCasKoniecObsluhyAutomat() == -1)
+        if (agent.getCasPrichodSystem() == -1
+            || agent.getCasZaciatokObsluhyAutomat() == -1)
         {
             throw new RuntimeException("Agent nema nastavene casy tykajuce sa automatu!");
         }
 
-        this.statistikaCakanieFront.pridajHodnotu(agent.getCasKoniecObsluhyAutomat()
+        this.statistikaCakanieFront.pridajHodnotu(agent.getCasZaciatokObsluhyAutomat()
             - agent.getCasPrichodSystem());
     }
 

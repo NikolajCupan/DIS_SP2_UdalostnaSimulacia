@@ -50,7 +50,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
         Queue<Agent> frontOkno = simulacia.getFrontOkno();
         if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
         {
-            throw new RuntimeException("Doslo k vydaniu listka hoci je front pred oknom plny!");
+            throw new RuntimeException("Doslo k naplanovaniu vydaniu listka hoci je front pred oknom plny!");
         }
 
 
@@ -60,6 +60,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasZaciatokObsluhyAutomat(this.getCasVykonania());
+        automat.pridajCakanieAgent(vykonavajuciAgent);
 
 
         // Naplanuj koniec obsluhy pri automate

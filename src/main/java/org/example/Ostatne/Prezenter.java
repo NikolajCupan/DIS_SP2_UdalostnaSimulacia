@@ -131,30 +131,34 @@ public class Prezenter
     public static void dlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
     {
         Queue<Agent> front = simulacia.getFrontOkno();
-        StringBuilder stavFront = new StringBuilder(front.size() + " [");
+        StringBuilder stavFront = new StringBuilder("]");
 
         for (Agent agent : front)
         {
             switch (agent.getTypAgenta())
             {
             case TypAgenta.ONLINE:
-                stavFront.append("O, ");
+                stavFront.append("O ");
                 break;
             case TypAgenta.BEZNY:
-                stavFront.append("B, ");
+                stavFront.append("B ");
                 break;
             case TypAgenta.ZMLUVNY:
-                stavFront.append("Z, ");
+                stavFront.append("Z ");
                 break;
             }
         }
 
         for (int i = front.size(); i < Konstanty.KAPACITA_FRONT_OKNO; i++)
         {
-            stavFront.append("X, ");
+            stavFront.append("X ");
         }
-        stavFront.setLength(stavFront.length() - 2);
-        stavFront.append("]");
+        stavFront.setLength(stavFront.length() - 1);
+        stavFront.append("[");
+        stavFront.reverse();
+
+        stavFront.insert(0, front.size() +  ": -> ");
+        stavFront.append(" ->");
 
         label.setText(stavFront.toString());
     }

@@ -15,6 +15,7 @@ import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Zakaznik.AgentKomparator;
 import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
+import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutomat;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
@@ -272,13 +273,48 @@ public class SimulaciaSystem extends SimulacneJadro
     @Override
     protected void predVykonanimUdalosti()
     {
+        this.kontrola();
         this.skontrolujVyprsanieSimulacnehoCasu();
     }
 
     @Override
     protected void poVykonaniUdalosti()
     {
+        this.kontrola();
         this.skontrolujVyprsanieSimulacnehoCasu();
+    }
+
+    private void kontrola()
+    {
+        boolean frontOknoPlny = this.frontOkno.size() == Konstanty.KAPACITA_FRONT_OKNO;
+        if (frontOknoPlny)
+        {
+            return;
+        }
+
+        boolean obsluhaAutomatPrebieha = this.automat.getObsluhaPrebieha();
+        if (obsluhaAutomatPrebieha)
+        {
+            return;
+        }
+
+        boolean frontAutomatPrazdny = (this.automat.getPocetFront() == 0);
+        if (frontAutomatPrazdny)
+        {
+            return;
+        }
+
+        for (Udalost udalost : this.getKalendarUdalosti())
+        {
+            if (udalost instanceof UdalostZaciatokObsluhyAutomat udalostZaciatokObsluhyAutomat)
+            {
+                if (Double.compare(this.getAktualnySimulacnyCas(), udalostZaciatokObsluhyAutomat.getCasVykonania()) != 0)
+                {
+                    System.out.println(this.getAktualnySimulacnyCas());
+                    throw new RuntimeException("Front pred oknom nie je plny, nikto nepouziva automat, front pred automatom nie je prazdny!");
+                }
+            }
+        }
     }
 
     private void skontrolujVyprsanieSimulacnehoCasu()

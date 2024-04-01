@@ -63,7 +63,6 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasKoniecObsluhyAutomat(this.getCasVykonania());
-        automat.pridajCakanieAgent(vykonavajuciAgent);
 
 
         // Pokus o naplanovanie obsluhy vykonavajuceho agenta u okienka
