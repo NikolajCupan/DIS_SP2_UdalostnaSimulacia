@@ -249,14 +249,12 @@ public class SimulaciaSystem extends SimulacneJadro
                 }
             }
 
-            if (poslednyOdchadzajuci == null
-                || poslednyCasOdchodu == -1
-                || poslednyCasOdchodu == Double.MIN_VALUE)
+            if (poslednyOdchadzajuci != null
+                && poslednyCasOdchodu != -1
+                && poslednyCasOdchodu != Double.MIN_VALUE)
             {
-                throw new RuntimeException("Chyba pri hladani posledneho odchadzajuceho agenta!");
+                this.celkovaStatistikaCasPoslednyOdchod.pridajHodnotu(poslednyCasOdchodu);
             }
-
-            this.celkovaStatistikaCasPoslednyOdchod.pridajHodnotu(poslednyCasOdchodu);
         }
 
         // Pocet obsluzenych agentov

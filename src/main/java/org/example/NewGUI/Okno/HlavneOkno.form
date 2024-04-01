@@ -114,9 +114,17 @@
                                   <Component id="labelPriemernaDlzkaAutomat" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel15" min="-2" pref="219" max="-2" attributes="0"/>
-                                  <Component id="labelDlzkaAutomat" min="-2" pref="219" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelDlzkaAutomat" min="-2" pref="219" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="labelDlzkaOkno" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel15" min="-2" pref="219" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jLabel20" min="-2" pref="214" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -252,12 +260,14 @@
                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelPriemernyCasAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelPriemernaDlzkaAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelDlzkaAutomat" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="labelDlzkaOkno" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="filler3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -778,6 +788,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelPocetObsluzenych">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n/a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel20">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Aktualna dlzka frontu pred obsluhou:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDlzkaOkno">
       <Properties>
         <Property name="text" type="java.lang.String" value="n/a"/>
       </Properties>

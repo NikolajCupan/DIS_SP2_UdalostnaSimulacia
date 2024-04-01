@@ -89,6 +89,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         labelCasPoslednyOdchod = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         labelPocetObsluzenych = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        labelDlzkaOkno = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -275,6 +277,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
         labelPocetObsluzenych.setText("n/a");
 
+        jLabel20.setText("Aktualna dlzka frontu pred obsluhou:");
+
+        labelDlzkaOkno.setText("n/a");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -336,9 +342,15 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(labelPriemernaDlzkaAutomat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelDlzkaAutomat, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelDlzkaAutomat, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(labelDlzkaOkno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)))
@@ -440,12 +452,14 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel15))
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel20))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPriemernyCasAutomat)
                     .addComponent(labelPriemernaDlzkaAutomat)
-                    .addComponent(labelDlzkaAutomat, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelDlzkaAutomat, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDlzkaOkno))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -571,6 +585,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -589,6 +604,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel labelCelkovyCasSystem;
     private javax.swing.JLabel labelCelkovyPriemernyCasAutomat;
     private javax.swing.JLabel labelDlzkaAutomat;
+    private javax.swing.JLabel labelDlzkaOkno;
     private javax.swing.JLabel labelPocetObsluzenych;
     private javax.swing.JLabel labelPriemernaDlzkaAutomat;
     private javax.swing.JLabel labelPriemernyCasAutomat;
@@ -707,6 +723,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             Prezenter.casFrontAutomat(simulacia, this.labelPriemernyCasAutomat);
             Prezenter.dlzkaFrontAutomat(simulacia, this.labelPriemernaDlzkaAutomat);
             Prezenter.aktualnaDlzkaFrontAutomat(simulacia, this.labelDlzkaAutomat);
+            Prezenter.dlzkaFrontOkno(simulacia, this.labelDlzkaOkno);
             Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
             Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
             Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);

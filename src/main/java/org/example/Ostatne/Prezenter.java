@@ -4,12 +4,14 @@ import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
+import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.Queue;
 import java.util.SortedSet;
 
 public class Prezenter
@@ -124,6 +126,37 @@ public class Prezenter
     public static void aktualnaDlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
     {
         label.setText(String.valueOf(simulacia.getAutomat().getPocetFront()));
+    }
+
+    public static void dlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
+    {
+        Queue<Agent> front = simulacia.getFrontOkno();
+        StringBuilder stavFront = new StringBuilder(front.size() + " [");
+
+        for (Agent agent : front)
+        {
+            switch (agent.getTypAgenta())
+            {
+            case TypAgenta.ONLINE:
+                stavFront.append("O, ");
+                break;
+            case TypAgenta.BEZNY:
+                stavFront.append("B, ");
+                break;
+            case TypAgenta.ZMLUVNY:
+                stavFront.append("Z, ");
+                break;
+            }
+        }
+
+        for (int i = front.size(); i < Konstanty.KAPACITA_FRONT_OKNO; i++)
+        {
+            stavFront.append("X, ");
+        }
+        stavFront.setLength(stavFront.length() - 2);
+        stavFront.append("]");
+
+        label.setText(stavFront.toString());
     }
 
     public static void tabulkaAgenti(SimulaciaSystem simulacia, JTable tabulka)
