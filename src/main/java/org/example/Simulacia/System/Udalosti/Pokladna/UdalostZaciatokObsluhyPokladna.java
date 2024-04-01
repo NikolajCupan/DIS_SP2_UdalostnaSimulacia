@@ -55,7 +55,7 @@ public class UdalostZaciatokObsluhyPokladna extends Udalost
 
 
         // Zmena stavu simulacie
-        this.pokladna.setObsadena(true);
+        this.pokladna.setObsadena(true, this.getCasVykonania());
 
 
         // Nastavenia atributov agenta, ktory udalost vykonava

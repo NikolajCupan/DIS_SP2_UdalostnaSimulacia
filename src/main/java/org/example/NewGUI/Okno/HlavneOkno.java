@@ -66,7 +66,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         labelCelkovyCasSystem = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        labelPriemernyCasAutomat = new javax.swing.JLabel();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -77,6 +77,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         jLabel14 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tabulkaOkna = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        labelPriemernaDlzkaAutomat = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        labelRadAutomat = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -172,9 +176,9 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Statistiky aktualnej replikacie:");
 
-        jLabel10.setText("Nieco:");
+        jLabel10.setText("Priemerny cas v rade pred automatom:");
 
-        jLabel11.setText("n/a");
+        labelPriemernyCasAutomat.setText("n/a");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Tabulka agenti:");
@@ -202,11 +206,11 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
             },
             new String [] {
-                "ID", "Obsadenost", "Vytazenie"
+                "ID", "Obsadenost", "Vytazenie", "Front", "Dlzka front"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -238,6 +242,14 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             }
         });
         jScrollPane5.setViewportView(tabulkaOkna);
+
+        jLabel11.setText("Priemerna dlzka radu pred automatom:");
+
+        labelPriemernaDlzkaAutomat.setText("n/a");
+
+        jLabel15.setText("Rad pred automatom:");
+
+        labelRadAutomat.setText("n/a");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -296,10 +308,20 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                                    .addComponent(labelPriemernyCasAutomat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(labelPriemernaDlzkaAutomat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelRadAutomat, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
@@ -364,9 +386,15 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                 .addGap(43, 43, 43)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPriemernyCasAutomat)
+                    .addComponent(labelPriemernaDlzkaAutomat)
+                    .addComponent(labelRadAutomat))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -486,6 +514,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -501,6 +530,9 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelAktualnaReplikacia;
     private javax.swing.JLabel labelCelkovyCasSystem;
+    private javax.swing.JLabel labelPriemernaDlzkaAutomat;
+    private javax.swing.JLabel labelPriemernyCasAutomat;
+    private javax.swing.JLabel labelRadAutomat;
     private javax.swing.JLabel labelRychlost;
     private javax.swing.JLabel labelSimulacnyCas;
     private javax.swing.JSlider sliderRychlost;

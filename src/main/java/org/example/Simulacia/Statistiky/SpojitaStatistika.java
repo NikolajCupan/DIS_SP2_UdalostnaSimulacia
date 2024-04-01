@@ -28,6 +28,12 @@ public class SpojitaStatistika
 
     public void pridajHodnotu(double vaha, int hodnota)
     {
+        Stav najnovsiStav = this.data.getLast();
+        if (vaha < najnovsiStav.vaha)
+        {
+            throw new RuntimeException("Element pridavany do spojitej statistiky nemoze mat mensiu vahu!");
+        }
+
         this.data.add(new Stav(vaha, hodnota));
     }
 

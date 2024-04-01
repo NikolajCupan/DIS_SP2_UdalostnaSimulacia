@@ -7,6 +7,7 @@ import org.example.Generatory.SpojityTrojuholnikovyGenerator;
 import org.example.Ostatne.Identifikator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Generovania.*;
+import org.example.Simulacia.Statistiky.SpojitaStatistika;
 import org.example.Simulacia.System.Agenti.*;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
@@ -36,6 +37,9 @@ public class SimulaciaSystem extends SimulacneJadro
     private SpojityExponencialnyGenerator generatorDalsiPrichod;
 
     private SpojityRovnomernyGenerator generatorVydanieListka;
+
+    private SpojitaStatistika statistikaDlzkaAutomat;
+    private DiskretnaStatistika statistikaCasAutomat;
     // Koniec automat
 
 
@@ -155,6 +159,9 @@ public class SimulaciaSystem extends SimulacneJadro
         this.obsluhaAutomatPrebieha = false;
         this.automatVypnuty = false;
         this.frontAutomat = new LinkedList<>();
+
+        this.statistikaDlzkaAutomat = new SpojitaStatistika();
+        this.statistikaCasAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         // Koniec automat
 
 

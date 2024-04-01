@@ -126,7 +126,9 @@ public class Prezenter
                     model.addRow(new Object[]{
                         pocitadlo,
                         pokladna.getObsadena(),
-                        "TODO"
+                        Prezenter.zaokruhli(pokladna.getVytazenie(simulacia.getAktualnySimulacnyCas())),
+                        pokladna.getPocetFront(),
+                        Prezenter.zaokruhli(pokladna.getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas()))
                     });
 
                     pocitadlo++;

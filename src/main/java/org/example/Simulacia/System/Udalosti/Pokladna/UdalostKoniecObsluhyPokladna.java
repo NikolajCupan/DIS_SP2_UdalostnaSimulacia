@@ -51,7 +51,7 @@ public class UdalostKoniecObsluhyPokladna extends Udalost
 
 
         // Zmena stavu simulacie
-        this.pokladna.setObsadena(false);
+        this.pokladna.setObsadena(false, this.getCasVykonania());
 
 
         // Nastavenia atributov agenta, ktory udalost vykonava
@@ -84,7 +84,7 @@ public class UdalostKoniecObsluhyPokladna extends Udalost
         }
         else
         {
-            Agent odobratyAgent = this.pokladna.odoberZFrontu();
+            Agent odobratyAgent = this.pokladna.odoberZFrontu(this.getCasVykonania());
 
             UdalostZaciatokObsluhyPokladna zaciatokObsluhyPokladna =
                 new UdalostZaciatokObsluhyPokladna(simulacia, this.getCasVykonania(), odobratyAgent, this.pokladna);
