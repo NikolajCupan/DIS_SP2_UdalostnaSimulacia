@@ -128,7 +128,17 @@ public class Prezenter
         label.setText(String.valueOf(simulacia.getAutomat().getPocetFront()));
     }
 
+    public static void casFrontOkno(SimulaciaSystem simulacia, JLabel label)
+    {
+
+    }
+
     public static void dlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
+    {
+
+    }
+
+    public static void aktualnaDlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
     {
         Queue<Agent> front = simulacia.getFrontOkno();
         StringBuilder stavFront = new StringBuilder("]");
@@ -137,15 +147,15 @@ public class Prezenter
         {
             switch (agent.getTypAgenta())
             {
-            case TypAgenta.ONLINE:
-                stavFront.append("O ");
-                break;
-            case TypAgenta.BEZNY:
-                stavFront.append("B ");
-                break;
-            case TypAgenta.ZMLUVNY:
-                stavFront.append("Z ");
-                break;
+                case TypAgenta.ONLINE:
+                    stavFront.append("O ");
+                    break;
+                case TypAgenta.BEZNY:
+                    stavFront.append("B ");
+                    break;
+                case TypAgenta.ZMLUVNY:
+                    stavFront.append("Z ");
+                    break;
             }
         }
 

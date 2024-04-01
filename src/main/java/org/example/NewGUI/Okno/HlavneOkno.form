@@ -118,7 +118,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="labelDlzkaAutomat" min="-2" pref="219" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="labelDlzkaOkno" max="32767" attributes="0"/>
+                                      <Component id="labelPriemernyCasOkno" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel15" min="-2" pref="219" max="-2" attributes="0"/>
@@ -132,15 +132,30 @@
                               <Component id="jScrollPane3" alignment="1" pref="942" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane5" pref="400" max="32767" attributes="0"/>
-                          <Component id="jLabel13" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane2" max="32767" attributes="0"/>
-                          <Component id="jLabel14" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jScrollPane5" pref="400" max="32767" attributes="0"/>
+                                  <Component id="jLabel13" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                                  <Component id="jLabel14" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel21" pref="239" max="32767" attributes="0"/>
+                                  <Component id="labelPriemernaDlzkaOkno" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="labelDlzkaOkno" max="32767" attributes="0"/>
+                                  <Component id="jLabel22" pref="257" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -261,13 +276,17 @@
                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelPriemernyCasAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelPriemernaDlzkaAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelDlzkaAutomat" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="labelPriemernyCasOkno" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelDlzkaOkno" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelPriemernaDlzkaOkno" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="filler3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -638,8 +657,8 @@
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="Obsadenost" type="java.lang.Object"/>
                 <Column editable="false" title="Vytazenie" type="java.lang.Object"/>
-                <Column editable="false" title="Front" type="java.lang.Object"/>
                 <Column editable="false" title="Dlzka front" type="java.lang.Object"/>
+                <Column editable="false" title="Pr. dlzka front" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -794,10 +813,30 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel20">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Aktualna dlzka frontu pred obsluhou:"/>
+        <Property name="text" type="java.lang.String" value="Priemerny cas vo fronte pred obsluhou:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelPriemernyCasOkno">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n/a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel21">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Priemerna dlzka frontu pred obsluhou:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel22">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Aktualna dlzka frontu pred obsluhou"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelDlzkaOkno">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n/a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelPriemernaDlzkaOkno">
       <Properties>
         <Property name="text" type="java.lang.String" value="n/a"/>
       </Properties>

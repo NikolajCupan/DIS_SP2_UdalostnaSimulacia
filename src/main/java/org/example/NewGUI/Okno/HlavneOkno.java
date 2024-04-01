@@ -90,7 +90,11 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         jLabel19 = new javax.swing.JLabel();
         labelPocetObsluzenych = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        labelPriemernyCasOkno = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         labelDlzkaOkno = new javax.swing.JLabel();
+        labelPriemernaDlzkaOkno = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -216,7 +220,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
             },
             new String [] {
-                "ID", "Obsadenost", "Vytazenie", "Front", "Dlzka front"
+                "ID", "Obsadenost", "Vytazenie", "Dlzka front", "Pr. dlzka front"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -277,9 +281,17 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
         labelPocetObsluzenych.setText("n/a");
 
-        jLabel20.setText("Aktualna dlzka frontu pred obsluhou:");
+        jLabel20.setText("Priemerny cas vo fronte pred obsluhou:");
+
+        labelPriemernyCasOkno.setText("n/a");
+
+        jLabel21.setText("Priemerna dlzka frontu pred obsluhou:");
+
+        jLabel22.setText("Aktualna dlzka frontu pred obsluhou");
 
         labelDlzkaOkno.setText("n/a");
+
+        labelPriemernaDlzkaOkno.setText("n/a");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,7 +358,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(labelDlzkaAutomat, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(labelDlzkaOkno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(labelPriemernyCasOkno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -355,13 +367,23 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                                 .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                                    .addComponent(labelPriemernaDlzkaOkno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(labelDlzkaOkno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -453,13 +475,17 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
                     .addComponent(jLabel15)
-                    .addComponent(jLabel20))
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel21)
+                    .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPriemernyCasAutomat)
                     .addComponent(labelPriemernaDlzkaAutomat)
                     .addComponent(labelDlzkaAutomat, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelDlzkaOkno))
+                    .addComponent(labelPriemernyCasOkno)
+                    .addComponent(labelDlzkaOkno)
+                    .addComponent(labelPriemernaDlzkaOkno))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -586,6 +612,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -607,7 +635,9 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel labelDlzkaOkno;
     private javax.swing.JLabel labelPocetObsluzenych;
     private javax.swing.JLabel labelPriemernaDlzkaAutomat;
+    private javax.swing.JLabel labelPriemernaDlzkaOkno;
     private javax.swing.JLabel labelPriemernyCasAutomat;
+    private javax.swing.JLabel labelPriemernyCasOkno;
     private javax.swing.JLabel labelRychlost;
     private javax.swing.JLabel labelSimulacnyCas;
     private javax.swing.JSlider sliderRychlost;
@@ -720,10 +750,15 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             // Statistiky aktualnej replikacie su menene iba za podmienky,
             // ze simulacia nebezi v maximalnej rychlosti
             Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
+
             Prezenter.casFrontAutomat(simulacia, this.labelPriemernyCasAutomat);
             Prezenter.dlzkaFrontAutomat(simulacia, this.labelPriemernaDlzkaAutomat);
             Prezenter.aktualnaDlzkaFrontAutomat(simulacia, this.labelDlzkaAutomat);
-            Prezenter.dlzkaFrontOkno(simulacia, this.labelDlzkaOkno);
+
+            Prezenter.casFrontOkno(simulacia, this.labelPriemernyCasOkno);
+            Prezenter.dlzkaFrontOkno(simulacia, this.labelPriemernaDlzkaOkno);
+            Prezenter.aktualnaDlzkaFrontOkno(simulacia, this.labelDlzkaOkno);
+
             Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
             Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
             Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
