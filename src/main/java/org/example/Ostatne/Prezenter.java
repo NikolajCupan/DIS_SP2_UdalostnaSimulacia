@@ -258,7 +258,8 @@ public class Prezenter
                         pokladna.getObsadena(),
                         Prezenter.zaokruhli(pokladna.getVytazenie(simulacia.getAktualnySimulacnyCas())),
                         pokladna.getPocetFront(),
-                        Prezenter.zaokruhli(pokladna.getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas()))
+                        Prezenter.zaokruhli(pokladna.getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas())),
+                        Prezenter.zaokruhli(pokladna.getPriemerneCakenieFront())
                     });
 
                     pocitadlo++;

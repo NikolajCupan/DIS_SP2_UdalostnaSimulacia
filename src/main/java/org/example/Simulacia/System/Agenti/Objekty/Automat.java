@@ -57,14 +57,13 @@ public class Automat
 
     public void pridajCakanieAgent(Agent agent)
     {
-        if (agent.getCasPrichodSystem() == -1
-            || agent.getCasZaciatokObsluhyAutomat() == -1)
+        if (agent.getCasZaciatokObsluhyAutomat() == -1
+            || agent.getCasPrichodSystem() == -1)
         {
             throw new RuntimeException("Agent nema nastavene casy tykajuce sa automatu!");
         }
 
-        this.statistikaCakanieFront.pridajHodnotu(agent.getCasZaciatokObsluhyAutomat()
-            - agent.getCasPrichodSystem());
+        this.statistikaCakanieFront.pridajHodnotu(agent.getCasZaciatokObsluhyAutomat() - agent.getCasPrichodSystem());
     }
 
     public double getPriemerneCakenieFront()
@@ -72,10 +71,10 @@ public class Automat
         return this.statistikaCakanieFront.forceGetPriemer();
     }
 
-    public void vyprazdniAutomat()
+    public void vyprazdniAutomat(double simulacnyCas)
     {
         this.front.clear();
-        this.statistikaDlzkaFront.pridajHodnotu(Konstanty.OTVARACIA_DOBA_SEKUND, 0);
+        this.statistikaDlzkaFront.pridajHodnotu(simulacnyCas, 0);
     }
 
     public int getPocetFront()

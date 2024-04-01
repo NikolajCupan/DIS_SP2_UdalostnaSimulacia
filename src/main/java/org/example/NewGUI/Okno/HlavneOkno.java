@@ -220,11 +220,11 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
             },
             new String [] {
-                "ID", "Obsadenost", "Vytazenie", "Dlzka front", "Pr. dlzka front"
+                "ID", "Obsadenost", "Vytazenie", "Dlzka front", "Pr. dlzka front", "Pr. cakanie front"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -287,7 +287,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
         jLabel21.setText("Priemerna dlzka frontu pred obsluhou:");
 
-        jLabel22.setText("Aktualna dlzka frontu pred obsluhou");
+        jLabel22.setText("Aktualna dlzka frontu pred obsluhou:");
 
         labelDlzkaOkno.setText("n/a");
 

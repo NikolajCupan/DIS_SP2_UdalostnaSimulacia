@@ -60,6 +60,7 @@ public class UdalostZaciatokObsluhyPokladna extends Udalost
 
         // Nastavenia atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasZaciatokObsluhyPokladna(this.getCasVykonania());
+        this.pokladna.pridajCakanieAgent(vykonavajuciAgent);
 
 
         // Naplanuj koniec obsluhy pri pokladni

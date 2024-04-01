@@ -136,8 +136,7 @@ public class ObsluhaOkna
             throw new RuntimeException("Agent nema nastavene casy tykajuce sa obsluzneho okna!");
         }
 
-        this.statistikaCakanieFront.pridajHodnotu(agent.getCasZaciatokObsluhyOkno()
-            - agent.getCasKoniecObsluhyAutomat());
+        this.statistikaCakanieFront.pridajHodnotu(agent.getCasZaciatokObsluhyOkno() - agent.getCasKoniecObsluhyAutomat());
     }
 
     public int getPocetFront()

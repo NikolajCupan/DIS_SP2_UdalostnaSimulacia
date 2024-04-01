@@ -1,5 +1,7 @@
 package org.example.Simulacia.System.Agenti.Objekty;
 
+import org.example.Ostatne.Konstanty;
+import org.example.Simulacia.Statistiky.DiskretnaStatistika;
 import org.example.Simulacia.Statistiky.SpojitaStatistika;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 
@@ -16,6 +18,7 @@ public class Pokladna
 
     private final SpojitaStatistika statistikaVytazenie;
     private final SpojitaStatistika statistikaDlzkaFront;
+    private final DiskretnaStatistika statistikaCakanieFront;
 
     public Pokladna()
     {
@@ -24,6 +27,7 @@ public class Pokladna
 
         this.statistikaVytazenie = new SpojitaStatistika();
         this.statistikaDlzkaFront = new SpojitaStatistika();
+        this.statistikaCakanieFront = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
     }
 
     public int getPocetFront()
@@ -52,6 +56,22 @@ public class Pokladna
         Agent odobratyAgent = this.front.poll();
         this.statistikaDlzkaFront.pridajHodnotu(simulacnyCas, this.getPocetFront());
         return odobratyAgent;
+    }
+
+    public void pridajCakanieAgent(Agent agent)
+    {
+        if (agent.getCasZaciatokObsluhyPokladna() == -1
+            || agent.getCasKoniecObsluhyOkno() == -1)
+        {
+            throw new RuntimeException("Agent nema nastavene casy tykajuce sa pokladne!");
+        }
+
+        this.statistikaCakanieFront.pridajHodnotu(agent.getCasZaciatokObsluhyPokladna() - agent.getCasKoniecObsluhyOkno());
+    }
+
+    public double getPriemerneCakenieFront()
+    {
+        return this.statistikaCakanieFront.forceGetPriemer();
     }
 
     public double getPriemernaDlzkaFrontu(double simulacnyCas)
