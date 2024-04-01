@@ -49,7 +49,6 @@ public class UdalostKoniecObsluhyOkno extends Udalost
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
-        Automat automat = simulacia.getAutomat();
         ObsluhaOkna obsluhaOkna = simulacia.getObsluhaOkna();
 
 
@@ -107,23 +106,6 @@ public class UdalostKoniecObsluhyOkno extends Udalost
                 UdalostZaciatokObsluhyOkno zaciatokObsluhy =
                     new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), obycajnyAgent, this.okno);
                 simulacia.naplanujUdalost(zaciatokObsluhy);
-            }
-        }
-
-
-        // Pokus o naplanovanie dalsej obsluhy zakaznika u automatu
-        if (frontOkno.size() < Konstanty.KAPACITA_FRONT_OKNO
-            && automat.getVypnuty())
-        {
-            // Naplanuj pouzitie automatu
-            automat.setVypnuty(false);
-            
-            if (automat.getPocetFront() != 0)
-            {
-                Agent odobratyAgent = automat.odoberFront(this.getCasVykonania());
-                UdalostZaciatokObsluhyAutomat zaciatokObsluhyAutomat =
-                    new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
-                simulacia.naplanujUdalost(zaciatokObsluhyAutomat);
             }
         }
 

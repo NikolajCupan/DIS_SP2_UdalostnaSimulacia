@@ -67,7 +67,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         vykonavajuciAgent.setCasKoniecObsluhyAutomat(this.getCasVykonania());
 
 
-        // Pokus o naplanovanie obsluhy vykonavajuceho agenta u okienka
+        // Pokus o naplanovanie obsluhy vykonavajuceho agenta u okna
         Queue<Agent> frontOkno = obsluhaOkna.getFront();
         if (frontOkno.size() >= Konstanty.KAPACITA_FRONT_OKNO)
         {

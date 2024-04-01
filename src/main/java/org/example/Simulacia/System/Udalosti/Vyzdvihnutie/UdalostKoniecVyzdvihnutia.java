@@ -88,7 +88,7 @@ public class UdalostKoniecVyzdvihnutia extends Udalost
             Agent obycajnyAgent = obsluhaOkna.vyberPrvyObycajnyAgent(this.getCasVykonania());
 
             UdalostZaciatokObsluhyOkno zaciatokObsluhy =
-                    new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), obycajnyAgent, okno);
+                new UdalostZaciatokObsluhyOkno(simulacia, this.getCasVykonania(), obycajnyAgent, okno);
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }
 
