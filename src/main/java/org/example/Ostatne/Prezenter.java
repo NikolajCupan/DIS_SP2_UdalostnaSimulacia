@@ -130,12 +130,12 @@ public class Prezenter
 
     public static void casFrontOkno(SimulaciaSystem simulacia, JLabel label)
     {
-
+        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getObsluhaOkna().getPriemerneCakenieFront())));
     }
 
     public static void dlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
     {
-
+        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getObsluhaOkna().getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas()))));
     }
 
     public static void aktualnaDlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)

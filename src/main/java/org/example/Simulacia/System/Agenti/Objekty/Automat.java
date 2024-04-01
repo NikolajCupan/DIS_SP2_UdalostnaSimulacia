@@ -12,7 +12,7 @@ public class Automat
 {
     private boolean obsluhaPrebieha;
     private boolean vypnuty;
-    private Queue<Agent> front;
+    private final Queue<Agent> front;
 
     private final SpojitaStatistika statistikaDlzkaFront;
     private final DiskretnaStatistika statistikaCakanieFront;

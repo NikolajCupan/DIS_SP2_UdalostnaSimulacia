@@ -96,7 +96,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         if (!obsluhaNaplanovana)
         {
             // Nebolo mozne agenta priradit ku ziadnemu oknu, agent je pridany do frontu pred oknami
-            frontOkno.add(vykonavajuciAgent);
+            obsluhaOkna.pridajFront(vykonavajuciAgent, this.getCasVykonania());
 
             if (frontOkno.size() > Konstanty.KAPACITA_FRONT_OKNO)
             {

@@ -3,6 +3,7 @@ package org.example.Simulacia.System.Udalosti.Okno;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
+import org.example.Simulacia.System.Agenti.Objekty.ObsluhaOkna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
@@ -41,6 +42,7 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
+        ObsluhaOkna obsluhaOkna = simulacia.getObsluhaOkna();
 
 
         // Kontrola stavu simulacie
@@ -56,6 +58,7 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasZaciatokObsluhyOkno(this.getCasVykonania());
+        obsluhaOkna.pridajCakanieAgent(vykonavajuciAgent);
 
 
         // Naplanuj koniec obsluhy pri okne
