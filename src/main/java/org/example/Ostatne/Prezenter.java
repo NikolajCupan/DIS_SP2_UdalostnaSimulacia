@@ -261,18 +261,17 @@ public class Prezenter
         }
     }
 
-    private static String zaokruhli(double cislo)
-    {
-        return Prezenter.FORMATOVAC.format(cislo);
-    }
-
     private static String naformatujCas(double casOdZaciatku)
     {
         int pocetHodin = (int)Math.floor(casOdZaciatku / 3600);
-        int pocetMinut = (int)Math.floor((casOdZaciatku - pocetHodin * 3600) / 60);
-        int pocetSekund = (int)Math.round(casOdZaciatku - pocetHodin * 3600 - pocetMinut * 60);
+        double pocetMinut = (casOdZaciatku - pocetHodin * 3600) / 60;
 
         final int hodinaOtvorenia = 9;
-        return (pocetHodin + hodinaOtvorenia) + ":" + pocetMinut + ":" + pocetSekund;
+        return (pocetHodin + hodinaOtvorenia) + ":" + Prezenter.zaokruhli(pocetMinut);
+    }
+
+    private static String zaokruhli(double cislo)
+    {
+        return Prezenter.FORMATOVAC.format(cislo);
     }
 }
