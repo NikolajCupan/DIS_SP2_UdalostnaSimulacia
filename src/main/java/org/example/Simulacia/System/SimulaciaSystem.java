@@ -77,6 +77,12 @@ public class SimulaciaSystem extends SimulacneJadro
 
     // Celkove statistiky
     private DiskretnaStatistika celkovaStatistikaCasSystem;
+
+    private DiskretnaStatistika celkovaStatistikaDlzkaFrontAutomat;
+    private DiskretnaStatistika celkovaStatistikaCasFrontAutomat;
+
+    private DiskretnaStatistika celkovaStatistikaCasPoslednyOdchod;
+    private DiskretnaStatistika celkovaStatistikaPocetObsluzenychAgentov;
     // Koniec celkove statistiky
 
 
@@ -139,6 +145,10 @@ public class SimulaciaSystem extends SimulacneJadro
 
         // Celkove statistiky
         this.celkovaStatistikaCasSystem = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.celkovaStatistikaDlzkaFrontAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.celkovaStatistikaCasFrontAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.celkovaStatistikaCasPoslednyOdchod = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.celkovaStatistikaPocetObsluzenychAgentov = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
     }
 
     @Override
@@ -208,11 +218,57 @@ public class SimulaciaSystem extends SimulacneJadro
     @Override
     protected void poReplikacii()
     {
-        this.statistikaCasSystem.skusPrepocitatStatistiky();
-        if (this.statistikaCasSystem.getStatistikyVypocitane())
+        double casSystem = this.statistikaCasSystem.forceGetPriemer();
+        if (casSystem != -1)
         {
-            this.celkovaStatistikaCasSystem.pridajHodnotu(this.statistikaCasSystem.getPriemer());
+            this.celkovaStatistikaCasSystem.pridajHodnotu(casSystem);
         }
+
+        double casFront = this.automat.getPriemerneCakenieFront();
+        if (casFront != -1)
+        {
+            this.celkovaStatistikaCasFrontAutomat.pridajHodnotu(casFront);
+        }
+
+        this.celkovaStatistikaDlzkaFrontAutomat.pridajHodnotu(this.automat.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
+
+        // Cas posledneho odchodu
+        if (!this.agenti.isEmpty())
+        {
+            Agent poslednyOdchadzajuci = null;
+            double poslednyCasOdchodu = Double.MIN_VALUE;
+            for (Agent agent : this.agenti)
+            {
+                double cas = (agent.getCasKoniecVyzdvihnutie() == -1) ?
+                    agent.getCasKoniecObsluhyPokladna() : agent.getCasKoniecVyzdvihnutie();
+
+                if (cas > poslednyCasOdchodu)
+                {
+                    poslednyOdchadzajuci = agent;
+                    poslednyCasOdchodu = cas;
+                }
+            }
+
+            if (poslednyOdchadzajuci == null
+                || poslednyCasOdchodu == -1
+                || poslednyCasOdchodu == Double.MIN_VALUE)
+            {
+                throw new RuntimeException("Chyba pri hladani posledneho odchadzajuceho agenta!");
+            }
+
+            this.celkovaStatistikaCasPoslednyOdchod.pridajHodnotu(poslednyCasOdchodu);
+        }
+
+        // Pocet obsluzenych agentov
+        int pocetObsluzenychAgentov = 0;
+        for (Agent agent : this.agenti)
+        {
+            if (agent.getCasZaciatokObsluhyAutomat() != -1)
+            {
+                pocetObsluzenychAgentov++;
+            }
+        }
+        this.celkovaStatistikaPocetObsluzenychAgentov.pridajHodnotu(pocetObsluzenychAgentov);
     }
 
     @Override
@@ -235,7 +291,7 @@ public class SimulaciaSystem extends SimulacneJadro
             this.prichodyZrusene = true;
 
             // Doslo k prekroceniu simulacneho casu, vyprazdni front pred automatom
-            this.automat.vyprazdniAutomat();
+            this.automat.vyprazdniAutomat(this.getAktualnySimulacnyCas());
 
             // Kontrola stavu kalendara udalosti
             for (Udalost udalost : this.getKalendarUdalosti())
@@ -517,6 +573,26 @@ public class SimulaciaSystem extends SimulacneJadro
     public DiskretnaStatistika getCelkovaStatistikaCasSystem()
     {
         return this.celkovaStatistikaCasSystem;
+    }
+
+    public DiskretnaStatistika getCelkovaStatistikaDlzkaFrontAutomat()
+    {
+        return this.celkovaStatistikaDlzkaFrontAutomat;
+    }
+
+    public DiskretnaStatistika getCelkovaStatistikaCasFrontAutomat()
+    {
+        return this.celkovaStatistikaCasFrontAutomat;
+    }
+
+    public DiskretnaStatistika getCelkovaStatistikaCasPoslednyOdchod()
+    {
+        return this.celkovaStatistikaCasPoslednyOdchod;
+    }
+
+    public DiskretnaStatistika getCelkovaStatistikaPocetObsluzenychAgentov()
+    {
+        return this.celkovaStatistikaPocetObsluzenychAgentov;
     }
     // Koniec celkove statistiky
 }

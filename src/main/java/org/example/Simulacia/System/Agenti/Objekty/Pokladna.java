@@ -35,7 +35,7 @@ public class Pokladna
     {
         if (this.front.contains(agent))
         {
-            throw new RuntimeException("Front pred pokladnou uz obsahuje daneho zakaznika!");
+            throw new RuntimeException("Front pred pokladnou uz obsahuje daneho agenta!");
         }
 
         this.front.add(agent);
@@ -49,7 +49,7 @@ public class Pokladna
             throw new RuntimeException("Front pred pokladnou je prazdny!");
         }
 
-        Agent odobratyAgent =  this.front.poll();
+        Agent odobratyAgent = this.front.poll();
         this.statistikaDlzkaFront.pridajHodnotu(simulacnyCas, this.getPocetFront());
         return odobratyAgent;
     }

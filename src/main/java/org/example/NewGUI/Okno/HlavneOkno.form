@@ -101,17 +101,8 @@
                   </Group>
                   <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
                   <Component id="filler3" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jLabel7" alignment="0" pref="355" max="32767" attributes="0"/>
-                          <Component id="labelCelkovyCasSystem" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel12" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jScrollPane3" alignment="1" pref="942" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="jLabel10" alignment="0" pref="228" max="32767" attributes="0"/>
@@ -122,11 +113,15 @@
                                   <Component id="jLabel11" max="32767" attributes="0"/>
                                   <Component id="labelPriemernaDlzkaAutomat" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jLabel15" min="-2" pref="189" max="-2" attributes="0"/>
-                                  <Component id="labelRadAutomat" min="-2" pref="189" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel15" min="-2" pref="219" max="-2" attributes="0"/>
+                                  <Component id="labelDlzkaAutomat" min="-2" pref="219" max="-2" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel12" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" alignment="1" pref="942" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -140,6 +135,33 @@
                           <Component id="jLabel14" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="labelCelkovyCasSystem" max="32767" attributes="0"/>
+                          <Component id="jLabel7" pref="193" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCelkovyPriemernyCasAutomat" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel17" max="32767" attributes="0"/>
+                          <Component id="labelCelkovaPriemernaDlzkaAutomat" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="labelCasPoslednyOdchod" max="32767" attributes="0"/>
+                          <Component id="jLabel18" pref="235" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel19" pref="273" max="32767" attributes="0"/>
+                          <Component id="labelPocetObsluzenych" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -200,7 +222,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" min="26" max="32767" attributes="0"/>
+              <EmptySpace min="26" pref="12" max="32767" attributes="0"/>
               <Component id="filler1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -208,9 +230,21 @@
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="labelCelkovyCasSystem" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelCelkovyCasSystem" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelCelkovyPriemernyCasAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelCelkovaPriemernaDlzkaAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelCasPoslednyOdchod" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelPocetObsluzenych" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -223,7 +257,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelPriemernyCasAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelPriemernaDlzkaAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelRadAutomat" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelDlzkaAutomat" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="filler3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -466,7 +500,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Priemerny cas v rade pred automatom:"/>
+        <Property name="text" type="java.lang.String" value="Priemerny cas vo fronte pred automatom:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelPriemernyCasAutomat">
@@ -690,7 +724,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Priemerna dlzka radu pred automatom:"/>
+        <Property name="text" type="java.lang.String" value="Priemerna dlzka frontu pred automatom:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelPriemernaDlzkaAutomat">
@@ -700,10 +734,50 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel15">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Rad pred automatom:"/>
+        <Property name="text" type="java.lang.String" value="Aktualna dlzka frontu pred automatom:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="labelRadAutomat">
+    <Component class="javax.swing.JLabel" name="labelDlzkaAutomat">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n/a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel16">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Priemerny cas vo fronte pred automatom:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCelkovyPriemernyCasAutomat">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n/a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel17">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Priemerna dlzka frontu pred automatom:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCelkovaPriemernaDlzkaAutomat">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n/a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel18">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Priemerny cas posledneho odchodu:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCasPoslednyOdchod">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="n/a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel19">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Priemerny pocet obsluzenych zakaznikov:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelPocetObsluzenych">
       <Properties>
         <Property name="text" type="java.lang.String" value="n/a"/>
       </Properties>

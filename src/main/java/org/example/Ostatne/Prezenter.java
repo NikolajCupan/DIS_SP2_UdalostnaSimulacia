@@ -33,6 +33,74 @@ public class Prezenter
         }
     }
 
+    public static void celkovyCasFrontAutomat(SimulaciaSystem simulacia, JLabel label)
+    {
+        DiskretnaStatistika statistika = simulacia.getCelkovaStatistikaCasFrontAutomat();
+
+        statistika.skusPrepocitatStatistiky();
+        if (!statistika.getStatistikyVypocitane())
+        {
+            label.setText("n/a");
+        }
+        else
+        {
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+                Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
+                Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+        }
+    }
+
+    public static void celkovaDlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
+    {
+        DiskretnaStatistika statistika = simulacia.getCelkovaStatistikaDlzkaFrontAutomat();
+
+        statistika.skusPrepocitatStatistiky();
+        if (!statistika.getStatistikyVypocitane())
+        {
+            label.setText("n/a");
+        }
+        else
+        {
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+                Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
+                Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+        }
+    }
+
+    public static void poslednyOdchod(SimulaciaSystem simulacia, JLabel label)
+    {
+        DiskretnaStatistika statistika = simulacia.getCelkovaStatistikaCasPoslednyOdchod();
+
+        statistika.skusPrepocitatStatistiky();
+        if (!statistika.getStatistikyVypocitane())
+        {
+            label.setText("n/a");
+        }
+        else
+        {
+            label.setText(Prezenter.naformatujCas(statistika.getPriemer()) + " [" +
+                Prezenter.naformatujCas(statistika.getDolnaHranicaIS()) + ", " +
+                Prezenter.naformatujCas(statistika.getHornaHranicaIS()) + "]");
+        }
+    }
+
+    public static void pocetObsluzenych(SimulaciaSystem simulacia, JLabel label)
+    {
+        DiskretnaStatistika statistika = simulacia.getCelkovaStatistikaPocetObsluzenychAgentov();
+
+        statistika.skusPrepocitatStatistiky();
+        if (!statistika.getStatistikyVypocitane())
+        {
+            label.setText("n/a");
+        }
+        else
+        {
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+                Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
+                Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+        }
+    }
+
     public static void aktualnaReplikacia(SimulaciaSystem simulacia, JLabel label)
     {
         label.setText(String.valueOf(simulacia.getAktualnaReplikacia()));
@@ -41,6 +109,21 @@ public class Prezenter
     public static void simulacnyCas(SimulaciaSystem simulacia, JLabel label)
     {
         label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAktualnySimulacnyCas())));
+    }
+
+    public static void dlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
+    {
+        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAutomat().getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas()))));
+    }
+
+    public static void casFrontAutomat(SimulaciaSystem simulacia, JLabel label)
+    {
+        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAutomat().getPriemerneCakenieFront())));
+    }
+
+    public static void aktualnaDlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
+    {
+        label.setText(String.valueOf(simulacia.getAutomat().getPocetFront()));
     }
 
     public static void tabulkaAgenti(SimulaciaSystem simulacia, JTable tabulka)
@@ -144,5 +227,15 @@ public class Prezenter
     private static String zaokruhli(double cislo)
     {
         return Prezenter.FORMATOVAC.format(cislo);
+    }
+
+    private static String naformatujCas(double casOdZaciatku)
+    {
+        int pocetHodin = (int)Math.floor(casOdZaciatku / 3600);
+        int pocetMinut = (int)Math.floor((casOdZaciatku - pocetHodin * 3600) / 60);
+        int pocetSekund = (int)Math.round(casOdZaciatku - pocetHodin * 3600 - pocetMinut * 60);
+
+        final int hodinaOtvorenia = 9;
+        return (pocetHodin + hodinaOtvorenia) + ":" + pocetMinut + ":" + pocetSekund;
     }
 }

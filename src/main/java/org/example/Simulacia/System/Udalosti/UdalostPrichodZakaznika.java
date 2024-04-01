@@ -66,7 +66,7 @@ public class UdalostPrichodZakaznika extends Udalost
         if (automat.getObsluhaPrebieha() || automat.getVypnuty())
         {
             // Niekto je obsluhovany alebo je automat vypnuty, pridaj agenta do frontu pred automatom
-            automat.pridajFront(vykonavajuciAgent);
+            automat.pridajFront(vykonavajuciAgent, this.getCasVykonania());
         }
         else
         {

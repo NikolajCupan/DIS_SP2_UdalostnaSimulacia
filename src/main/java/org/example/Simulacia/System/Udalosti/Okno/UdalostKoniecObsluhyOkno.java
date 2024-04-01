@@ -118,7 +118,7 @@ public class UdalostKoniecObsluhyOkno extends Udalost
             
             if (automat.getPocetFront() != 0)
             {
-                Agent odobratyAgent = automat.odoberFront();
+                Agent odobratyAgent = automat.odoberFront(this.getCasVykonania());
                 UdalostZaciatokObsluhyAutomat zaciatokObsluhyAutomat =
                     new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
                 simulacia.naplanujUdalost(zaciatokObsluhyAutomat);

@@ -63,6 +63,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
 
         // Nastavenie atributov agenta, ktory udalost vykonava
         vykonavajuciAgent.setCasKoniecObsluhyAutomat(this.getCasVykonania());
+        automat.pridajCakanieAgent(vykonavajuciAgent);
 
 
         // Pokus o naplanovanie obsluhy vykonavajuceho agenta u okienka
@@ -116,7 +117,7 @@ public class UdalostKoniecObsluhyAutomat extends Udalost
         }
         else
         {
-            Agent odobratyAgent = automat.odoberFront();
+            Agent odobratyAgent = automat.odoberFront(this.getCasVykonania());
             UdalostZaciatokObsluhyAutomat zaciatokObsluhy = new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
             simulacia.naplanujUdalost(zaciatokObsluhy);
         }

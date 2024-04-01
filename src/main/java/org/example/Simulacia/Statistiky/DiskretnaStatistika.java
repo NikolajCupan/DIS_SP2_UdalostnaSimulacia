@@ -130,6 +130,18 @@ public class DiskretnaStatistika
         return this.priemer;
     }
 
+    public double forceGetPriemer()
+    {
+        if (this.pocetHodnot == 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return this.sucet / this.pocetHodnot;
+        }
+    }
+
     public double getDolnaHranicaIS()
     {
         if (!this.statistikyVypocitane)
