@@ -819,21 +819,9 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         this.labelRychlost.setText(Konstanty.DEFAULT_RYCHLOST + "x");
     }
 
-    private void resetujGUI()
+    private void resetujPriebezneStatistiky()
     {
         this.labelSimulacnyCas.setText("n/a");
-        this.labelAktualnaReplikacia.setText("n/a");
-        this.labelDlzkaOkno.setText("n/a");
-        this.labelCelkovyPriemernyCasAutomat.setText("n/a");
-        this.labelCelkovaPriemernaDlzkaAutomat.setText("n/a");
-        this.labelCasPoslednyOdchod.setText("n/a");
-        this.labelCelkovyPriemernyCasOkno.setText("n/a");
-        this.labelPocetObsluzenych.setText("n/a");
-        this.labelCelkovaPriemernaDlzkaOkno.setText("n/a");
-
-        ((DefaultTableModel)this.tabulkaCelkoveOkna.getModel()).setRowCount(0);
-        ((DefaultTableModel)this.tabulkaCelkovePokladne.getModel()).setRowCount(0);
-
         this.labelPriemernyCasAutomat.setText("n/a");
         this.labelPriemernaDlzkaAutomat.setText("n/a");
         this.labelDlzkaAutomat.setText("n/a");
@@ -876,6 +864,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
             Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
             Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
+        }
+        else
+        {
+            this.resetujPriebezneStatistiky();
         }
     }
 
