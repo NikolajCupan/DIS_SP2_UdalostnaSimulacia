@@ -92,11 +92,11 @@ public abstract class SimulacneJadro
                 this.poVykonaniUdalosti();
 
                 this.udalostPrebieha = false;
-                this.aktualizujGUI();
+                this.aktualizujGUI(false, true);
             }
 
             this.poReplikacii();
-            this.aktualizujGUI();
+            this.aktualizujGUI(true, false);
             this.aktualnaReplikacia++;
         }
 
@@ -128,8 +128,11 @@ public abstract class SimulacneJadro
         this.aktualnySimulacnyCas = 0.0;
 
         // Naplanovanie prvej systemovej udalosti v case 0
-        SystemovaUdalost systemovaUdalost = new SystemovaUdalost(this, 0.0);
-        this.naplanujUdalost(systemovaUdalost);
+        if (this.rychlost < Konstanty.MAX_RYCHLOST)
+        {
+            SystemovaUdalost systemovaUdalost = new SystemovaUdalost(this, 0.0);
+            this.naplanujUdalost(systemovaUdalost);
+        }
     }
 
     private void aktualizujSimulacnyCas(Udalost vykonavanaUdalost)
@@ -256,11 +259,11 @@ public abstract class SimulacneJadro
         this.delegati.remove(delegat);
     }
 
-    public void aktualizujGUI()
+    public void aktualizujGUI(boolean celkoveStatistiky, boolean priebezneStatistiky)
     {
         for (ISimulationDelegate delegat : this.delegati)
         {
-            delegat.aktualizujSa(this);
+            delegat.aktualizujSa(this, celkoveStatistiky, priebezneStatistiky);
         }
     }
 

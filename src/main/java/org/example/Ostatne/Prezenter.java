@@ -137,36 +137,31 @@ public class Prezenter
         }
     }
 
-    public static void tabulkaCelkoveOkna(SimulaciaSystem simulacia, JTable tabulka)
+    public static void textAreaCelkoveOkna(SimulaciaSystem simulacia, JTextArea tabulka)
     {
         try
         {
             EventQueue.invokeAndWait(() -> {
-                DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
-                model.setRowCount(0);
+                StringBuilder stringBuilder = new StringBuilder();
 
-                DiskretnaStatistika[] obycajneOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieObycajneOkna();
-                for (DiskretnaStatistika statistika : obycajneOknaStatistiky)
+                Okno[] oknaOnline = simulacia.getObsluhaOkna().getOknaOnline();
+                for (int i = 0; i < oknaOnline.length; i++)
                 {
-                    model.addRow(new Object[]{
-                        "Obycajne",
-                        Prezenter.zaokruhli(statistika.forceGetPriemer())
-                    });
+                    stringBuilder.append(oknaOnline[i].getVytazenie(simulacia.getAktualnySimulacnyCas())).append("\n");
                 }
 
-                DiskretnaStatistika[] onlineOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieOnlineOkna();
-                for (DiskretnaStatistika statistika : onlineOknaStatistiky)
+                Okno[] oknaObycajni = simulacia.getObsluhaOkna().getOknaObycajni();
+                for (int i = 0; i < oknaObycajni.length; i++)
                 {
-                    model.addRow(new Object[]{
-                        "Online",
-                        Prezenter.zaokruhli(statistika.forceGetPriemer())
-                    });
+                    stringBuilder.append(oknaObycajni[i].getVytazenie(simulacia.getAktualnySimulacnyCas())).append("\n");
                 }
+
+                tabulka.setText(stringBuilder.toString());
             });
         }
         catch (Exception ex)
         {
-            throw new RuntimeException("Chyba pri aktualizacii celkovej tabulky okien!");
+            throw new RuntimeException("Chyba pri aktualizacii celkovej statistiky obsluznych okien!");
         }
     }
 

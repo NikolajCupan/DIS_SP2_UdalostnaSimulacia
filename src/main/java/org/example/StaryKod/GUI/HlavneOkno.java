@@ -194,7 +194,7 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
     }
 
     @Override
-    public void aktualizujSa(SimulacneJadro simulacneJadro)
+    public void aktualizujSa(SimulacneJadro simulacneJadro, boolean priebezneStatistiky, boolean celkoveStatistiky)
     {
         SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
 

@@ -99,12 +99,12 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         labelCelkovyPriemernyCasOkno = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         labelCelkovaPriemernaDlzkaOkno = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tabulkaCelkoveOkna = new javax.swing.JTable();
         jLabel27 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tabulkaCelkovePokladne = new javax.swing.JTable();
         jLabel26 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        textAreaCelkoveOkna = new javax.swing.JTextArea();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -311,24 +311,6 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
         labelCelkovaPriemernaDlzkaOkno.setText("n/a");
 
-        tabulkaCelkoveOkna.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Typ", "Vytazenie"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane4.setViewportView(tabulkaCelkoveOkna);
-
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("Tabulka obsluzni zamestnanci:");
 
@@ -352,6 +334,12 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("Tabulka pokladne:");
+
+        textAreaCelkoveOkna.setEditable(false);
+        textAreaCelkoveOkna.setColumns(20);
+        textAreaCelkoveOkna.setRows(5);
+        textAreaCelkoveOkna.setFocusable(false);
+        jScrollPane7.setViewportView(textAreaCelkoveOkna);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -477,9 +465,9 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                                     .addComponent(labelCelkovaPriemernaDlzkaOkno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                                .addGap(27, 27, 27)
+                                    .addComponent(jScrollPane7)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
                                     .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -556,8 +544,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                     .addComponent(jLabel26))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -717,9 +705,9 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelAktualnaReplikacia;
     private javax.swing.JLabel labelCasPoslednyOdchod;
@@ -739,10 +727,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel labelSimulacnyCas;
     private javax.swing.JSlider sliderRychlost;
     private javax.swing.JTable tabulkaAgenti;
-    private javax.swing.JTable tabulkaCelkoveOkna;
     private javax.swing.JTable tabulkaCelkovePokladne;
     private javax.swing.JTable tabulkaOkna;
     private javax.swing.JTable tabulkaPokladne;
+    private javax.swing.JTextArea textAreaCelkoveOkna;
     // End of variables declaration//GEN-END:variables
 
     private void inicializacia()
@@ -831,44 +819,44 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     }
 
     @Override
-    public void aktualizujSa(SimulacneJadro simulacneJadro)
+    public void aktualizujSa(SimulacneJadro simulacneJadro, boolean celkoveStatistiky, boolean priebezneStatistiky)
     {
         SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
 
-        // Celkove informacie
-        Prezenter.aktualnaReplikacia(simulacia, this.labelAktualnaReplikacia);
-        Prezenter.celkovyPriemernyCasSystem(simulacia, this.labelCelkovyCasSystem);
-
-        Prezenter.celkovyCasFrontAutomat(simulacia, this.labelCelkovyPriemernyCasAutomat);
-        Prezenter.celkovaDlzkaFrontAutomat(simulacia, this.labelCelkovaPriemernaDlzkaAutomat);
-
-        Prezenter.poslednyOdchod(simulacia, this.labelCasPoslednyOdchod);
-        Prezenter.pocetObsluzenych(simulacia, this.labelPocetObsluzenych);
-
-        Prezenter.celkovyCasFrontOkno(simulacia, this.labelCelkovyPriemernyCasOkno);
-        Prezenter.celkovaDlzkaFrontOkno(simulacia, this.labelCelkovaPriemernaDlzkaOkno);
-
-        Prezenter.tabulkaCelkoveOkna(simulacia, this.tabulkaCelkoveOkna);
-        Prezenter.tabulkaCelkovePokladne(simulacia, this.tabulkaCelkovePokladne);
-
-        // Informacie aktualnej replikacie
-        if (simulacneJadro.getRychlost() < Konstanty.MAX_RYCHLOST)
+        if (celkoveStatistiky)
         {
-            // Statistiky aktualnej replikacie su menene iba za podmienky,
-            // ze simulacia nebezi v maximalnej rychlosti
-            Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
+            Prezenter.aktualnaReplikacia(simulacia, this.labelAktualnaReplikacia);
+            Prezenter.celkovyPriemernyCasSystem(simulacia, this.labelCelkovyCasSystem);
+            Prezenter.celkovyCasFrontAutomat(simulacia, this.labelCelkovyPriemernyCasAutomat);
+            Prezenter.celkovaDlzkaFrontAutomat(simulacia, this.labelCelkovaPriemernaDlzkaAutomat);
+            Prezenter.poslednyOdchod(simulacia, this.labelCasPoslednyOdchod);
+            Prezenter.pocetObsluzenych(simulacia, this.labelPocetObsluzenych);
+            Prezenter.celkovyCasFrontOkno(simulacia, this.labelCelkovyPriemernyCasOkno);
+            Prezenter.celkovaDlzkaFrontOkno(simulacia, this.labelCelkovaPriemernaDlzkaOkno);
+            Prezenter.textAreaCelkoveOkna(simulacia, this.textAreaCelkoveOkna);
+            //Prezenter.tabulkaCelkovePokladne(simulacia, this.tabulkaCelkovePokladne);
+        }
 
-            Prezenter.casFrontAutomat(simulacia, this.labelPriemernyCasAutomat);
-            Prezenter.dlzkaFrontAutomat(simulacia, this.labelPriemernaDlzkaAutomat);
-            Prezenter.aktualnaDlzkaFrontAutomat(simulacia, this.labelDlzkaAutomat);
-
-            Prezenter.casFrontOkno(simulacia, this.labelPriemernyCasOkno);
-            Prezenter.dlzkaFrontOkno(simulacia, this.labelPriemernaDlzkaOkno);
-            Prezenter.aktualnaDlzkaFrontOkno(simulacia, this.labelDlzkaOkno);
-
-            Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
-            Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
-            Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
+        if (priebezneStatistiky)
+        {
+//        // Informacie aktualnej replikacie
+//        if (simulacneJadro.getRychlost() < Konstanty.MAX_RYCHLOST)
+//        {
+//            // Statistiky aktualnej replikacie su menene iba za podmienky,
+//            // ze simulacia nebezi v maximalnej rychlosti
+//            Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
+//
+//            Prezenter.casFrontAutomat(simulacia, this.labelPriemernyCasAutomat);
+//            Prezenter.dlzkaFrontAutomat(simulacia, this.labelPriemernaDlzkaAutomat);
+//            Prezenter.aktualnaDlzkaFrontAutomat(simulacia, this.labelDlzkaAutomat);
+//
+//            Prezenter.casFrontOkno(simulacia, this.labelPriemernyCasOkno);
+//            Prezenter.dlzkaFrontOkno(simulacia, this.labelPriemernaDlzkaOkno);
+//            Prezenter.aktualnaDlzkaFrontOkno(simulacia, this.labelDlzkaOkno);
+//
+//            Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
+//            Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
+//            Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
         }
     }
 }
