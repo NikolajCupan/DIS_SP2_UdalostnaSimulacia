@@ -89,14 +89,12 @@ public abstract class SimulacneJadro
 
                 this.predVykonanimUdalosti();
                 aktualnaUdalost.vykonajUdalost();
-                this.poVykonaniUdalosti();
-
                 this.udalostPrebieha = false;
-                this.aktualizujGUI(false, true);
+
+                this.poVykonaniUdalosti();
             }
 
             this.poReplikacii();
-            this.aktualizujGUI(true, false);
             this.aktualnaReplikacia++;
         }
 
@@ -127,7 +125,8 @@ public abstract class SimulacneJadro
         this.kalendarUdalosti = new PriorityBlockingQueue<Udalost>(1, this.komparatorUdalosti);
         this.aktualnySimulacnyCas = 0.0;
 
-        // Naplanovanie prvej systemovej udalosti v case 0
+        // Naplanovanie prvej systemovej udalosti v case 0,
+        // za podmienky, ze nie je nastavena maximalna rychlost
         if (this.rychlost < Konstanty.MAX_RYCHLOST)
         {
             SystemovaUdalost systemovaUdalost = new SystemovaUdalost(this, 0.0);

@@ -115,8 +115,8 @@ public class Prezenter
         else
         {
             label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
-                    Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
-                    Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+                Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
+                Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
         }
     }
 
@@ -132,36 +132,40 @@ public class Prezenter
         else
         {
             label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
-                    Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
-                    Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+                Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
+                Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
         }
     }
 
-    public static void textAreaCelkoveOkna(SimulaciaSystem simulacia, JTextArea tabulka)
+    public static void tabulkaCelkoveOkna(SimulaciaSystem simulacia, JTable tabulka)
     {
         try
         {
             EventQueue.invokeAndWait(() -> {
-                StringBuilder stringBuilder = new StringBuilder();
-
-                Okno[] oknaOnline = simulacia.getObsluhaOkna().getOknaOnline();
-                for (int i = 0; i < oknaOnline.length; i++)
+                DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
+                model.setRowCount(0);
+                DiskretnaStatistika[] obycajneOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieObycajneOkna();
+                for (DiskretnaStatistika statistika : obycajneOknaStatistiky)
                 {
-                    stringBuilder.append(oknaOnline[i].getVytazenie(simulacia.getAktualnySimulacnyCas())).append("\n");
+                    model.addRow(new Object[]{
+                        "Obycajne",
+                        Prezenter.zaokruhli(statistika.forceGetPriemer())
+                    });
                 }
 
-                Okno[] oknaObycajni = simulacia.getObsluhaOkna().getOknaObycajni();
-                for (int i = 0; i < oknaObycajni.length; i++)
+                DiskretnaStatistika[] onlineOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieOnlineOkna();
+                for (DiskretnaStatistika statistika : onlineOknaStatistiky)
                 {
-                    stringBuilder.append(oknaObycajni[i].getVytazenie(simulacia.getAktualnySimulacnyCas())).append("\n");
+                    model.addRow(new Object[]{
+                        "Online",
+                        Prezenter.zaokruhli(statistika.forceGetPriemer())
+                    });
                 }
-
-                tabulka.setText(stringBuilder.toString());
             });
         }
         catch (Exception ex)
         {
-            throw new RuntimeException("Chyba pri aktualizacii celkovej statistiky obsluznych okien!");
+            throw new RuntimeException("Chyba pri aktualizacii celkovej tabulky okien!");
         }
     }
 
@@ -201,7 +205,7 @@ public class Prezenter
 
     public static void simulacnyCas(SimulaciaSystem simulacia, JLabel label)
     {
-        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAktualnySimulacnyCas())));
+        label.setText(Prezenter.naformatujCas(simulacia.getAktualnySimulacnyCas()));
     }
 
     public static void dlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
@@ -366,10 +370,27 @@ public class Prezenter
     private static String naformatujCas(double casOdZaciatku)
     {
         int pocetHodin = (int)Math.floor(casOdZaciatku / 3600);
-        double pocetMinut = (casOdZaciatku - pocetHodin * 3600) / 60;
+        int pocetMinut = (int)Math.floor((casOdZaciatku - pocetHodin * 3600) / 60);
+        int pocetSekund = (int)Math.round(casOdZaciatku - pocetHodin * 3600 - pocetMinut * 60);
 
         final int hodinaOtvorenia = 9;
-        return (pocetHodin + hodinaOtvorenia) + ":" + Prezenter.zaokruhli(pocetMinut);
+        pocetHodin += hodinaOtvorenia;
+
+        return Prezenter.casNaString(pocetHodin) + ":" + Prezenter.casNaString(pocetMinut) + ":" + Prezenter.casNaString(pocetSekund);
+    }
+
+    private static String casNaString(int cas)
+    {
+        String casString = String.valueOf(cas);
+
+        if (casString.length() == 1)
+        {
+            return '0' + casString;
+        }
+        else
+        {
+            return casString;
+        }
     }
 
     private static String zaokruhli(double cislo)

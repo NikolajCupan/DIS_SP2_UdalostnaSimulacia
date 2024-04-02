@@ -235,6 +235,9 @@ public class SimulaciaSystem extends SimulacneJadro
             UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, casPrichodu, vykonavajuciAgent);
             this.naplanujUdalost(prichod);
         }
+
+        // Inicializacia GUI
+        this.aktualizujGUI(true, false);
     }
 
     @Override
@@ -322,6 +325,9 @@ public class SimulaciaSystem extends SimulacneJadro
                 this.celkovaStatistikaCakanieFrontPokladne[i].pridajHodnotu(priemerneCakanie);
             }
         }
+
+        // Aktualizacia GUI
+        this.aktualizujGUI(true, false);
     }
 
     @Override
@@ -336,6 +342,12 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         this.kontrola();
         this.skontrolujVyprsanieSimulacnehoCasu();
+
+        if (this.getRychlost() < Konstanty.MAX_RYCHLOST)
+        {
+            // Aktualizuj iba ak simulacia nebezi v real time
+            this.aktualizujGUI(false, true);
+        }
     }
 
     private void kontrola()
