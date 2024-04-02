@@ -187,8 +187,8 @@ public class Prezenter
                     model.addRow(new Object[]{
                         i,
                         Prezenter.zaokruhli(vytazenie[i].forceGetPriemer()),
-                        Prezenter.zaokruhli(cakanie[i].forceGetPriemer()),
-                        Prezenter.zaokruhli(dlzkaFront[i].forceGetPriemer())
+                        Prezenter.zaokruhli(dlzkaFront[i].forceGetPriemer()),
+                        Prezenter.zaokruhli(cakanie[i].forceGetPriemer())
                     });
                 }
             });
