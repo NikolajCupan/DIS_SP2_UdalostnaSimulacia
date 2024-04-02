@@ -29,7 +29,7 @@ public class Prezenter
         }
         else
         {
-            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " sec [" +
                 Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
                 Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
         }
@@ -46,7 +46,7 @@ public class Prezenter
         }
         else
         {
-            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " sec [" +
                 Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
                 Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
         }
@@ -114,7 +114,7 @@ public class Prezenter
         }
         else
         {
-            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " sec [" +
                 Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
                 Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
         }
@@ -149,7 +149,7 @@ public class Prezenter
                 {
                     model.addRow(new Object[]{
                         "Obycajne",
-                        Prezenter.zaokruhli(statistika.forceGetPriemer())
+                        Prezenter.zaokruhli(statistika.forceGetPriemer() * 100) + " %"
                     });
                 }
 
@@ -158,7 +158,7 @@ public class Prezenter
                 {
                     model.addRow(new Object[]{
                         "Online",
-                        Prezenter.zaokruhli(statistika.forceGetPriemer())
+                        Prezenter.zaokruhli(statistika.forceGetPriemer() * 100) + " %"
                     });
                 }
             });
@@ -185,9 +185,9 @@ public class Prezenter
                 {
                     model.addRow(new Object[]{
                         i,
-                        Prezenter.zaokruhli(vytazenie[i].forceGetPriemer()),
+                        Prezenter.zaokruhli(vytazenie[i].forceGetPriemer() * 100) + " %",
                         Prezenter.zaokruhli(dlzkaFront[i].forceGetPriemer()),
-                        Prezenter.zaokruhli(cakanie[i].forceGetPriemer())
+                        Prezenter.zaokruhli(cakanie[i].forceGetPriemer()) + " sec"
                     });
                 }
             });
@@ -215,7 +215,7 @@ public class Prezenter
 
     public static void casFrontAutomat(SimulaciaSystem simulacia, JLabel label)
     {
-        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAutomat().getPriemerneCakenieFront())));
+        label.setText(Prezenter.zaokruhli(simulacia.getAutomat().getPriemerneCakenieFront()) + " sec");
     }
 
     public static void aktualnaDlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
@@ -225,7 +225,7 @@ public class Prezenter
 
     public static void casFrontOkno(SimulaciaSystem simulacia, JLabel label)
     {
-        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getObsluhaOkna().getPriemerneCakenieFront())));
+        label.setText(Prezenter.zaokruhli(simulacia.getObsluhaOkna().getPriemerneCakenieFront()) + " sec");
     }
 
     public static void dlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
@@ -282,15 +282,15 @@ public class Prezenter
                     model.addRow(new Object[]{
                         agent.getID(),
                         agent.getTypAgenta(),
-                        Prezenter.zaokruhli(agent.getCasPrichodSystem()),
-                        Prezenter.zaokruhli(agent.getCasZaciatokObsluhyAutomat()),
-                        Prezenter.zaokruhli(agent.getCasKoniecObsluhyAutomat()),
-                        Prezenter.zaokruhli(agent.getCasZaciatokObsluhyOkno()),
-                        Prezenter.zaokruhli(agent.getCasKoniecObsluhyOkno()),
-                        Prezenter.zaokruhli(agent.getCasZaciatokObsluhyPokladna()),
-                        Prezenter.zaokruhli(agent.getCasKoniecObsluhyPokladna()),
-                        Prezenter.zaokruhli(agent.getCasZaciatokVyzdvihnutie()),
-                        Prezenter.zaokruhli(agent.getCasKoniecVyzdvihnutie())
+                        Prezenter.naformatujCas(agent.getCasPrichodSystem()),
+                        Prezenter.naformatujCas(agent.getCasZaciatokObsluhyAutomat()),
+                        Prezenter.naformatujCas(agent.getCasKoniecObsluhyAutomat()),
+                        Prezenter.naformatujCas(agent.getCasZaciatokObsluhyOkno()),
+                        Prezenter.naformatujCas(agent.getCasKoniecObsluhyOkno()),
+                        Prezenter.naformatujCas(agent.getCasZaciatokObsluhyPokladna()),
+                        Prezenter.naformatujCas(agent.getCasKoniecObsluhyPokladna()),
+                        Prezenter.naformatujCas(agent.getCasZaciatokVyzdvihnutie()),
+                        Prezenter.naformatujCas(agent.getCasKoniecVyzdvihnutie())
                     });
                 }
             });
@@ -315,7 +315,7 @@ public class Prezenter
                     model.addRow(new Object[]{
                         "Obycajne",
                         okno.getObsadene(),
-                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()))
+                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %"
                     });
                 }
 
@@ -325,7 +325,7 @@ public class Prezenter
                     model.addRow(new Object[]{
                         "Online",
                         okno.getObsadene(),
-                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()))
+                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %"
                     });
                 }
             });
@@ -351,10 +351,10 @@ public class Prezenter
                     model.addRow(new Object[]{
                         pocitadlo,
                         pokladna.getObsadena(),
-                        Prezenter.zaokruhli(pokladna.getVytazenie(simulacia.getAktualnySimulacnyCas())),
+                        Prezenter.zaokruhli(pokladna.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %",
                         pokladna.getPocetFront(),
                         Prezenter.zaokruhli(pokladna.getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas())),
-                        Prezenter.zaokruhli(pokladna.getPriemerneCakenieFront())
+                        Prezenter.zaokruhli(pokladna.getPriemerneCakenieFront()) + " sec"
                     });
 
                     pocitadlo++;
@@ -369,6 +369,11 @@ public class Prezenter
 
     private static String naformatujCas(double casOdZaciatku)
     {
+        if (casOdZaciatku < 0)
+        {
+            return "n/a";
+        }
+
         int pocetHodin = (int)Math.floor(casOdZaciatku / 3600);
         int pocetMinut = (int)Math.floor((casOdZaciatku - pocetHodin * 3600) / 60);
         int pocetSekund = (int)Math.round(casOdZaciatku - pocetHodin * 3600 - pocetMinut * 60);
@@ -395,6 +400,11 @@ public class Prezenter
 
     private static String zaokruhli(double cislo)
     {
+        if (cislo < 0)
+        {
+            return "n/a";
+        }
+
         return Prezenter.FORMATOVAC.format(cislo);
     }
 }

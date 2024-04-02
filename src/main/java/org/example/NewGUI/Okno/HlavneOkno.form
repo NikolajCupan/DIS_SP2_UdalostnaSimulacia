@@ -604,25 +604,25 @@
               <Table columnCount="11" rowCount="0">
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="Typ" type="java.lang.Object"/>
-                <Column editable="false" title="S. system" type="java.lang.Object"/>
-                <Column editable="false" title="S. automat" type="java.lang.Object"/>
-                <Column editable="false" title="K. automat" type="java.lang.Object"/>
-                <Column editable="false" title="S. obsluha" type="java.lang.Object"/>
-                <Column editable="false" title="K. obsluha" type="java.lang.Object"/>
-                <Column editable="false" title="S. pokladna" type="java.lang.Object"/>
-                <Column editable="false" title="K. pokladna" type="java.lang.Object"/>
-                <Column editable="false" title="S. vyzdvihnutie" type="java.lang.Object"/>
-                <Column editable="false" title="K. vyzdvihnutie" type="java.lang.Object"/>
+                <Column editable="false" title="S system" type="java.lang.Object"/>
+                <Column editable="false" title="S automat" type="java.lang.Object"/>
+                <Column editable="false" title="K automat" type="java.lang.Object"/>
+                <Column editable="false" title="S obsluha" type="java.lang.Object"/>
+                <Column editable="false" title="K obsluha" type="java.lang.Object"/>
+                <Column editable="false" title="S pokladna" type="java.lang.Object"/>
+                <Column editable="false" title="K pokladna" type="java.lang.Object"/>
+                <Column editable="false" title="S vyzdvihnutie" type="java.lang.Object"/>
+                <Column editable="false" title="K vyzdvihnutie" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="40" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="60" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -696,28 +696,28 @@
                 <Column editable="false" title="Obsadenost" type="java.lang.Object"/>
                 <Column editable="false" title="Vytazenie" type="java.lang.Object"/>
                 <Column editable="false" title="Dlzka front" type="java.lang.Object"/>
-                <Column editable="false" title="Pr. dlzka front" type="java.lang.Object"/>
-                <Column editable="false" title="Pr. cakanie front" type="java.lang.Object"/>
+                <Column editable="false" title="Priemerna dlzka front" type="java.lang.Object"/>
+                <Column editable="false" title="Priemerne cakanie front" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="40" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="100" minWidth="-1" prefWidth="100" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="80" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="110" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -924,18 +924,18 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="Vytazenie" type="java.lang.Object"/>
-                <Column editable="false" title="Pr. dlzka front" type="java.lang.Object"/>
-                <Column editable="false" title="Pr. cakanie front" type="java.lang.Object"/>
+                <Column editable="false" title="Priemerna dlzka front" type="java.lang.Object"/>
+                <Column editable="false" title="Priemerne cakanie front" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="40" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>

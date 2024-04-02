@@ -212,7 +212,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
             },
             new String [] {
-                "ID", "Typ", "S. system", "S. automat", "K. automat", "S. obsluha", "K. obsluha", "S. pokladna", "K. pokladna", "S. vyzdvihnutie", "K. vyzdvihnutie"
+                "ID", "Typ", "S system", "S automat", "K automat", "S obsluha", "K obsluha", "S pokladna", "K pokladna", "S vyzdvihnutie", "K vyzdvihnutie"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -224,13 +224,17 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             }
         });
         jScrollPane3.setViewportView(tabulkaAgenti);
+        if (tabulkaAgenti.getColumnModel().getColumnCount() > 0) {
+            tabulkaAgenti.getColumnModel().getColumn(0).setMaxWidth(40);
+            tabulkaAgenti.getColumnModel().getColumn(1).setMaxWidth(60);
+        }
 
         tabulkaPokladne.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Obsadenost", "Vytazenie", "Dlzka front", "Pr. dlzka front", "Pr. cakanie front"
+                "ID", "Obsadenost", "Vytazenie", "Dlzka front", "Priemerna dlzka front", "Priemerne cakanie front"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -242,6 +246,13 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             }
         });
         jScrollPane2.setViewportView(tabulkaPokladne);
+        if (tabulkaPokladne.getColumnModel().getColumnCount() > 0) {
+            tabulkaPokladne.getColumnModel().getColumn(0).setMaxWidth(40);
+            tabulkaPokladne.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tabulkaPokladne.getColumnModel().getColumn(1).setMaxWidth(100);
+            tabulkaPokladne.getColumnModel().getColumn(2).setMaxWidth(80);
+            tabulkaPokladne.getColumnModel().getColumn(3).setMaxWidth(110);
+        }
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Tabulka obsluzni zamestnanci:");
@@ -319,7 +330,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
             },
             new String [] {
-                "ID", "Vytazenie", "Pr. dlzka front", "Pr. cakanie front"
+                "ID", "Vytazenie", "Priemerna dlzka front", "Priemerne cakanie front"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -331,6 +342,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             }
         });
         jScrollPane6.setViewportView(tabulkaCelkovePokladne);
+        if (tabulkaCelkovePokladne.getColumnModel().getColumnCount() > 0) {
+            tabulkaCelkovePokladne.getColumnModel().getColumn(0).setMaxWidth(40);
+            tabulkaCelkovePokladne.getColumnModel().getColumn(1).setMaxWidth(70);
+        }
 
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("Tabulka pokladne:");

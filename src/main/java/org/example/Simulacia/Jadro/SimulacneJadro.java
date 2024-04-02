@@ -27,7 +27,6 @@ public abstract class SimulacneJadro
     private volatile boolean simulaciaUkoncena;
 
     private volatile boolean udalostPrebieha;
-    private volatile boolean simulaciaPrebieha;
 
     private volatile int rychlost;
 
@@ -56,8 +55,6 @@ public abstract class SimulacneJadro
 
     public void simuluj()
     {
-        this.simulaciaPrebieha = true;
-
         this.simulaciaPozastavena = false;
         this.simulaciaUkoncena = false;
         this.aktualnaReplikacia = 1;
@@ -105,8 +102,6 @@ public abstract class SimulacneJadro
         }
 
         this.poReplikaciach();
-
-        this.simulaciaPrebieha = false;
     }
 
     // Skontroluje, ci kalendar udalosti obsahuje inu udalost ako systemovu
@@ -263,11 +258,6 @@ public abstract class SimulacneJadro
 
     public void odoberDelegata(ISimulationDelegate delegat)
     {
-        while (!this.simulaciaPrebieha)
-        {
-            // Pockaj kym simulacia skonci
-        }
-
         this.delegati.remove(delegat);
     }
 
