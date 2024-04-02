@@ -346,6 +346,11 @@ public class SimulaciaSystem extends SimulacneJadro
             return;
         }
 
+        if (this.automat.getVypnuty() && this.obsluhaOkna.getPocetFront() < (Konstanty.KAPACITA_FRONT_OKNO - 1))
+        {
+            throw new RuntimeException("Automat je vypnuty hoci front pred oknom nie je plny!");
+        }
+
         boolean obsluhaAutomatPrebieha = this.automat.getObsluhaPrebieha();
         if (obsluhaAutomatPrebieha)
         {

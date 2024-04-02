@@ -73,6 +73,12 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
             throw new RuntimeException("Front pred oknami prekrocil maximalnu velkost!");
         }
 
+        if (frontOkno.size() < (Konstanty.KAPACITA_FRONT_OKNO - 1)
+            && automat.getVypnuty())
+        {
+            throw new RuntimeException("Automat je vypnuty hoci front pred oknom nie je plny!");
+        }
+
         if (frontOkno.size() < Konstanty.KAPACITA_FRONT_OKNO
             && automat.getVypnuty())
         {
