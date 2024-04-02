@@ -89,6 +89,10 @@ public class SimulaciaSystem extends SimulacneJadro
 
     private DiskretnaStatistika[] celkovaStatistikaVytazenieObycajneOkna;
     private DiskretnaStatistika[] celkovaStatistikaVytazenieOnlineOkna;
+
+    private DiskretnaStatistika[] celkovaStatistikaVytazeniePokladne;
+    private DiskretnaStatistika[] celkovaStatistikaDlzkaFrontPokladne;
+    private DiskretnaStatistika[] celkovaStatistikaCakanieFrontPokladne;
     // Koniec celkove statistiky
 
 
@@ -171,6 +175,16 @@ public class SimulaciaSystem extends SimulacneJadro
         for (int i = 0; i < this.pocetOnlineObsluznychMiest; i++)
         {
             this.celkovaStatistikaVytazenieOnlineOkna[i] = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        }
+
+        this.celkovaStatistikaVytazeniePokladne = new DiskretnaStatistika[this.pocetPokladni];
+        this.celkovaStatistikaCakanieFrontPokladne = new DiskretnaStatistika[this.pocetPokladni];
+        this.celkovaStatistikaDlzkaFrontPokladne = new DiskretnaStatistika[this.pocetPokladni];
+        for (int i = 0; i < this.pocetPokladni; i++)
+        {
+            this.celkovaStatistikaVytazeniePokladne[i] = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+            this.celkovaStatistikaCakanieFrontPokladne[i] = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+            this.celkovaStatistikaDlzkaFrontPokladne[i] = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         }
     }
 
@@ -293,6 +307,20 @@ public class SimulaciaSystem extends SimulacneJadro
         for (int i = 0; i < oknaOnline.length; i++)
         {
             this.celkovaStatistikaVytazenieOnlineOkna[i].pridajHodnotu(oknaOnline[i].getVytazenie(this.getAktualnySimulacnyCas()));
+        }
+
+        // Statistiky pokladni
+        for (int i = 0; i < this.pocetPokladni; i++)
+        {
+            Pokladna pokladna = this.pokladne[i];
+            this.celkovaStatistikaVytazeniePokladne[i].pridajHodnotu(pokladna.getVytazenie(this.getAktualnySimulacnyCas()));
+            this.celkovaStatistikaDlzkaFrontPokladne[i].pridajHodnotu(pokladna.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
+
+            double priemerneCakanie = pokladna.getPriemerneCakenieFront();
+            if (priemerneCakanie != -1)
+            {
+                this.celkovaStatistikaCakanieFrontPokladne[i].pridajHodnotu(priemerneCakanie);
+            }
         }
     }
 
@@ -594,5 +622,20 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         return this.celkovaStatistikaVytazenieOnlineOkna;
     }
-// Koniec celkove statistiky
+
+    public DiskretnaStatistika[] getCelkovaStatistikaVytazeniePokladne()
+    {
+        return this.celkovaStatistikaVytazeniePokladne;
+    }
+
+    public DiskretnaStatistika[] getCelkovaStatistikaDlzkaFrontPokladne()
+    {
+        return this.celkovaStatistikaDlzkaFrontPokladne;
+    }
+
+    public DiskretnaStatistika[] getCelkovaStatistikaCakanieFrontPokladne()
+    {
+        return this.celkovaStatistikaCakanieFrontPokladne;
+    }
+    // Koniec celkove statistiky
 }

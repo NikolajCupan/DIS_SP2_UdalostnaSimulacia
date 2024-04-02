@@ -148,29 +148,48 @@ public class Prezenter
                 DiskretnaStatistika[] obycajneOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieObycajneOkna();
                 for (DiskretnaStatistika statistika : obycajneOknaStatistiky)
                 {
-                    statistika.skusPrepocitatStatistiky();
-
-                    if (statistika.getStatistikyVypocitane())
-                    {
-                        model.addRow(new Object[]{
-                            "Obycajne",
-                            Prezenter.zaokruhli(statistika.getPriemer())
-                        });
-                    }
+                    model.addRow(new Object[]{
+                        "Obycajne",
+                        Prezenter.zaokruhli(statistika.forceGetPriemer())
+                    });
                 }
 
                 DiskretnaStatistika[] onlineOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieOnlineOkna();
                 for (DiskretnaStatistika statistika : onlineOknaStatistiky)
                 {
-                    statistika.skusPrepocitatStatistiky();
+                    model.addRow(new Object[]{
+                        "Online",
+                        Prezenter.zaokruhli(statistika.forceGetPriemer())
+                    });
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Chyba pri aktualizacii celkovej tabulky okien!");
+        }
+    }
 
-                    if (statistika.getStatistikyVypocitane())
-                    {
-                        model.addRow(new Object[]{
-                            "Online",
-                            Prezenter.zaokruhli(statistika.getPriemer())
-                        });
-                    }
+    public static void tabulkaCelkovePokladne(SimulaciaSystem simulacia, JTable tabulka)
+    {
+        try
+        {
+            EventQueue.invokeAndWait(() -> {
+                DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
+                model.setRowCount(0);
+
+                DiskretnaStatistika[] vytazenie = simulacia.getCelkovaStatistikaVytazeniePokladne();
+                DiskretnaStatistika[] cakanie = simulacia.getCelkovaStatistikaCakanieFrontPokladne();
+                DiskretnaStatistika[] dlzkaFront = simulacia.getCelkovaStatistikaDlzkaFrontPokladne();
+
+                for (int i = 0; i < vytazenie.length; i++)
+                {
+                    model.addRow(new Object[]{
+                        i,
+                        Prezenter.zaokruhli(vytazenie[i].forceGetPriemer()),
+                        Prezenter.zaokruhli(cakanie[i].forceGetPriemer()),
+                        Prezenter.zaokruhli(dlzkaFront[i].forceGetPriemer())
+                    });
                 }
             });
         }

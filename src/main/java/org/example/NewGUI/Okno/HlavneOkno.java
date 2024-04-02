@@ -849,6 +849,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         Prezenter.celkovaDlzkaFrontOkno(simulacia, this.labelCelkovaPriemernaDlzkaOkno);
 
         Prezenter.tabulkaCelkoveOkna(simulacia, this.tabulkaCelkoveOkna);
+        Prezenter.tabulkaCelkovePokladne(simulacia, this.tabulkaCelkovePokladne);
 
         // Informacie aktualnej replikacie
         if (simulacneJadro.getRychlost() < Konstanty.MAX_RYCHLOST)
