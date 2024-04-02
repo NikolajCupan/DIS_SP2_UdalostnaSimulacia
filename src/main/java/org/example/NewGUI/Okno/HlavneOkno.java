@@ -819,40 +819,6 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         this.labelRychlost.setText(Konstanty.DEFAULT_RYCHLOST + "x");
     }
 
-    @Override
-    public void aktualizujSa(SimulacneJadro simulacneJadro, boolean celkoveStatistiky, boolean priebezneStatistiky)
-    {
-        SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
-
-        if (celkoveStatistiky)
-        {
-            Prezenter.aktualnaReplikacia(simulacia, this.labelAktualnaReplikacia);
-            Prezenter.celkovyPriemernyCasSystem(simulacia, this.labelCelkovyCasSystem);
-            Prezenter.celkovyCasFrontAutomat(simulacia, this.labelCelkovyPriemernyCasAutomat);
-            Prezenter.celkovaDlzkaFrontAutomat(simulacia, this.labelCelkovaPriemernaDlzkaAutomat);
-            Prezenter.poslednyOdchod(simulacia, this.labelCasPoslednyOdchod);
-            Prezenter.pocetObsluzenych(simulacia, this.labelPocetObsluzenych);
-            Prezenter.celkovyCasFrontOkno(simulacia, this.labelCelkovyPriemernyCasOkno);
-            Prezenter.celkovaDlzkaFrontOkno(simulacia, this.labelCelkovaPriemernaDlzkaOkno);
-            Prezenter.tabulkaCelkoveOkna(simulacia, this.tabulkaCelkoveOkna);
-            Prezenter.tabulkaCelkovePokladne(simulacia, this.tabulkaCelkovePokladne);
-        }
-
-        if (priebezneStatistiky)
-        {
-            Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
-            Prezenter.casFrontAutomat(simulacia, this.labelPriemernyCasAutomat);
-            Prezenter.dlzkaFrontAutomat(simulacia, this.labelPriemernaDlzkaAutomat);
-            Prezenter.aktualnaDlzkaFrontAutomat(simulacia, this.labelDlzkaAutomat);
-            Prezenter.casFrontOkno(simulacia, this.labelPriemernyCasOkno);
-            Prezenter.dlzkaFrontOkno(simulacia, this.labelPriemernaDlzkaOkno);
-            Prezenter.aktualnaDlzkaFrontOkno(simulacia, this.labelDlzkaOkno);
-            Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
-            Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
-            Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
-        }
-    }
-
     private void resetujGUI()
     {
         this.labelSimulacnyCas.setText("n/a");
@@ -878,5 +844,44 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         ((DefaultTableModel)this.tabulkaAgenti.getModel()).setRowCount(0);
         ((DefaultTableModel)this.tabulkaOkna.getModel()).setRowCount(0);
         ((DefaultTableModel)this.tabulkaPokladne.getModel()).setRowCount(0);
+    }
+
+    @Override
+    public void aktualizujSa(SimulacneJadro simulacneJadro, boolean celkoveStatistiky, boolean priebezneStatistiky)
+    {
+        SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
+
+        if (celkoveStatistiky)
+        {
+            Prezenter.aktualnaReplikacia(simulacia, this.labelAktualnaReplikacia);
+            Prezenter.celkovyPriemernyCasSystem(simulacia, this.labelCelkovyCasSystem);
+            Prezenter.celkovyCasFrontAutomat(simulacia, this.labelCelkovyPriemernyCasAutomat);
+            Prezenter.celkovaDlzkaFrontAutomat(simulacia, this.labelCelkovaPriemernaDlzkaAutomat);
+            Prezenter.poslednyOdchod(simulacia, this.labelCasPoslednyOdchod);
+            Prezenter.pocetObsluzenych(simulacia, this.labelPocetObsluzenych);
+            Prezenter.celkovyCasFrontOkno(simulacia, this.labelCelkovyPriemernyCasOkno);
+            Prezenter.celkovaDlzkaFrontOkno(simulacia, this.labelCelkovaPriemernaDlzkaOkno);
+            Prezenter.tabulkaCelkoveOkna(simulacia, this.tabulkaCelkoveOkna);
+            Prezenter.tabulkaCelkovePokladne(simulacia, this.tabulkaCelkovePokladne);
+        }
+
+        if (priebezneStatistiky)
+        {
+            Prezenter.casFrontAutomat(simulacia, this.labelPriemernyCasAutomat);
+            Prezenter.dlzkaFrontAutomat(simulacia, this.labelPriemernaDlzkaAutomat);
+            Prezenter.aktualnaDlzkaFrontAutomat(simulacia, this.labelDlzkaAutomat);
+            Prezenter.casFrontOkno(simulacia, this.labelPriemernyCasOkno);
+            Prezenter.dlzkaFrontOkno(simulacia, this.labelPriemernaDlzkaOkno);
+            Prezenter.aktualnaDlzkaFrontOkno(simulacia, this.labelDlzkaOkno);
+            Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
+            Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
+            Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
+        }
+    }
+
+    @Override
+    public void aktualizujSimulacnyCas(SimulacneJadro simulacneJadro)
+    {
+        Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
     }
 }

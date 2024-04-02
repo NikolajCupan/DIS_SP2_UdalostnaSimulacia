@@ -15,16 +15,17 @@ public class SystemovaUdalost extends Udalost
     @Override
     public void vykonajUdalost()
     {
+        SimulacneJadro simulacneJadro = this.getSimulacneJadro();
+
         try
         {
+            simulacneJadro.aktualizujSimulacnyCasGUI();
             Thread.sleep(Konstanty.DLZKA_PAUZY_SYSTEMOVA_UDALOST_MS);
         }
         catch (Exception ex)
         {
             throw new RuntimeException("Pri uspavani simulacie nastala chyba!");
         }
-
-        SimulacneJadro simulacneJadro = this.getSimulacneJadro();
 
         double rychlost = simulacneJadro.getRychlost();
         if (rychlost >= Konstanty.MAX_RYCHLOST)

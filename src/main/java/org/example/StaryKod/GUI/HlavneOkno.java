@@ -208,4 +208,10 @@ public class HlavneOkno extends JFrame implements ISimulationDelegate
         Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
         Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
     }
+
+    @Override
+    public void aktualizujSimulacnyCas(SimulacneJadro simulacneJadro)
+    {
+        Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
+    }
 }

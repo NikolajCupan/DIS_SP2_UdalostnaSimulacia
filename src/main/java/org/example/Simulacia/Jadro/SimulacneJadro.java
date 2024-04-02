@@ -4,14 +4,16 @@ import org.example.NewGUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public abstract class SimulacneJadro
 {
     // Prepojenie s GUI
-    private final ArrayList<ISimulationDelegate> delegati;
+    private final List<ISimulationDelegate> delegati;
 
     private final long pocetReplikacii;
     private int aktualnaReplikacia;
@@ -31,7 +33,7 @@ public abstract class SimulacneJadro
     {
         this.validujVstupy(pocetReplikacii, rychlost);
 
-        this.delegati = new ArrayList<>();
+        this.delegati = Collections.synchronizedList(new ArrayList<>());
         this.pocetReplikacii = pocetReplikacii;
         this.rychlost = rychlost;
         this.aktualnaReplikacia = -1;
@@ -263,6 +265,14 @@ public abstract class SimulacneJadro
         for (ISimulationDelegate delegat : this.delegati)
         {
             delegat.aktualizujSa(this, celkoveStatistiky, priebezneStatistiky);
+        }
+    }
+
+    public void aktualizujSimulacnyCasGUI()
+    {
+        for (ISimulationDelegate delegat : this.delegati)
+        {
+            delegat.aktualizujSimulacnyCas(this);
         }
     }
 
