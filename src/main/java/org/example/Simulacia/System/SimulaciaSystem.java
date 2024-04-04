@@ -297,7 +297,7 @@ public class SimulaciaSystem extends SimulacneJadro
         int pocetObsluzenychAgentov = 0;
         for (Agent agent : this.agenti)
         {
-            if (agent.getCasZaciatokObsluhyAutomat() != -1)
+            if (agent.getCasKoniecObsluhyAutomat() != -1)
             {
                 pocetObsluzenychAgentov++;
             }

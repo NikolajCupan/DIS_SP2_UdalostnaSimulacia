@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExperimentOkno implements ISimulationDelegate
+public class Experiment implements ISimulationDelegate
 {
     private final JLabel labelAktualnaReplikacia;
     private final JPanel panelGraf;
@@ -29,7 +29,7 @@ public class ExperimentOkno implements ISimulationDelegate
 
     private final List<SimulaciaSystem> simulacie;
 
-    public ExperimentOkno(JLabel labekAktualnaReplikacia, JPanel panelGraf, int minPocetPokladni, int maxPocetPokladni)
+    public Experiment(JLabel labekAktualnaReplikacia, JPanel panelGraf, int minPocetPokladni, int maxPocetPokladni)
     {
         this.validujVstupy(minPocetPokladni, maxPocetPokladni);
         this.minPocetPokladni = minPocetPokladni;

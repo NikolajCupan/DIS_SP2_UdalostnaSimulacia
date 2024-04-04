@@ -23,7 +23,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
-    private ExperimentOkno experimentOkno;
+    private Experiment experiment;
     private boolean priebezneStatistikyVypisane;
 
     /**
@@ -816,10 +816,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     }//GEN-LAST:event_formMouseClicked
 
     private void buttonExperimentStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExperimentStopActionPerformed
-        if (this.experimentOkno != null)
+        if (this.experiment != null)
         {
-            this.experimentOkno.ukonciExperiment();
-            this.experimentOkno = null;
+            this.experiment.ukonciExperiment();
+            this.experiment = null;
         }
     }//GEN-LAST:event_buttonExperimentStopActionPerformed
 
@@ -1045,10 +1045,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
     private void inicializujExperiment()
     {
-        if (this.experimentOkno != null)
+        if (this.experiment != null)
         {
-            this.experimentOkno.ukonciExperiment();
-            this.experimentOkno = null;
+            this.experiment.ukonciExperiment();
+            this.experiment = null;
         }
 
         int pocetReplikacii = Integer.parseInt(this.inputPocetReplikacii.getText());
@@ -1061,10 +1061,10 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             throw new RuntimeException("Pocet okien nemoze byt mensi ako 3!");
         }
 
-        this.experimentOkno = new ExperimentOkno(this.labelExperimentAktualnaReplikacia, this.panelGraf, Konstanty.MIN_POCET_POKLADNI, Konstanty.MAX_POCET_POKLADNI);
+        this.experiment = new Experiment(this.labelExperimentAktualnaReplikacia, this.panelGraf, Konstanty.MIN_POCET_POKLADNI, Konstanty.MAX_POCET_POKLADNI);
         this.labelExperimentPocetOkien.setText(String.valueOf(pocetObsluznychMiest));
         this.labelExperimentPocetPokladni.setText("<" + Konstanty.MIN_POCET_POKLADNI + ", " + Konstanty.MAX_POCET_POKLADNI + ">");
-        this.experimentOkno.spustiExperiment(pocetReplikacii, Konstanty.OTVARACIA_DOBA_SEKUND, pocetObsluznychMiest,
+        this.experiment.spustiExperiment(pocetReplikacii, Konstanty.OTVARACIA_DOBA_SEKUND, pocetObsluznychMiest,
             nasada, nasadaZadana);
     }
 

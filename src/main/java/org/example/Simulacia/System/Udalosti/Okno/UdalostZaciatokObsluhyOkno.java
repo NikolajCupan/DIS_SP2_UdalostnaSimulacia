@@ -89,7 +89,7 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
             {
                 Agent odobratyAgent = automat.odoberFront(this.getCasVykonania());
                 UdalostZaciatokObsluhyAutomat zaciatokObsluhyAutomat =
-                        new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
+                    new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
                 simulacia.naplanujUdalost(zaciatokObsluhyAutomat);
             }
         }
