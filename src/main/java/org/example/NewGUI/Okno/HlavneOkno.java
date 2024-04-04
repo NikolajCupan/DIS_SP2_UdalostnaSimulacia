@@ -399,6 +399,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         labelCelkoveVytazenieAutomat.setText("n/a");
 
         panelExperiment.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelExperiment.setMaximumSize(new java.awt.Dimension(985, 288));
+        panelExperiment.setMinimumSize(new java.awt.Dimension(985, 288));
 
         buttonExperimentStart.setText("Experiment");
         buttonExperimentStart.addActionListener(new java.awt.event.ActionListener() {
@@ -419,6 +421,14 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
         labelExperimentPocetPokladni.setText("n/a");
 
+        panelGraf.setEnabled(false);
+        panelGraf.setFocusable(false);
+        panelGraf.setMaximumSize(new java.awt.Dimension(828, 270));
+        panelGraf.setMinimumSize(new java.awt.Dimension(828, 270));
+        panelGraf.setPreferredSize(new java.awt.Dimension(828, 270));
+        panelGraf.setRequestFocusEnabled(false);
+        panelGraf.setVerifyInputWhenFocusTarget(false);
+
         javax.swing.GroupLayout panelGrafLayout = new javax.swing.GroupLayout(panelGraf);
         panelGraf.setLayout(panelGrafLayout);
         panelGrafLayout.setHorizontalGroup(
@@ -427,7 +437,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         );
         panelGrafLayout.setVerticalGroup(
             panelGrafLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         buttonExperimentStop.setText("Stop");
@@ -458,7 +468,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                     .addComponent(labelExperimentPocetPokladni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonExperimentStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelExperimentLayout.setVerticalGroup(
@@ -467,13 +477,13 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                 .addContainerGap()
                 .addGroup(panelExperimentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelExperimentLayout.createSequentialGroup()
-                        .addComponent(panelGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelGraf, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(panelExperimentLayout.createSequentialGroup()
                         .addComponent(buttonExperimentStart)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(buttonExperimentStop)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelExperimentAktualnaReplikacia)

@@ -9,14 +9,12 @@ import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Experiment implements ISimulationDelegate
 {
     private final JLabel labelAktualnaReplikacia;
     private final JPanel panelGraf;
+    private ChartPanel chartPanel;
 
     private final int minPocetPokladni;
     private final int maxPocetPokladni;
@@ -24,10 +22,9 @@ public class Experiment implements ISimulationDelegate
     private Graf grafExperiment;
     private Thread experimentVlakno;
 
-    private volatile int aktualnyExperiment;
     private volatile boolean experimentStopnuty;
 
-    private final List<SimulaciaSystem> simulacie;
+    private SimulaciaSystem aktualnaSimulacia;
 
     public Experiment(JLabel labekAktualnaReplikacia, JPanel panelGraf, int minPocetPokladni, int maxPocetPokladni)
     {
@@ -38,9 +35,7 @@ public class Experiment implements ISimulationDelegate
         this.labelAktualnaReplikacia = labekAktualnaReplikacia;
         this.panelGraf = panelGraf;
 
-        this.simulacie = Collections.synchronizedList(new ArrayList<>(this.maxPocetPokladni - this.minPocetPokladni + 1));
         this.experimentStopnuty = false;
-        this.aktualnyExperiment = -1;
 
         this.inicializujGraf();
     }
@@ -55,10 +50,10 @@ public class Experiment implements ISimulationDelegate
 
         int panelSirka = this.panelGraf.getWidth();
         int panelVyska = this.panelGraf.getHeight();
-        ChartPanel chartPanel = new ChartPanel(this.grafExperiment.getGraf());
-        chartPanel.setBounds(0, 0, panelSirka, panelVyska);
+        this.chartPanel = new ChartPanel(this.grafExperiment.getGraf());
+        this.chartPanel.setBounds(0, 0, panelSirka, panelVyska);
 
-        this.panelGraf.add(chartPanel);
+        this.panelGraf.add(this.chartPanel);
         this.panelGraf.repaint();
         this.panelGraf.revalidate();
     }
@@ -66,13 +61,6 @@ public class Experiment implements ISimulationDelegate
     public void spustiExperiment(int pocetReplikacii, double dlzkaTrvaniaSimulacie, int pocetObsluznychMiest,
                                  int nasada, boolean pouziNasadu)
     {
-        for (int i = this.minPocetPokladni; i <= this.maxPocetPokladni; i++)
-        {
-            this.simulacie.add(i - this.minPocetPokladni, new SimulaciaSystem(pocetReplikacii, Konstanty.MAX_RYCHLOST, dlzkaTrvaniaSimulacie,
-                pocetObsluznychMiest, i, nasada, pouziNasadu));
-            this.simulacie.get(i - this.minPocetPokladni).pridajDelegata(this);
-        }
-
         this.experimentVlakno = new Thread(() -> {
             for (int i = this.minPocetPokladni; i <= this.maxPocetPokladni; i++)
             {
@@ -81,8 +69,10 @@ public class Experiment implements ISimulationDelegate
                     break;
                 }
 
-                this.aktualnyExperiment = i;
-                this.simulacie.get(i - this.minPocetPokladni).simuluj();
+                this.aktualnaSimulacia = new SimulaciaSystem(pocetReplikacii, Konstanty.MAX_RYCHLOST, dlzkaTrvaniaSimulacie,
+                    pocetObsluznychMiest, i, nasada, pouziNasadu);
+                this.aktualnaSimulacia.pridajDelegata(this);
+                this.aktualnaSimulacia.simuluj();
             }
         });
         this.experimentVlakno.setName("Experiment");
@@ -107,18 +97,26 @@ public class Experiment implements ISimulationDelegate
 
     public void ukonciExperiment()
     {
-        this.experimentStopnuty = true;
-        SimulaciaSystem prebiehajucaSimulacia = this.simulacie.get(this.aktualnyExperiment - this.minPocetPokladni);
-        prebiehajucaSimulacia.ukonciSimulaciu();
-        prebiehajucaSimulacia.odoberDelegata(this);
-        prebiehajucaSimulacia = null;
-
-        for (int i = this.aktualnyExperiment + 1; i <= this.maxPocetPokladni; i++)
+        if (this.aktualnaSimulacia != null)
         {
-            this.simulacie.get(i - this.minPocetPokladni).ukonciSimulaciu();
-            this.simulacie.get(i - this.minPocetPokladni).odoberDelegata(this);
-            this.simulacie.set(i - this.minPocetPokladni, null);
+            this.experimentStopnuty = true;
+            this.aktualnaSimulacia.ukonciSimulaciu();
+            this.aktualnaSimulacia.odoberDelegata(this);
+            this.aktualnaSimulacia = null;
         }
+
+        try
+        {
+            this.experimentVlakno.join();
+        }
+        catch (Exception exception)
+        {
+            throw new RuntimeException("Chyba pri zastavovani vlakna experimentu!");
+        }
+
+        this.panelGraf.remove(this.chartPanel);
+        this.panelGraf.revalidate();
+        this.panelGraf.repaint();
     }
 
     @Override
