@@ -30,6 +30,7 @@ public class SimulaciaSystem extends SimulacneJadro
     private final double dlzkaTrvaniaSimulacie;
     private boolean prichodyZrusene;
     private ConcurrentSkipListSet<Agent> agenti;
+    private Identifikator identifikator;
     // Koniec ostatne
 
 
@@ -200,7 +201,7 @@ public class SimulaciaSystem extends SimulacneJadro
         // Ostatne
         this.prichodyZrusene = false;
         this.agenti = new ConcurrentSkipListSet<>(new AgentKomparator());
-        Identifikator.resetID();
+        this.identifikator = new Identifikator();
         // Koniec ostatne
 
 
@@ -229,7 +230,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
 
         // Naplanovanie prichodu 1. zakaznika
-        Agent vykonavajuciAgent = new Agent(Identifikator.getID(), this.generatorTypZakaznika.getTypAgenta());
+        Agent vykonavajuciAgent = new Agent(this.identifikator.getID(), this.generatorTypZakaznika.getTypAgenta());
         double casPrichodu = this.generatorDalsiPrichod.sample();
         if (casPrichodu <= this.dlzkaTrvaniaSimulacie)
         {
@@ -435,6 +436,11 @@ public class SimulaciaSystem extends SimulacneJadro
     {
         return this.agenti;
     }
+
+    public Identifikator getIdentifikator()
+    {
+        return this.identifikator;
+    }
     // Koniec ostatne
 
 
@@ -493,6 +499,11 @@ public class SimulaciaSystem extends SimulacneJadro
     public GenerovanieDlzkyPlatenia getGeneratorDlzkaPlatenia()
     {
         return this.generatorDlzkaPlatenia;
+    }
+
+    public int getPocetPokladni()
+    {
+        return this.pocetPokladni;
     }
 
     public Pokladna[] getPokladne()

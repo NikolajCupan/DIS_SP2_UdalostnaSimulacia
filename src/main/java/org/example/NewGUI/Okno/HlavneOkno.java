@@ -8,6 +8,7 @@ import org.example.NewGUI.ISimulationDelegate;
 import org.example.Ostatne.Konstanty;
 import org.example.Ostatne.Prezenter;
 import org.example.Simulacia.Jadro.SimulacneJadro;
+import org.example.Simulacia.System.Experiment;
 import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
+    private Experiment experiment;
 
     /**
      * Creates new form HlavneOkno
@@ -109,6 +111,16 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         labelVytazenieAutomat = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         labelCelkoveVytazenieAutomat = new javax.swing.JLabel();
+        panelExperiment = new javax.swing.JPanel();
+        buttonExperimentStart = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        labelExperimentAktualnaReplikacia = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        labelExperimentPocetOkien = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        labelExperimentPocetPokladni = new javax.swing.JLabel();
+        panelGraf = new javax.swing.JPanel();
+        buttonExperimentStop = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -124,6 +136,11 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Pocet replikacii:");
 
@@ -380,6 +397,96 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
         labelCelkoveVytazenieAutomat.setText("n/a");
 
+        panelExperiment.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        buttonExperimentStart.setText("Experiment");
+        buttonExperimentStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExperimentStartActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setText("Aktualna replikacia:");
+
+        labelExperimentAktualnaReplikacia.setText("n/a");
+
+        jLabel28.setText("Pocet obsluznych miest:");
+
+        labelExperimentPocetOkien.setText("n/a");
+
+        jLabel31.setText("Pocet pokladni:");
+
+        labelExperimentPocetPokladni.setText("n/a");
+
+        javax.swing.GroupLayout panelGrafLayout = new javax.swing.GroupLayout(panelGraf);
+        panelGraf.setLayout(panelGrafLayout);
+        panelGrafLayout.setHorizontalGroup(
+            panelGrafLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 828, Short.MAX_VALUE)
+        );
+        panelGrafLayout.setVerticalGroup(
+            panelGrafLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        buttonExperimentStop.setText("Stop");
+        buttonExperimentStop.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonExperimentStopMouseClicked(evt);
+            }
+        });
+        buttonExperimentStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExperimentStopActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelExperimentLayout = new javax.swing.GroupLayout(panelExperiment);
+        panelExperiment.setLayout(panelExperimentLayout);
+        panelExperimentLayout.setHorizontalGroup(
+            panelExperimentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelExperimentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelExperimentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonExperimentStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelExperimentAktualnaReplikacia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelExperimentPocetOkien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelExperimentPocetPokladni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonExperimentStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelExperimentLayout.setVerticalGroup(
+            panelExperimentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelExperimentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelExperimentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelExperimentLayout.createSequentialGroup()
+                        .addComponent(panelGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(panelExperimentLayout.createSequentialGroup()
+                        .addComponent(buttonExperimentStart)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonExperimentStop)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelExperimentAktualnaReplikacia)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelExperimentPocetOkien)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelExperimentPocetPokladni)
+                        .addGap(59, 59, 59))))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -483,6 +590,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(46, 46, 46)
+                        .addComponent(panelExperiment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -573,15 +682,16 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                     .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel30))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel16)
+                        .addComponent(jLabel17)
+                        .addComponent(jLabel18)
+                        .addComponent(jLabel24)
+                        .addComponent(jLabel19)
+                        .addComponent(jLabel30)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCelkovyCasSystem)
@@ -592,14 +702,17 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
                     .addComponent(labelCelkovyPriemernyCasOkno)
                     .addComponent(labelCelkovaPriemernaDlzkaOkno)
                     .addComponent(labelCelkoveVytazenieAutomat))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel26))
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel27))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(panelExperiment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -686,6 +799,33 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         this.ukonciSimulaciu();
     }//GEN-LAST:event_buttonStopMouseClicked
 
+    private void buttonExperimentStartActionPerformed(java.awt.event.ActionEvent evt) {
+        try
+        {
+            this.inicializujExperiment();
+        }
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(HlavneOkno.this, "Neplatne zadane parametre experimentu!");
+        }
+    }                                                   
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formMouseClicked
+
+    private void buttonExperimentStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExperimentStopActionPerformed
+        if (this.experiment != null)
+        {
+            this.experiment.ukonciExperiment();
+            this.experiment = null;
+        }
+    }//GEN-LAST:event_buttonExperimentStopActionPerformed
+
+    private void buttonExperimentStopMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExperimentStopMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonExperimentStopMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -722,6 +862,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonExperimentStart;
+    private javax.swing.JButton buttonExperimentStop;
     private javax.swing.JButton buttonPauza;
     private javax.swing.JButton buttonStart;
     private javax.swing.JButton buttonStop;
@@ -749,11 +891,14 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -777,6 +922,9 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel labelCelkovyPriemernyCasOkno;
     private javax.swing.JLabel labelDlzkaAutomat;
     private javax.swing.JLabel labelDlzkaOkno;
+    private javax.swing.JLabel labelExperimentAktualnaReplikacia;
+    private javax.swing.JLabel labelExperimentPocetOkien;
+    private javax.swing.JLabel labelExperimentPocetPokladni;
     private javax.swing.JLabel labelPocetObsluzenych;
     private javax.swing.JLabel labelPriemernaDlzkaAutomat;
     private javax.swing.JLabel labelPriemernaDlzkaOkno;
@@ -785,6 +933,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private javax.swing.JLabel labelRychlost;
     private javax.swing.JLabel labelSimulacnyCas;
     private javax.swing.JLabel labelVytazenieAutomat;
+    private javax.swing.JPanel panelExperiment;
+    private javax.swing.JPanel panelGraf;
     private javax.swing.JSlider sliderRychlost;
     private javax.swing.JTable tabulkaAgenti;
     private javax.swing.JTable tabulkaCelkoveOkna;
@@ -796,6 +946,15 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private void inicializacia()
     {
         this.inicializujSlider();
+    }
+
+    private void inicializujSlider()
+    {
+        this.sliderRychlost.setValueIsAdjusting(true);
+        this.sliderRychlost.setValue(Konstanty.DEFAULT_RYCHLOST);
+        this.sliderRychlost.setValueIsAdjusting(false);
+
+        this.labelRychlost.setText(Konstanty.DEFAULT_RYCHLOST + "x");
     }
 
     private void inicializujSimulaciu()
@@ -857,15 +1016,6 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         return zadanaRychlost;
     }
 
-    private void inicializujSlider()
-    {
-        this.sliderRychlost.setValueIsAdjusting(true);
-        this.sliderRychlost.setValue(Konstanty.DEFAULT_RYCHLOST);
-        this.sliderRychlost.setValueIsAdjusting(false);
-
-        this.labelRychlost.setText(Konstanty.DEFAULT_RYCHLOST + "x");
-    }
-
     private void resetujPriebezneStatistiky()
     {
         this.labelSimulacnyCas.setText("n/a");
@@ -880,6 +1030,31 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         ((DefaultTableModel)this.tabulkaAgenti.getModel()).setRowCount(0);
         ((DefaultTableModel)this.tabulkaOkna.getModel()).setRowCount(0);
         ((DefaultTableModel)this.tabulkaPokladne.getModel()).setRowCount(0);
+    }
+
+    private void inicializujExperiment()
+    {
+        if (this.experiment != null)
+        {
+            this.experiment.ukonciExperiment();
+            this.experiment = null;
+        }
+
+        int pocetReplikacii = Integer.parseInt(this.inputPocetReplikacii.getText());
+        boolean nasadaZadana = !this.inputNasada.getText().isEmpty();
+        int nasada = (nasadaZadana ? Integer.parseInt(this.inputNasada.getText()) : -1);
+        int pocetObsluznychMiest = Integer.parseInt(this.inputPocetObsluznychMiest.getText());
+
+        if (pocetObsluznychMiest < 3)
+        {
+            throw new RuntimeException("Pocet okien nemoze byt mensi ako 3!");
+        }
+
+        this.experiment = new Experiment(this.labelExperimentAktualnaReplikacia, this.panelGraf, Konstanty.MIN_POCET_POKLADNI, Konstanty.MAX_POCET_POKLADNI);
+        this.labelExperimentPocetOkien.setText(String.valueOf(pocetObsluznychMiest));
+        this.labelExperimentPocetPokladni.setText("<" + Konstanty.MIN_POCET_POKLADNI + ", " + Konstanty.MAX_POCET_POKLADNI + ">");
+        this.experiment.spustiExperiment(pocetReplikacii, Konstanty.OTVARACIA_DOBA_SEKUND, pocetObsluznychMiest,
+            nasada, nasadaZadana);
     }
 
     @Override

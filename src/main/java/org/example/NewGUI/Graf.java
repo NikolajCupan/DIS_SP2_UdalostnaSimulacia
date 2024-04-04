@@ -1,64 +1,87 @@
 package org.example.NewGUI;
 
-import org.example.Ostatne.Konstanty;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import java.awt.*;
 
 public class Graf
 {
-    private JFreeChart graf;
-    private XYSeries dataset;
+    private final JFreeChart graf;
+    private final DefaultCategoryDataset dataset;
+    private int maxHodnota;
 
-    private double curMaxHodnota;
-    private double curMinHodnota;
-
-    public Graf(String nadpisGrafu)
+    public Graf(int minHodnota, int maxHodnota, double hornaHranica)
     {
-        this.dataset = new XYSeries("Data");
-        XYSeriesCollection seriesCollection = new XYSeriesCollection(this.dataset);
+        this.validujVstupy(hornaHranica);
 
-        this.graf = ChartFactory.createXYLineChart(
-            nadpisGrafu,
-            "Replikacia",
-            "Hodnota",
-            seriesCollection,
+        this.dataset = new DefaultCategoryDataset();
+        for (int i = minHodnota; i <= maxHodnota; i++)
+        {
+            this.dataset.addValue(0.0, "Stlpec", String.valueOf(i));
+        }
+
+        this.graf = ChartFactory.createBarChart(
+            "",
+            "Pocet pokladni",
+            "Dlzka frontu pred automatom",
+            this.dataset,
             PlotOrientation.VERTICAL,
             false,
             false,
             false
         );
 
-        this.curMaxHodnota = Integer.MIN_VALUE;
-        this.curMinHodnota = Integer.MAX_VALUE;
+        Color transparent = new Color(0xFF, 0xFF, 0xFF, 0);
+        this.graf.setBackgroundPaint(transparent);
+        this.graf.getCategoryPlot().getRangeAxis().setLowerBound(0.0);
+        this.graf.getCategoryPlot().getRangeAxis().setUpperBound(hornaHranica);
+
+        CategoryItemRenderer renderer = ((CategoryPlot)this.graf.getPlot()).getRenderer();
+        renderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        renderer.setDefaultItemLabelsVisible(true);
+        ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12,
+            TextAnchor.TOP_CENTER);
+        renderer.setDefaultPositiveItemLabelPosition(position);
+
+        this.maxHodnota = Integer.MIN_VALUE;
     }
 
-    public void pridajHodnotu(int cisloReplikacie, double vysledok)
+    private void validujVstupy(double hornaHranica)
     {
-        this.curMaxHodnota = Math.max(this.curMaxHodnota, vysledok);
-        this.curMinHodnota = Math.min(this.curMinHodnota, vysledok);
+        if (hornaHranica < 1)
+        {
+            throw new RuntimeException("Horna hranica grafu nemoze byt mensia ako 1!");
+        }
+    }
 
-        this.dataset.add(cisloReplikacie, vysledok);
-        XYPlot xyPlot = (XYPlot)this.graf.getPlot();
-        NumberAxis range = (NumberAxis)xyPlot.getRangeAxis();
-        range.setRange(this.curMinHodnota - Konstanty.ODSADENIE_HRANICNE_HODNOTY,
-                       this.curMaxHodnota + Konstanty.ODSADENIE_HRANICNE_HODNOTY);
-        this.graf.fireChartChanged();
+    public void aktualizujGraf(int stlpec, double hodnota)
+    {
+        if (hodnota < 0)
+        {
+            return;
+        }
+
+        if (hodnota > this.maxHodnota)
+        {
+            this.maxHodnota = (int)Math.ceil(hodnota);
+            this.graf.getCategoryPlot().getRangeAxis().setUpperBound(this.maxHodnota + 1);
+        }
+
+        this.dataset.setValue(hodnota, "Stlpec", String.valueOf(stlpec));
+
     }
 
     public JFreeChart getGraf()
     {
         return this.graf;
-    }
-
-    public void resetuj()
-    {
-        this.dataset.clear();
-        this.curMaxHodnota = Integer.MIN_VALUE;
-        this.curMinHodnota = Integer.MAX_VALUE;
     }
 }

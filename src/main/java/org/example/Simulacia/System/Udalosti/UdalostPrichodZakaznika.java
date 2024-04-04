@@ -55,7 +55,7 @@ public class UdalostPrichodZakaznika extends Udalost
         if (casDalsiehoPrichodu <= simulacia.getDlzkaTrvaniaSimulacie())
         {
             // Udalost je naplanovana iba za predpokladu, ze nenastane po vyprsani simulacneho casu
-            Agent dalsiPrichadzajuciAgent = new Agent(Identifikator.getID(), simulacia.getGeneratorTypZakaznika().getTypAgenta());
+            Agent dalsiPrichadzajuciAgent = new Agent(simulacia.getIdentifikator().getID(), simulacia.getGeneratorTypZakaznika().getTypAgenta());
             simulacia.pridajAgenta(dalsiPrichadzajuciAgent);
             UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casDalsiehoPrichodu, dalsiPrichadzajuciAgent);
             simulacia.naplanujUdalost(dalsiPrichod);

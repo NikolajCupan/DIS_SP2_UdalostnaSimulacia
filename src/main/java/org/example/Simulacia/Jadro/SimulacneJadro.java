@@ -219,6 +219,11 @@ public abstract class SimulacneJadro
         this.simulaciaPozastavena = simulaciaBolaZastavena;
     }
 
+    public long getPocetReplikacii()
+    {
+        return this.pocetReplikacii;
+    }
+
     public int getRychlost()
     {
         return this.rychlost;

@@ -2,15 +2,15 @@ package org.example.Ostatne;
 
 public class Identifikator
 {
-    private static long curID = 0;
+    private long curID;
 
-    public static synchronized long getID()
+    public Identifikator()
     {
-        return Identifikator.curID++;
+        this.curID = 0;
     }
 
-    public static synchronized void resetID()
+    public long getID()
     {
-        Identifikator.curID = 0;
+        return this.curID++;
     }
 }

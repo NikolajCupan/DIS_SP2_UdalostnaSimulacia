@@ -51,4 +51,10 @@ public class Konstanty
 
     public static final int PRIORITA_ZACIATOK_VYZDVIHNUTIA     = 200;
     public static final int PRIORITA_KONIEC_VYZDVIHNUTIA       = 1;
+
+
+    // Experiment
+    public static final int MIN_POCET_POKLADNI = 2;
+    public static final int MAX_POCET_POKLADNI = 6;
+    public static final double HORNA_HRANICA_GRAF = 15.0;
 }
