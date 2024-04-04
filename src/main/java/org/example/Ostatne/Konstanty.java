@@ -14,7 +14,7 @@ public class Konstanty
     // Debug
     public static final boolean DEBUG_VYPIS_AGENT = false;
     public static final boolean DEBUG_VYPIS_UDALOST = false;
-    public static final boolean STATISTIKY_ZOZNAM_DAT =false;
+    public static final boolean STATISTIKY_ZOZNAM_DAT = false;
 
 
     public static final int DLZKA_PAUZY_MS = 1000;

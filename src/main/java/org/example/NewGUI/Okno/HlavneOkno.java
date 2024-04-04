@@ -12,6 +12,7 @@ import org.example.Simulacia.System.SimulaciaSystem;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 /**
  *
@@ -1026,9 +1027,18 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
         this.labelPriemernaDlzkaOkno.setText("n/a");
         this.labelDlzkaOkno.setText("n/a");
 
-        ((DefaultTableModel)this.tabulkaAgenti.getModel()).setRowCount(0);
-        ((DefaultTableModel)this.tabulkaOkna.getModel()).setRowCount(0);
-        ((DefaultTableModel)this.tabulkaPokladne.getModel()).setRowCount(0);
+        try
+        {
+            EventQueue.invokeAndWait(() -> {
+                ((DefaultTableModel)this.tabulkaAgenti.getModel()).setRowCount(0);
+                ((DefaultTableModel)this.tabulkaOkna.getModel()).setRowCount(0);
+                ((DefaultTableModel)this.tabulkaPokladne.getModel()).setRowCount(0);
+            });
+        }
+        catch (Exception ex)
+        {
+            throw new RuntimeException("Chyba pri resetovani priebeznych statistik!");
+        }
     }
 
     private void inicializujExperiment()
@@ -1076,7 +1086,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             Prezenter.tabulkaCelkovePokladne(simulacia, this.tabulkaCelkovePokladne);
         }
 
-        if (priebezneStatistiky)
+        if (priebezneStatistiky && simulacneJadro.getRychlost() < Konstanty.MAX_RYCHLOST)
         {
             Prezenter.casFrontAutomat(simulacia, this.labelPriemernyCasAutomat);
             Prezenter.dlzkaFrontAutomat(simulacia, this.labelPriemernaDlzkaAutomat);

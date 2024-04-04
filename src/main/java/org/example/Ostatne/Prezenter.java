@@ -166,7 +166,7 @@ public class Prezenter
                 for (DiskretnaStatistika statistika : obycajneOknaStatistiky)
                 {
                     model.addRow(new Object[]{
-                        "Obycajne",
+                        "Obycajny",
                         Prezenter.zaokruhli(statistika.forceGetPriemer() * 100) + " %"
                     });
                 }
@@ -337,7 +337,7 @@ public class Prezenter
                 for (Okno okno : oknaObycajni)
                 {
                     model.addRow(new Object[]{
-                        "Obycajne",
+                        "Obycajny",
                         okno.getObsadene(),
                         Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %"
                     });

@@ -332,7 +332,7 @@ public class SimulaciaSystem extends SimulacneJadro
         }
 
         // Aktualizacia GUI
-        this.aktualizujGUI(true, false);
+        this.aktualizujGUI(true, true);
     }
 
     @Override
