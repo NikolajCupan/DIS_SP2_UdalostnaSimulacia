@@ -1098,6 +1098,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     @Override
     public void aktualizujSimulacnyCas(SimulacneJadro simulacneJadro)
     {
+        SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
         Prezenter.simulacnyCas(simulacia, this.labelSimulacnyCas);
     }
 }

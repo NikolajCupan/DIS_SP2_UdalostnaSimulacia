@@ -8,6 +8,7 @@ import org.example.Simulacia.System.SimulaciaSystem;
 import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,9 @@ public class ExperimentOkno implements ISimulationDelegate
     private Graf grafExperiment;
     private Thread experimentVlakno;
 
+    private volatile int aktualnyExperiment;
+    private volatile boolean experimentStopnuty;
+
     private final List<SimulaciaSystem> simulacie;
 
     public ExperimentOkno(JLabel labekAktualnaReplikacia, JPanel panelGraf, int minPocetPokladni, int maxPocetPokladni)
@@ -35,12 +39,18 @@ public class ExperimentOkno implements ISimulationDelegate
         this.panelGraf = panelGraf;
 
         this.simulacie = Collections.synchronizedList(new ArrayList<>(this.maxPocetPokladni - this.minPocetPokladni + 1));
+        this.experimentStopnuty = false;
+        this.aktualnyExperiment = -1;
 
         this.inicializujGraf();
     }
 
     private void inicializujGraf()
     {
+        if (this.grafExperiment != null)
+        {
+            this.grafExperiment.resetujGraf();
+        }
         this.grafExperiment = new Graf(Konstanty.MIN_POCET_POKLADNI, Konstanty.MAX_POCET_POKLADNI, Konstanty.HORNA_HRANICA_GRAF);
 
         int panelSirka = this.panelGraf.getWidth();
@@ -66,10 +76,13 @@ public class ExperimentOkno implements ISimulationDelegate
         this.experimentVlakno = new Thread(() -> {
             for (int i = this.minPocetPokladni; i <= this.maxPocetPokladni; i++)
             {
-                if (this.simulacie.get(i - this.minPocetPokladni) != null)
+                if (this.experimentStopnuty)
                 {
-                    this.simulacie.get(i - this.minPocetPokladni).simuluj();
+                    break;
                 }
+
+                this.aktualnyExperiment = i;
+                this.simulacie.get(i - this.minPocetPokladni).simuluj();
             }
         });
         this.experimentVlakno.setName("Experiment");
@@ -94,14 +107,17 @@ public class ExperimentOkno implements ISimulationDelegate
 
     public void ukonciExperiment()
     {
-        for (int i = this.minPocetPokladni; i <= this.maxPocetPokladni; i++)
+        this.experimentStopnuty = true;
+        SimulaciaSystem prebiehajucaSimulacia = this.simulacie.get(this.aktualnyExperiment - this.minPocetPokladni);
+        prebiehajucaSimulacia.ukonciSimulaciu();
+        prebiehajucaSimulacia.odoberDelegata(this);
+        prebiehajucaSimulacia = null;
+
+        for (int i = this.aktualnyExperiment + 1; i <= this.maxPocetPokladni; i++)
         {
-            if (this.simulacie.get(i - this.minPocetPokladni) != null)
-            {
-                this.simulacie.get(i - this.minPocetPokladni).ukonciSimulaciu();
-                this.simulacie.get(i - this.minPocetPokladni).odoberDelegata(this);
-                this.simulacie.set(i - this.minPocetPokladni, null);
-            }
+            this.simulacie.get(i - this.minPocetPokladni).ukonciSimulaciu();
+            this.simulacie.get(i - this.minPocetPokladni).odoberDelegata(this);
+            this.simulacie.set(i - this.minPocetPokladni, null);
         }
     }
 
@@ -115,9 +131,19 @@ public class ExperimentOkno implements ISimulationDelegate
 
         if (celkoveStatistiky)
         {
-            SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
-            this.grafExperiment.aktualizujGraf(simulacia.getPocetPokladni(), simulacia.getCelkovaStatistikaDlzkaFrontAutomat().forceGetPriemer());
-            this.labelAktualnaReplikacia.setText(simulacia.getAktualnaReplikacia() + "/" + simulacia.getPocetReplikacii());
+            try
+            {
+                SimulaciaSystem simulacia = (SimulaciaSystem)simulacneJadro;
+
+                EventQueue.invokeLater(() -> {
+                    this.grafExperiment.aktualizujGraf(simulacia.getPocetPokladni(), simulacia.getCelkovaStatistikaDlzkaFrontAutomat().forceGetPriemer());
+                    this.labelAktualnaReplikacia.setText(simulacia.getAktualnaReplikacia() - 1 + "/" + simulacia.getPocetReplikacii());
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new RuntimeException("Chyba pri aktualizacia grafov!");
+            }
         }
     }
 

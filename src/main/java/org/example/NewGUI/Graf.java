@@ -80,6 +80,11 @@ public class Graf
 
     }
 
+    public void resetujGraf()
+    {
+        this.dataset.clear();
+    }
+
     public JFreeChart getGraf()
     {
         return this.graf;

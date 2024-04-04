@@ -159,7 +159,7 @@ public class Prezenter
     {
         try
         {
-            EventQueue.invokeAndWait(() -> {
+            EventQueue.invokeLater(() -> {
                 DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
                 model.setRowCount(0);
                 DiskretnaStatistika[] obycajneOknaStatistiky = simulacia.getCelkovaStatistikaVytazenieObycajneOkna();
@@ -191,7 +191,7 @@ public class Prezenter
     {
         try
         {
-            EventQueue.invokeAndWait(() -> {
+            EventQueue.invokeLater(() -> {
                 DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
                 model.setRowCount(0);
 
