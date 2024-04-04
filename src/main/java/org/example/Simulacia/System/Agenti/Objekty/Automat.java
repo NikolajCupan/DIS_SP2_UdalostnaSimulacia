@@ -71,8 +71,16 @@ public class Automat
         return this.statistikaCakanieFront.forceGetPriemer();
     }
 
-    public void vyprazdniAutomat(double simulacnyCas)
+    public void vyprazdniAutomat(double simulacnyCas, DiskretnaStatistika statistikaCasSystem)
     {
+        for (Agent agent : this.front)
+        {
+            agent.setCasZaciatokObsluhyAutomat(simulacnyCas);
+            this.pridajCakanieAgent(agent);
+
+            statistikaCasSystem.pridajHodnotu(agent.getCasZaciatokObsluhyAutomat() - agent.getCasPrichodSystem());
+        }
+
         this.front.clear();
         this.statistikaDlzkaFront.pridajHodnotu(simulacnyCas, 0);
     }
