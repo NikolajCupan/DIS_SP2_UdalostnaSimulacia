@@ -15,7 +15,9 @@ import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Zakaznik.AgentKomparator;
+import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
 import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutomat;
+import org.example.Simulacia.System.Udalosti.Okno.UdalostZaciatokObsluhyOkno;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
@@ -336,16 +338,16 @@ public class SimulaciaSystem extends SimulacneJadro
     }
 
     @Override
-    protected void predVykonanimUdalosti()
+    protected void predVykonanimUdalosti(Udalost vykonavanaUdalost)
     {
-        this.kontrola();
+        this.kontrola(vykonavanaUdalost);
         this.skontrolujVyprsanieSimulacnehoCasu();
     }
 
     @Override
-    protected void poVykonaniUdalosti()
+    protected void poVykonaniUdalosti(Udalost vykonanaUdalost)
     {
-        this.kontrola();
+        this.kontrola(vykonanaUdalost);
         this.skontrolujVyprsanieSimulacnehoCasu();
 
         if (this.getRychlost() < Konstanty.MAX_RYCHLOST)
@@ -355,7 +357,7 @@ public class SimulaciaSystem extends SimulacneJadro
         }
     }
 
-    private void kontrola()
+    private void kontrola(Udalost udalost)
     {
         boolean frontOknoPlny = this.obsluhaOkna.getPocetFront() == Konstanty.KAPACITA_FRONT_OKNO;
         if (frontOknoPlny)
@@ -380,14 +382,68 @@ public class SimulaciaSystem extends SimulacneJadro
             return;
         }
 
-        for (Udalost udalost : this.getKalendarUdalosti())
+        for (Udalost curUdalost : this.getKalendarUdalosti())
         {
-            if (udalost instanceof UdalostZaciatokObsluhyAutomat udalostZaciatokObsluhyAutomat)
+            if (curUdalost instanceof UdalostZaciatokObsluhyAutomat udalostZaciatokObsluhyAutomat)
             {
                 if (Double.compare(this.getAktualnySimulacnyCas(), udalostZaciatokObsluhyAutomat.getCasVykonania()) != 0)
                 {
                     System.out.println(this.getAktualnySimulacnyCas());
                     throw new RuntimeException("Front pred oknom nie je plny, nikto nepouziva automat, front pred automatom nie je prazdny!");
+                }
+            }
+        }
+
+        int pocetOnline = 0;
+        int pocetObycajnych = 0;
+        for (Agent agent : this.obsluhaOkna.getFront())
+        {
+            if (agent.getTypAgenta() == TypAgenta.ONLINE)
+            {
+                pocetOnline++;
+            }
+            else
+            {
+                pocetObycajnych++;
+            }
+        }
+
+        if (pocetOnline + pocetObycajnych > 9)
+        {
+            throw new RuntimeException("Front pred oknom presiahol kapacitu!");
+        }
+
+        if (pocetOnline + pocetObycajnych == 9 && this.automat.getVypnuty())
+        {
+            throw new RuntimeException("Front pred oknom je plny a automat nie je vypnuty!");
+        }
+
+        if (pocetOnline + pocetObycajnych < 8 && this.automat.getVypnuty())
+        {
+            throw new RuntimeException("Automat je vypnuty pri fonte mensom ako 7!");
+        }
+
+        if (pocetOnline + pocetObycajnych < 9 && this.automat.getVypnuty())
+        {
+            int pocetZaciatokOkno = 0;
+            for (Udalost curUdalost : this.getKalendarUdalosti())
+            {
+                if (curUdalost instanceof UdalostZaciatokObsluhyOkno)
+                {
+                    pocetZaciatokOkno++;
+                }
+            }
+
+            if (pocetZaciatokOkno > 1)
+            {
+                throw new RuntimeException("Kalendar udalosti obsahuje viac ako 1 udalost zaciatku obsluhy u okna!");
+            }
+
+            if (pocetZaciatokOkno < 1)
+            {
+                if (!(udalost instanceof UdalostZaciatokObsluhyOkno))
+                {
+                    throw new RuntimeException("Front pred oknom nie je plny a automat je vypnuty!");
                 }
             }
         }

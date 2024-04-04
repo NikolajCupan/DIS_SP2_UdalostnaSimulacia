@@ -90,11 +90,11 @@ public abstract class SimulacneJadro
                 Udalost aktualnaUdalost = this.kalendarUdalosti.poll();
                 this.aktualizujSimulacnyCas(aktualnaUdalost);
 
-                this.predVykonanimUdalosti();
+                this.predVykonanimUdalosti(aktualnaUdalost);
                 aktualnaUdalost.vykonajUdalost();
                 this.udalostPrebieha = false;
 
-                this.poVykonaniUdalosti();
+                this.poVykonaniUdalosti(aktualnaUdalost);
             }
 
             this.poReplikacii();
@@ -287,6 +287,6 @@ public abstract class SimulacneJadro
     protected abstract void poReplikaciach();
     protected abstract void predReplikaciou();
     protected abstract void poReplikacii();
-    protected abstract void predVykonanimUdalosti();
-    protected abstract void poVykonaniUdalosti();
+    protected abstract void predVykonanimUdalosti(Udalost vykonavanaUdalost);
+    protected abstract void poVykonaniUdalosti(Udalost vykonanaUdalost);
 }
