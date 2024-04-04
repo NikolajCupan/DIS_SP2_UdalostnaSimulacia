@@ -12,8 +12,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Queue;
-import java.util.SortedSet;
 
 public class Prezenter
 {
@@ -298,24 +298,44 @@ public class Prezenter
         {
             EventQueue.invokeAndWait(() -> {
                 DefaultTableModel model = (DefaultTableModel)tabulka.getModel();
-                model.setRowCount(0);
+                ArrayList<Agent> agenti = new ArrayList<>(simulacia.getAgenti());
 
-                SortedSet<Agent> agenti = simulacia.getAgenti();
-                for (Agent agent : agenti)
+                int index = 0;
+                while (index < model.getRowCount())
+                {
+                    int stlpec = 0;
+                    model.setValueAt(agenti.get(index).getID(), index, stlpec++);
+                    model.setValueAt(agenti.get(index).getTypAgenta(), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasPrichodSystem()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasZaciatokObsluhyAutomat()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasKoniecObsluhyAutomat()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasZaciatokObsluhyOkno()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasKoniecObsluhyOkno()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasZaciatokObsluhyPokladna()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasKoniecObsluhyPokladna()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasZaciatokVyzdvihnutie()), index, stlpec++);
+                    model.setValueAt(Prezenter.naformatujCas(agenti.get(index).getCasKoniecVyzdvihnutie()), index, stlpec++);
+
+                    index++;
+                }
+
+                while (index < agenti.size())
                 {
                     model.addRow(new Object[]{
-                        agent.getID(),
-                        agent.getTypAgenta(),
-                        Prezenter.naformatujCas(agent.getCasPrichodSystem()),
-                        Prezenter.naformatujCas(agent.getCasZaciatokObsluhyAutomat()),
-                        Prezenter.naformatujCas(agent.getCasKoniecObsluhyAutomat()),
-                        Prezenter.naformatujCas(agent.getCasZaciatokObsluhyOkno()),
-                        Prezenter.naformatujCas(agent.getCasKoniecObsluhyOkno()),
-                        Prezenter.naformatujCas(agent.getCasZaciatokObsluhyPokladna()),
-                        Prezenter.naformatujCas(agent.getCasKoniecObsluhyPokladna()),
-                        Prezenter.naformatujCas(agent.getCasZaciatokVyzdvihnutie()),
-                        Prezenter.naformatujCas(agent.getCasKoniecVyzdvihnutie())
+                        agenti.get(index).getID(),
+                        agenti.get(index).getTypAgenta(),
+                        Prezenter.naformatujCas(agenti.get(index).getCasPrichodSystem()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasZaciatokObsluhyAutomat()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasKoniecObsluhyAutomat()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasZaciatokObsluhyOkno()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasKoniecObsluhyOkno()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasZaciatokObsluhyPokladna()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasKoniecObsluhyPokladna()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasZaciatokVyzdvihnutie()),
+                        Prezenter.naformatujCas(agenti.get(index).getCasKoniecVyzdvihnutie())
                     });
+
+                    index++;
                 }
             });
         }

@@ -24,6 +24,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
     private SimulaciaSystem simulacia;
     private Thread simulacneVlakno;
     private ExperimentOkno experimentOkno;
+    private boolean priebezneStatistikyVypisane;
 
     /**
      * Creates new form HlavneOkno
@@ -945,6 +946,7 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
 
     private void inicializacia()
     {
+        this.priebezneStatistikyVypisane = true;
         this.inicializujSlider();
     }
 
@@ -1098,10 +1100,13 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             Prezenter.tabulkaAgenti(simulacia, this.tabulkaAgenti);
             Prezenter.tabulkaOkna(simulacia, this.tabulkaOkna);
             Prezenter.tabulkaPokladne(simulacia, this.tabulkaPokladne);
+
+            this.priebezneStatistikyVypisane = true;
         }
-        else
+        else if (this.priebezneStatistikyVypisane)
         {
             this.resetujPriebezneStatistiky();
+            this.priebezneStatistikyVypisane = false;
         }
     }
 

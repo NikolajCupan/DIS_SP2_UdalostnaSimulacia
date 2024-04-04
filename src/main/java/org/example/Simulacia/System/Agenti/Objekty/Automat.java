@@ -107,11 +107,21 @@ public class Automat
 
     public void setVypnuty(boolean vypnuty)
     {
+        if (this.obsluhaPrebieha)
+        {
+            throw new RuntimeException("Automat nemozno vypnut alebo zapnut ak ho niekto prave pouziva!");
+        }
+
         this.vypnuty = vypnuty;
     }
 
     public void setObsluhaPrebieha(boolean obsluhaPrebieha, double simulacnyCas)
     {
+        if (this.vypnuty)
+        {
+            throw new RuntimeException("Nemozno naplanovat obsluhu u automatu ak je vypnuty!");
+        }
+
         this.obsluhaPrebieha = obsluhaPrebieha;
         this.aktualizujStatistiku(simulacnyCas);
     }
