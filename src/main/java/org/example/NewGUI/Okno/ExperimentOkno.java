@@ -1,4 +1,4 @@
-package org.example.Simulacia.System;
+package org.example.NewGUI.Okno;
 
 import org.example.NewGUI.Graf;
 import org.example.NewGUI.ISimulationDelegate;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Experiment implements ISimulationDelegate
+public class ExperimentOkno implements ISimulationDelegate
 {
     private final JLabel labelAktualnaReplikacia;
     private final JPanel panelGraf;
@@ -25,7 +25,7 @@ public class Experiment implements ISimulationDelegate
 
     private final List<SimulaciaSystem> simulacie;
 
-    public Experiment(JLabel labekAktualnaReplikacia, JPanel panelGraf, int minPocetPokladni, int maxPocetPokladni)
+    public ExperimentOkno(JLabel labekAktualnaReplikacia, JPanel panelGraf, int minPocetPokladni, int maxPocetPokladni)
     {
         this.validujVstupy(minPocetPokladni, maxPocetPokladni);
         this.minPocetPokladni = minPocetPokladni;
