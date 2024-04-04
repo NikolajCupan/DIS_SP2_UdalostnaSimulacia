@@ -1,6 +1,7 @@
 package org.example.Ostatne;
 
 import org.example.Simulacia.Statistiky.DiskretnaStatistika;
+import org.example.Simulacia.System.Agenti.Objekty.Automat;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Objekty.Pokladna;
@@ -63,9 +64,26 @@ public class Prezenter
         }
         else
         {
-            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " [" +
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer())+ " [" +
                 Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
                 Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+        }
+    }
+
+    public static void celkoveVytazenieAutomat(SimulaciaSystem simulacia, JLabel label)
+    {
+        DiskretnaStatistika statistika = simulacia.getCelkovaStatistikaVytazenieAutomat();
+
+        statistika.skusPrepocitatStatistiky();
+        if (!statistika.getStatistikyVypocitane())
+        {
+            label.setText("n/a");
+        }
+        else
+        {
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer() * 100) + " % [" +
+                Prezenter.zaokruhli(statistika.getDolnaHranicaIS() * 100) + ", " +
+                Prezenter.zaokruhli(statistika.getHornaHranicaIS() * 100) + "]");
         }
     }
 
@@ -221,6 +239,12 @@ public class Prezenter
     public static void aktualnaDlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
     {
         label.setText(String.valueOf(simulacia.getAutomat().getPocetFront()));
+    }
+
+    public static void vytazenieAutomat(SimulaciaSystem simulacia, JLabel label)
+    {
+        Automat automat = simulacia.getAutomat();
+        label.setText(Prezenter.zaokruhli(automat.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %");
     }
 
     public static void casFrontOkno(SimulaciaSystem simulacia, JLabel label)

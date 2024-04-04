@@ -57,7 +57,7 @@ public class UdalostZaciatokObsluhyAutomat extends Udalost
 
 
         // Zmena stavu simulacie
-        automat.setObsluhaPrebieha(true);
+        automat.setObsluhaPrebieha(true, this.getCasVykonania());
 
 
         // Nastavenie atributov agenta, ktory udalost vykonava

@@ -10,12 +10,16 @@ import java.util.Queue;
 
 public class Automat
 {
+    private static final int AUTOMAT_OBSADENY = 1;
+    private static final int AUTOMAT_VOLNY = 0;
+
     private boolean obsluhaPrebieha;
     private boolean vypnuty;
     private final Queue<Agent> front;
 
     private final SpojitaStatistika statistikaDlzkaFront;
     private final DiskretnaStatistika statistikaCakanieFront;
+    private final SpojitaStatistika statistikaVytazenie;
 
     public Automat()
     {
@@ -25,6 +29,7 @@ public class Automat
 
         this.statistikaDlzkaFront = new SpojitaStatistika();
         this.statistikaCakanieFront = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.statistikaVytazenie = new SpojitaStatistika();
     }
 
     public void pridajFront(Agent agent, double simulacnyCas)
@@ -100,13 +105,32 @@ public class Automat
         return this.vypnuty;
     }
 
-    public void setObsluhaPrebieha(boolean obsluhaPrebieha)
-    {
-        this.obsluhaPrebieha = obsluhaPrebieha;
-    }
-
     public void setVypnuty(boolean vypnuty)
     {
         this.vypnuty = vypnuty;
+    }
+
+    public void setObsluhaPrebieha(boolean obsluhaPrebieha, double simulacnyCas)
+    {
+        this.obsluhaPrebieha = obsluhaPrebieha;
+        this.aktualizujStatistiku(simulacnyCas);
+    }
+
+    public double getVytazenie(double simulacnyCas)
+    {
+        int aktualnyStav = (this.obsluhaPrebieha) ? Automat.AUTOMAT_OBSADENY : Automat.AUTOMAT_VOLNY;
+        return this.statistikaVytazenie.getPriemer(simulacnyCas, aktualnyStav);
+    }
+
+    private void aktualizujStatistiku(double simulacnyCas)
+    {
+        if (this.obsluhaPrebieha)
+        {
+            this.statistikaVytazenie.pridajHodnotu(simulacnyCas, Automat.AUTOMAT_OBSADENY);
+        }
+        else
+        {
+            this.statistikaVytazenie.pridajHodnotu(simulacnyCas, Automat.AUTOMAT_VOLNY);
+        }
     }
 }

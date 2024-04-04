@@ -80,6 +80,7 @@ public class SimulaciaSystem extends SimulacneJadro
 
     private DiskretnaStatistika celkovaStatistikaDlzkaFrontAutomat;
     private DiskretnaStatistika celkovaStatistikaCasFrontAutomat;
+    private DiskretnaStatistika celkovaStatistikaVytazenieAutomat;
 
     private DiskretnaStatistika celkovaStatistikaCasPoslednyOdchod;
     private DiskretnaStatistika celkovaStatistikaPocetObsluzenychAgentov;
@@ -159,6 +160,8 @@ public class SimulaciaSystem extends SimulacneJadro
 
         this.celkovaStatistikaDlzkaFrontAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         this.celkovaStatistikaCasFrontAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+        this.celkovaStatistikaVytazenieAutomat = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
+
         this.celkovaStatistikaCasPoslednyOdchod = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
         this.celkovaStatistikaPocetObsluzenychAgentov = new DiskretnaStatistika(95, Konstanty.KVANTIL_95_PERCENT);
 
@@ -255,6 +258,7 @@ public class SimulaciaSystem extends SimulacneJadro
             this.celkovaStatistikaCasFrontAutomat.pridajHodnotu(casFrontAutomat);
         }
         this.celkovaStatistikaDlzkaFrontAutomat.pridajHodnotu(this.automat.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
+        this.celkovaStatistikaVytazenieAutomat.pridajHodnotu(this.automat.getVytazenie(this.getAktualnySimulacnyCas()));
 
         double casFrontOkno = this.obsluhaOkna.getPriemerneCakenieFront();
         if (casFrontOkno != -1)
@@ -608,6 +612,11 @@ public class SimulaciaSystem extends SimulacneJadro
     public DiskretnaStatistika getCelkovaStatistikaCasFrontAutomat()
     {
         return this.celkovaStatistikaCasFrontAutomat;
+    }
+
+    public DiskretnaStatistika getCelkovaStatistikaVytazenieAutomat()
+    {
+        return this.celkovaStatistikaVytazenieAutomat;
     }
 
     public DiskretnaStatistika getCelkovaStatistikaCasPoslednyOdchod()
