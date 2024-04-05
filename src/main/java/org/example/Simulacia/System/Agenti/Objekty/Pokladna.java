@@ -35,8 +35,42 @@ public class Pokladna
         return this.front.size();
     }
 
-    public void pridajDoFrontu(Agent agent, double simulacnyCas)
+    public void pridajDoFrontu(Agent agent, double simulacnyCas, Pokladna[] pokladne)
     {
+        if (!this.obsadena)
+        {
+            throw new RuntimeException("Pokus o pridanie agenta do frontu pred pokladnou, hoci pokladna nie je obsadena!");
+        }
+
+        Pokladna[] ostatnePokladne = new Pokladna[pokladne.length - 1];
+        int index = 0;
+        for (Pokladna pokladna : pokladne)
+        {
+            if (pokladna != this)
+            {
+                ostatnePokladne[index] = pokladna;
+                index++;
+            }
+        }
+
+        if (ostatnePokladne.length != pokladne.length - 1)
+        {
+            throw new RuntimeException("Neplatna velkost pola ostatnych pokladni!");
+        }
+
+        for (Pokladna pokladna : ostatnePokladne)
+        {
+            if (!pokladna.getObsadena())
+            {
+                throw new RuntimeException("Agent bol priradeny do frontu pred pokladnou, hoci existuje ina pokladna, ktora nie je obsadena!");
+            }
+
+            if (pokladna.getPocetFront() < this.getPocetFront())
+            {
+                throw new RuntimeException("Agent bol priradeny do frontu pred pokladnou, hoci existuje ina pokladna, ktora ma mensi front!");
+            }
+        }
+
         if (this.front.contains(agent))
         {
             throw new RuntimeException("Front pred pokladnou uz obsahuje daneho agenta!");

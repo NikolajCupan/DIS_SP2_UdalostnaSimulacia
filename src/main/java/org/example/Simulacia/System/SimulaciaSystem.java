@@ -145,7 +145,7 @@ public class SimulaciaSystem extends SimulacneJadro
         // Generatory
         this.generatorTypZakaznika = new GenerovanieTypuZakaznika(this.generatorNasad);
         this.generatorDalsiPrichod = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
-        this.generatorVydanieListka = new SpojityRovnomernyGenerator(30.0, 180.0, this.generatorNasad);
+        this.generatorVydanieListka = new SpojityRovnomernyGenerator(30.0, 120.0, this.generatorNasad);
 
         this.generatorObsluhaObycajni = new SpojityRovnomernyGenerator(60.0, 900.0, this.generatorNasad);
         this.generatorObsluhaOnline = new SpojityTrojuholnikovyGenerator(60.0, 480.0, 120.0, this.generatorNasad);
@@ -569,8 +569,85 @@ public class SimulaciaSystem extends SimulacneJadro
 
     public Pokladna getPokladna()
     {
-        int indexPokladne = this.getIndexPokladne();
-        return this.pokladne[indexPokladne];
+        boolean existujeNeobsadenaPokladna = this.existujeNeobsadenaPokladna();
+        if (existujeNeobsadenaPokladna)
+        {
+            // Existuje neobsadena pokladna
+            int indexNeobsadenejPokladne = this.getIndexNeobsadenejPokladne();
+            return this.pokladne[indexNeobsadenejPokladne];
+        }
+        else
+        {
+            // Vsetky pokladne su neobsadene
+            int indexPokladne = this.getIndexPokladne();
+            return this.pokladne[indexPokladne];
+        }
+    }
+
+    private int getIndexNeobsadenejPokladne()
+    {
+        int pocetNeobsadenychPokladni = this.getPocetNeobsadenychPokladni();
+        int vygenerovanyIndex = this.generatorVyberFrontu.getIndexFrontu(pocetNeobsadenychPokladni);
+
+        int curIndex = 0;
+        for (int i = 0; i < this.pokladne.length; i++)
+        {
+            if (!this.pokladne[i].getObsadena())
+            {
+                if (this.pokladne[i].getPocetFront() != 0)
+                {
+                    throw new RuntimeException("Existuje pokladna, ktora nie je obsadena a front pred nou nie je prazdny!");
+                }
+
+                if (curIndex < vygenerovanyIndex)
+                {
+                    curIndex++;
+                }
+                else
+                {
+                    return i;
+                }
+            }
+        }
+
+        throw new RuntimeException("Chyba pri generovani indexu frontu pred pokladnami!");
+    }
+
+    private int getPocetNeobsadenychPokladni()
+    {
+        int pocetNeobsadenychPokladni = 0;
+        for (int i = 0; i < this.pokladne.length; i++)
+        {
+            if (!this.pokladne[i].getObsadena())
+            {
+                pocetNeobsadenychPokladni++;
+            }
+        }
+
+        if (pocetNeobsadenychPokladni == 0)
+        {
+            throw new RuntimeException("Neexistuje ziadna neobsadena pokladna!");
+        }
+
+        return pocetNeobsadenychPokladni;
+    }
+
+    private boolean existujeNeobsadenaPokladna()
+    {
+        for (int i = 0; i < this.pokladne.length; i++)
+        {
+            if (!this.pokladne[i].getObsadena())
+            {
+                if (this.pokladne[i].getPocetFront() != 0)
+                {
+                    throw new RuntimeException("Existuje pokladna, ktora nie je obsadena a front pred nou nie je prazdny!");
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private int getIndexPokladne()

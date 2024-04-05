@@ -122,7 +122,7 @@ public class UdalostKoniecObsluhyOkno extends Udalost
         else
         {
             // Pred pokladnou je front, umiestni agenta do frontu
-            pokladna.pridajDoFrontu(vykonavajuciAgent, this.getCasVykonania());
+            pokladna.pridajDoFrontu(vykonavajuciAgent, this.getCasVykonania(), simulacia.getPokladne());
         }
     }
 }
