@@ -55,9 +55,9 @@ public class Automat
         return odobratyAgent;
     }
 
-    public double getPriemernaDlzkaFrontu(double simulacnyCas)
+    public double getPriemernaDlzkaFrontu()
     {
-        return this.statistikaDlzkaFront.getPriemer(simulacnyCas, this.getPocetFront());
+        return this.statistikaDlzkaFront.getPriemer();
     }
 
     public void pridajCakanieAgent(Agent agent)
@@ -118,10 +118,9 @@ public class Automat
         this.aktualizujStatistiku(simulacnyCas);
     }
 
-    public double getVytazenie(double simulacnyCas)
+    public double getVytazenie()
     {
-        int aktualnyStav = (this.obsluhaPrebieha) ? Automat.AUTOMAT_OBSADENY : Automat.AUTOMAT_VOLNY;
-        return this.statistikaVytazenie.getPriemer(simulacnyCas, aktualnyStav);
+        return this.statistikaVytazenie.getPriemer();
     }
 
     private void aktualizujStatistiku(double simulacnyCas)

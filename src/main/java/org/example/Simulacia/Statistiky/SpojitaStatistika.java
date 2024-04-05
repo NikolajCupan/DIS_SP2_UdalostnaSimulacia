@@ -26,6 +26,11 @@ public class SpojitaStatistika
         this.data.add(new Stav(0.0, 0));
     }
 
+    public double getNajnovsiaVaha()
+    {
+        return this.data.getLast().vaha;
+    }
+
     public void pridajHodnotu(double vaha, int hodnota)
     {
         Stav najnovsiStav = this.data.getLast();
@@ -37,13 +42,10 @@ public class SpojitaStatistika
         this.data.add(new Stav(vaha, hodnota));
     }
 
-    public double getPriemer(double vaha, int hodnota)
+    public double getPriemer()
     {
-        this.data.add(new Stav(vaha, hodnota));
-        this.skontrolujData();
-
         double menovatel = this.data.getLast().vaha;
-        if (menovatel == 0.0)
+        if (menovatel == 0.0 || this.data.size() == 1)
         {
             return 0.0;
         }
@@ -57,26 +59,5 @@ public class SpojitaStatistika
         }
 
         return citatel / menovatel;
-    }
-
-    private void skontrolujData()
-    {
-        Stav prvy = this.data.getFirst();
-        if (prvy.vaha != 0.0 || prvy.hodnota != 0)
-        {
-            throw new RuntimeException("Prvy element spojitej statistiky je neplatny!");
-        }
-
-        if (this.data.size() < 2)
-        {
-            throw new RuntimeException("Spojita statistika neobsahuje uzatvaraci element!");
-        }
-
-        Stav predposledny = this.data.get(this.data.size() - 2);
-        Stav posledny = this.data.getLast();
-        if (predposledny.hodnota != posledny.hodnota)
-        {
-            throw new RuntimeException("Posledny element spojitej statistiky je neplatny!");
-        }
     }
 }

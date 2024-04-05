@@ -228,7 +228,7 @@ public class Prezenter
 
     public static void dlzkaFrontAutomat(SimulaciaSystem simulacia, JLabel label)
     {
-        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAutomat().getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas()))));
+        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getAutomat().getPriemernaDlzkaFrontu())));
     }
 
     public static void casFrontAutomat(SimulaciaSystem simulacia, JLabel label)
@@ -244,7 +244,7 @@ public class Prezenter
     public static void vytazenieAutomat(SimulaciaSystem simulacia, JLabel label)
     {
         Automat automat = simulacia.getAutomat();
-        label.setText(Prezenter.zaokruhli(automat.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %");
+        label.setText(Prezenter.zaokruhli(automat.getVytazenie() * 100) + " %");
     }
 
     public static void casFrontOkno(SimulaciaSystem simulacia, JLabel label)
@@ -254,7 +254,7 @@ public class Prezenter
 
     public static void dlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
     {
-        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getObsluhaOkna().getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas()))));
+        label.setText(String.valueOf(Prezenter.zaokruhli(simulacia.getObsluhaOkna().getPriemernaDlzkaFrontu())));
     }
 
     public static void aktualnaDlzkaFrontOkno(SimulaciaSystem simulacia, JLabel label)
@@ -359,7 +359,7 @@ public class Prezenter
                     model.addRow(new Object[]{
                         "Obycajny",
                         okno.getObsadene(),
-                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %"
+                        Prezenter.zaokruhli(okno.getVytazenie() * 100) + " %"
                     });
                 }
 
@@ -369,7 +369,7 @@ public class Prezenter
                     model.addRow(new Object[]{
                         "Online",
                         okno.getObsadene(),
-                        Prezenter.zaokruhli(okno.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %"
+                        Prezenter.zaokruhli(okno.getVytazenie() * 100) + " %"
                     });
                 }
             });
@@ -395,9 +395,9 @@ public class Prezenter
                     model.addRow(new Object[]{
                         pocitadlo,
                         pokladna.getObsadena(),
-                        Prezenter.zaokruhli(pokladna.getVytazenie(simulacia.getAktualnySimulacnyCas()) * 100) + " %",
+                        Prezenter.zaokruhli(pokladna.getVytazenie() * 100) + " %",
                         pokladna.getPocetFront(),
-                        Prezenter.zaokruhli(pokladna.getPriemernaDlzkaFrontu(simulacia.getAktualnySimulacnyCas())),
+                        Prezenter.zaokruhli(pokladna.getPriemernaDlzkaFrontu()),
                         Prezenter.zaokruhli(pokladna.getPriemerneCakenieFront()) + " sec"
                     });
 

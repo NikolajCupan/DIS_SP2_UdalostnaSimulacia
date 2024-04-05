@@ -260,15 +260,15 @@ public class SimulaciaSystem extends SimulacneJadro
         {
             this.celkovaStatistikaCasFrontAutomat.pridajHodnotu(casFrontAutomat);
         }
-        this.celkovaStatistikaDlzkaFrontAutomat.pridajHodnotu(this.automat.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
-        this.celkovaStatistikaVytazenieAutomat.pridajHodnotu(this.automat.getVytazenie(this.getAktualnySimulacnyCas()));
+        this.celkovaStatistikaDlzkaFrontAutomat.pridajHodnotu(this.automat.getPriemernaDlzkaFrontu());
+        this.celkovaStatistikaVytazenieAutomat.pridajHodnotu(this.automat.getVytazenie());
 
         double casFrontOkno = this.obsluhaOkna.getPriemerneCakenieFront();
         if (casFrontOkno != -1)
         {
             this.celkovaStatistikaCasFrontOkno.pridajHodnotu(casFrontOkno);
         }
-        this.celkovaStatistikaDlzkaFrontOkno.pridajHodnotu(this.obsluhaOkna.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
+        this.celkovaStatistikaDlzkaFrontOkno.pridajHodnotu(this.obsluhaOkna.getPriemernaDlzkaFrontu());
 
         // Cas posledneho odchodu
         if (!this.agenti.isEmpty())
@@ -310,21 +310,21 @@ public class SimulaciaSystem extends SimulacneJadro
         Okno[] oknaObycajni = this.obsluhaOkna.getOknaObycajni();
         for (int i = 0; i < oknaObycajni.length; i++)
         {
-            this.celkovaStatistikaVytazenieObycajneOkna[i].pridajHodnotu(oknaObycajni[i].getVytazenie(this.getAktualnySimulacnyCas()));
+            this.celkovaStatistikaVytazenieObycajneOkna[i].pridajHodnotu(oknaObycajni[i].getVytazenie());
         }
 
         Okno[] oknaOnline = this.obsluhaOkna.getOknaOnline();
         for (int i = 0; i < oknaOnline.length; i++)
         {
-            this.celkovaStatistikaVytazenieOnlineOkna[i].pridajHodnotu(oknaOnline[i].getVytazenie(this.getAktualnySimulacnyCas()));
+            this.celkovaStatistikaVytazenieOnlineOkna[i].pridajHodnotu(oknaOnline[i].getVytazenie());
         }
 
         // Statistiky pokladni
         for (int i = 0; i < this.pocetPokladni; i++)
         {
             Pokladna pokladna = this.pokladne[i];
-            this.celkovaStatistikaVytazeniePokladne[i].pridajHodnotu(pokladna.getVytazenie(this.getAktualnySimulacnyCas()));
-            this.celkovaStatistikaDlzkaFrontPokladne[i].pridajHodnotu(pokladna.getPriemernaDlzkaFrontu(this.getAktualnySimulacnyCas()));
+            this.celkovaStatistikaVytazeniePokladne[i].pridajHodnotu(pokladna.getVytazenie());
+            this.celkovaStatistikaDlzkaFrontPokladne[i].pridajHodnotu(pokladna.getPriemernaDlzkaFrontu());
 
             double priemerneCakanie = pokladna.getPriemerneCakenieFront();
             if (priemerneCakanie != -1)

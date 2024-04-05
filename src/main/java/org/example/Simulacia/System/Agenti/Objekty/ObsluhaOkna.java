@@ -156,9 +156,9 @@ public class ObsluhaOkna
         return this.oknaOnline;
     }
 
-    public double getPriemernaDlzkaFrontu(double simulacnyCas)
+    public double getPriemernaDlzkaFrontu()
     {
-        return this.statistikaDlzkaFront.getPriemer(simulacnyCas, this.getPocetFront());
+        return this.statistikaDlzkaFront.getPriemer();
     }
 
     public double getPriemerneCakenieFront()

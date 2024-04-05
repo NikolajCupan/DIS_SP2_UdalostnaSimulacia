@@ -108,9 +108,9 @@ public class Pokladna
         return this.statistikaCakanieFront.forceGetPriemer();
     }
 
-    public double getPriemernaDlzkaFrontu(double simulacnyCas)
+    public double getPriemernaDlzkaFrontu()
     {
-        return this.statistikaDlzkaFront.getPriemer(simulacnyCas, this.getPocetFront());
+        return this.statistikaDlzkaFront.getPriemer();
     }
 
     public boolean getObsadena()
@@ -124,10 +124,9 @@ public class Pokladna
         this.aktualizujStatistiku(simulacnyCas);
     }
 
-    public double getVytazenie(double simulacnyCas)
+    public double getVytazenie()
     {
-        int aktualnyStav = (this.obsadena) ? Pokladna.POKLADNA_OBSADENA : Pokladna.POKLADNA_VOLNA;
-        return this.statistikaVytazenie.getPriemer(simulacnyCas, aktualnyStav);
+        return this.statistikaVytazenie.getPriemer();
     }
 
     private void aktualizujStatistiku(double simulacnyCas)

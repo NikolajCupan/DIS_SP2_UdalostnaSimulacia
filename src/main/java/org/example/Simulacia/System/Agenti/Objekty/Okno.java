@@ -27,10 +27,9 @@ public class Okno
         this.aktualizujStatistiku(simulacnyCas);
     }
 
-    public double getVytazenie(double simulacnyCas)
+    public double getVytazenie()
     {
-        int aktualnyStav = (this.obsadene) ? Okno.OKNO_OBSADENE: Okno.OKNO_VOLNE;
-        return this.statistikaVytazenie.getPriemer(simulacnyCas, aktualnyStav);
+        return this.statistikaVytazenie.getPriemer();
     }
 
     private void aktualizujStatistiku(double simulacnyCas)
