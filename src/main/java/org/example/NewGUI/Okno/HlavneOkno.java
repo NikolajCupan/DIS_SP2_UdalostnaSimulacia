@@ -181,8 +181,8 @@ public class HlavneOkno extends javax.swing.JFrame implements ISimulationDelegat
             }
         });
 
-        sliderRychlost.setMajorTickSpacing(100);
-        sliderRychlost.setMaximum(1000);
+        sliderRychlost.setMajorTickSpacing(250);
+        sliderRychlost.setMaximum(2000);
         sliderRychlost.setMinorTickSpacing(10);
         sliderRychlost.setPaintLabels(true);
         sliderRychlost.setPaintTicks(true);

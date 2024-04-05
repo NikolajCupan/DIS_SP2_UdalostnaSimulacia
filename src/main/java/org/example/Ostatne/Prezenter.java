@@ -30,9 +30,9 @@ public class Prezenter
         }
         else
         {
-            label.setText(Prezenter.zaokruhli(statistika.getPriemer()) + " sec [" +
-                Prezenter.zaokruhli(statistika.getDolnaHranicaIS()) + ", " +
-                Prezenter.zaokruhli(statistika.getHornaHranicaIS()) + "]");
+            label.setText(Prezenter.zaokruhli(statistika.getPriemer() / 60.0) + " min [" +
+                Prezenter.zaokruhli(statistika.getDolnaHranicaIS() / 60.0) + ", " +
+                Prezenter.zaokruhli(statistika.getHornaHranicaIS() / 60.0) + "]");
         }
     }
 

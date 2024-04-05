@@ -21,7 +21,7 @@ public class Konstanty
     public static final int DLZKA_PAUZY_SYSTEMOVA_UDALOST_MS = 1000;
 
     public static final int DEFAULT_RYCHLOST = 100;
-    public static final int MAX_RYCHLOST = 1000;
+    public static final int MAX_RYCHLOST = 2000;
 
 
     // Intervaly spolahlivosti

@@ -481,8 +481,8 @@
     </Component>
     <Component class="javax.swing.JSlider" name="sliderRychlost">
       <Properties>
-        <Property name="majorTickSpacing" type="int" value="100"/>
-        <Property name="maximum" type="int" value="1000"/>
+        <Property name="majorTickSpacing" type="int" value="250"/>
+        <Property name="maximum" type="int" value="2000"/>
         <Property name="minorTickSpacing" type="int" value="10"/>
         <Property name="paintLabels" type="boolean" value="true"/>
         <Property name="paintTicks" type="boolean" value="true"/>
