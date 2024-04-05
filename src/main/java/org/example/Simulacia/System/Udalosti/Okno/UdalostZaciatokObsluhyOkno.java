@@ -5,6 +5,7 @@ import org.example.Simulacia.Jadro.SimulacneJadro;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Objekty.Automat;
 import org.example.Simulacia.System.Agenti.Objekty.ObsluhaOkna;
+import org.example.Simulacia.System.Agenti.Objekty.TypOkna;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
 import org.example.Simulacia.System.Agenti.Objekty.Okno;
 import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
@@ -25,6 +26,21 @@ public class UdalostZaciatokObsluhyOkno extends Udalost
         if (this.okno.getObsadene())
         {
             throw new RuntimeException("Bola naplanovana obsluha u obsadeneho okna!");
+        }
+
+        if (okno.getTypOkna() == TypOkna.ONLINE)
+        {
+            if (agent.getTypAgenta() != TypAgenta.ONLINE)
+            {
+                throw new RuntimeException("Agent bol priradene k nekompatibilnemu oknu!");
+            }
+        }
+        else
+        {
+            if (agent.getTypAgenta() == TypAgenta.ONLINE)
+            {
+                throw new RuntimeException("Agent bol priradene k nekompatibilnemu oknu!");
+            }
         }
     }
 

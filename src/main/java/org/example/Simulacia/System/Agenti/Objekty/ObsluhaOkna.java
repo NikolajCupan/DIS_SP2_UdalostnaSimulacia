@@ -25,13 +25,13 @@ public class ObsluhaOkna
         this.oknaObycajni = new Okno[pocetObycajnychObsluznychMiest];
         for (int i = 0; i < this.oknaObycajni.length; i++)
         {
-            this.oknaObycajni[i] = new Okno();
+            this.oknaObycajni[i] = new Okno(TypOkna.OBYCAJNE);
         }
 
         this.oknaOnline = new Okno[pocetOnlineObsluznychMiest];
         for (int i = 0; i < this.oknaOnline.length; i++)
         {
-            this.oknaOnline[i] = new Okno();
+            this.oknaOnline[i] = new Okno(TypOkna.ONLINE);
         }
 
         this.statistikaDlzkaFront = new SpojitaStatistika();

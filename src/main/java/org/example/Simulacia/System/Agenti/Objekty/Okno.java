@@ -7,13 +7,20 @@ public class Okno
     private static final int OKNO_OBSADENE = 1;
     private static final int OKNO_VOLNE = 0;
 
+    private final TypOkna typOkna;
     private boolean obsadene;
     private final SpojitaStatistika statistikaVytazenie;
 
-    public Okno()
+    public Okno(TypOkna typOkna)
     {
+        this.typOkna = typOkna;
         this.obsadene = false;
         this.statistikaVytazenie = new SpojitaStatistika();
+    }
+
+    public TypOkna getTypOkna()
+    {
+        return this.typOkna;
     }
 
     public boolean getObsadene()
