@@ -26,11 +26,6 @@ public class SpojitaStatistika
         this.data.add(new Stav(0.0, 0));
     }
 
-    public double getNajnovsiaVaha()
-    {
-        return this.data.getLast().vaha;
-    }
-
     public void pridajHodnotu(double vaha, int hodnota)
     {
         Stav najnovsiStav = this.data.getLast();
