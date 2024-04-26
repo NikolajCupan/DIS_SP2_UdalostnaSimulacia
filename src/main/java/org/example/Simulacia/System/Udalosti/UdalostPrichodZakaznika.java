@@ -1,13 +1,12 @@
 package org.example.Simulacia.System.Udalosti;
 
-import org.example.Ostatne.Identifikator;
+import org.example.Generatory.SpojityExponencialnyGenerator;
 import org.example.Ostatne.Konstanty;
 import org.example.Simulacia.Jadro.SimulacneJadro;
-import org.example.Simulacia.System.Agenti.Objekty.Automat;
-import org.example.Simulacia.System.SimulaciaSystem;
 import org.example.Simulacia.Jadro.Udalost;
 import org.example.Simulacia.System.Agenti.Zakaznik.Agent;
-import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutomat;
+import org.example.Simulacia.System.Agenti.Zakaznik.TypAgenta;
+import org.example.Simulacia.System.SimulaciaSystem;
 
 public class UdalostPrichodZakaznika extends Udalost
 {
@@ -28,13 +27,27 @@ public class UdalostPrichodZakaznika extends Udalost
         }
     }
 
+    private SpojityExponencialnyGenerator getGenerator(SimulaciaSystem simulacia, Agent agent)
+    {
+        switch (agent.getTypAgenta())
+        {
+            case TypAgenta.BEZNY:
+                return simulacia.getGeneratorDalsiPrichodBeznyZakaznik();
+            case TypAgenta.ZMLUVNY:
+                return simulacia.getGeneratorDalsiPrichodZmluvnyZakaznik();
+            case TypAgenta.ONLINE:
+                return simulacia.getGeneratorDalsiPrichodOnlineZakaznik();
+            default:
+                throw new RuntimeException("Neplatny typ agenta!");
+        }
+    }
+
     @Override
     public void vykonajUdalost()
     {
         this.vypis();
         SimulaciaSystem simulacia = (SimulaciaSystem)this.getSimulacneJadro();
         Agent vykonavajuciAgent = this.getAgent();
-        Automat automat = simulacia.getAutomat();
 
 
         // Kontrola stavu simulacie
@@ -49,50 +62,20 @@ public class UdalostPrichodZakaznika extends Udalost
 
 
         // Naplanuj prichod dalsieho zakaznika
-        double dalsiPrichodPo = simulacia.getGeneratorDalsiPrichod().sample();
+        SpojityExponencialnyGenerator generator = this.getGenerator(simulacia, vykonavajuciAgent);
+        double dalsiPrichodPo = generator.sample();
         double casDalsiehoPrichodu = simulacia.getAktualnySimulacnyCas() + dalsiPrichodPo;
 
         if (casDalsiehoPrichodu <= simulacia.getDlzkaTrvaniaSimulacie())
         {
             // Udalost je naplanovana iba za predpokladu, ze nenastane po vyprsani simulacneho casu
-            Agent dalsiPrichadzajuciAgent = new Agent(simulacia.getIdentifikator().getID(), simulacia.getGeneratorTypZakaznika().getTypAgenta());
+            Agent dalsiPrichadzajuciAgent = new Agent(simulacia.getIdentifikator().getID(), vykonavajuciAgent.getTypAgenta());
             simulacia.pridajAgenta(dalsiPrichadzajuciAgent);
             UdalostPrichodZakaznika dalsiPrichod = new UdalostPrichodZakaznika(simulacia, casDalsiehoPrichodu, dalsiPrichadzajuciAgent);
             simulacia.naplanujUdalost(dalsiPrichod);
         }
 
-
-        // Naplanuj zaciatok obsluhy u automatu, ak je to mozne
-        if (automat.getObsluhaPrebieha() || automat.getVypnuty())
-        {
-            // Niekto je obsluhovany alebo je automat vypnuty, pridaj agenta do frontu pred automatom
-            automat.pridajFront(vykonavajuciAgent, this.getCasVykonania());
-        }
-        else
-        {
-            // Obsluha u automatu moze byt naplanovana
-            if (automat.getPocetFront() == 0)
-            {
-                // Front pred automatom je prazdny, vykonavajuci agent bude obsluhovany
-                UdalostZaciatokObsluhyAutomat zaciatokObsluhy =
-                    new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), vykonavajuciAgent);
-                simulacia.naplanujUdalost(zaciatokObsluhy);
-            }
-            else
-            {
-                throw new RuntimeException("Nikto nepouziva automat a front pred nim nie je prazdny!");
-
-                /*
-                // Povodny kod
-
-                // Front pred automatom nie je prazdny, vyber z neho prveho agenta
-                // a naplanuj jeho obsluhu
-                Agent odobratyAgent = simulacia.odoberFrontAutomat();
-                UdalostZaciatokObsluhyAutomat zaciatokObsluhy =
-                    new UdalostZaciatokObsluhyAutomat(simulacia, this.getCasVykonania(), odobratyAgent);
-                simulacia.naplanujUdalost(zaciatokObsluhy);
-                */
-            }
-        }
+        UdalostVstupZakaznika vstupZakaznika = new UdalostVstupZakaznika(simulacia, this.getCasVykonania(), vykonavajuciAgent);
+        simulacia.naplanujUdalost(vstupZakaznika);
     }
 }

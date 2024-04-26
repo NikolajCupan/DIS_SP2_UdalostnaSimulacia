@@ -39,6 +39,7 @@ public class Konstanty
     public static final int PRIORITA_SYSTEMOVA_UDALOST         = 0;
 
     public static final int PRIORITA_PRICHOD_ZAKAZNIKA         = Integer.MAX_VALUE;
+    public static final int PRIORITA_VSTUP_ZAKAZNIKA           = Integer.MAX_VALUE - 1;
 
     public static final int PRIORITA_ZACIATOK_OBSLUHY_AUTOMAT  = 10;
     public static final int PRIORITA_KONIEC_OBSLUHY_AUTOMAT    = 100;

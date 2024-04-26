@@ -20,6 +20,7 @@ import org.example.Simulacia.System.Udalosti.Automat.UdalostZaciatokObsluhyAutom
 import org.example.Simulacia.System.Udalosti.Okno.UdalostZaciatokObsluhyOkno;
 import org.example.Simulacia.System.Udalosti.UdalostKomparator;
 import org.example.Simulacia.System.Udalosti.UdalostPrichodZakaznika;
+import org.example.Simulacia.System.Udalosti.UdalostVstupZakaznika;
 import org.example.Simulacia.Jadro.Udalost;
 
 import java.util.*;
@@ -40,7 +41,9 @@ public class SimulaciaSystem extends SimulacneJadro
     private Automat automat;
 
     private GenerovanieTypuZakaznika generatorTypZakaznika;
-    private SpojityExponencialnyGenerator generatorDalsiPrichod;
+    private SpojityExponencialnyGenerator generatorDalsiPrichodBeznyZakaznik;
+    private SpojityExponencialnyGenerator generatorDalsiPrichodZmluvnyZakaznik;
+    private SpojityExponencialnyGenerator generatorDalsiPrichodOnlineZakaznik;
 
     private SpojityRovnomernyGenerator generatorVydanieListka;
     // Koniec automat
@@ -144,7 +147,9 @@ public class SimulaciaSystem extends SimulacneJadro
 
         // Generatory
         this.generatorTypZakaznika = new GenerovanieTypuZakaznika(this.generatorNasad);
-        this.generatorDalsiPrichod = new SpojityExponencialnyGenerator(1.0 / 120.0, this.generatorNasad);
+        this.generatorDalsiPrichodBeznyZakaznik = new SpojityExponencialnyGenerator(1.0 / 240.0, this.generatorNasad);
+        this.generatorDalsiPrichodZmluvnyZakaznik = new SpojityExponencialnyGenerator(1.0 / 720.0, this.generatorNasad);
+        this.generatorDalsiPrichodOnlineZakaznik = new SpojityExponencialnyGenerator(1.0 / 360.0, this.generatorNasad);
         this.generatorVydanieListka = new SpojityRovnomernyGenerator(30.0, 120.0, this.generatorNasad);
 
         this.generatorObsluhaObycajni = new SpojityRovnomernyGenerator(60.0, 900.0, this.generatorNasad);
@@ -231,14 +236,34 @@ public class SimulaciaSystem extends SimulacneJadro
         // Koniec statistiky 1 replikacie
 
 
-        // Naplanovanie prichodu 1. zakaznika
-        Agent vykonavajuciAgent = new Agent(this.identifikator.getID(), this.generatorTypZakaznika.getTypAgenta());
-        double casPrichodu = this.generatorDalsiPrichod.sample();
-        if (casPrichodu <= this.dlzkaTrvaniaSimulacie)
+        // Naplanovanie prichodu 1. zakaznikov
+        // Bezny
+        Agent beznyZakaznik = new Agent(this.identifikator.getID(), TypAgenta.BEZNY);
+        double casPrichoduBezny = this.generatorDalsiPrichodBeznyZakaznik.sample();
+        if (casPrichoduBezny <= this.dlzkaTrvaniaSimulacie)
         {
-            // Udalost je naplanovana iba za predpokladu, ze nenastane po vyprsani simulacneho casu
-            this.pridajAgenta(vykonavajuciAgent);
-            UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, casPrichodu, vykonavajuciAgent);
+            this.pridajAgenta(beznyZakaznik);
+            UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, casPrichoduBezny, beznyZakaznik);
+            this.naplanujUdalost(prichod);
+        }
+
+        // Zmluvny
+        Agent zmluvnyZakaznik = new Agent(this.identifikator.getID(), TypAgenta.ZMLUVNY);
+        double casPrichoduZmluvny = this.generatorDalsiPrichodZmluvnyZakaznik.sample();
+        if (casPrichoduZmluvny <= this.dlzkaTrvaniaSimulacie)
+        {
+            this.pridajAgenta(zmluvnyZakaznik);
+            UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, casPrichoduZmluvny, zmluvnyZakaznik);
+            this.naplanujUdalost(prichod);
+        }
+
+        // Online
+        Agent onlineZakaznik = new Agent(this.identifikator.getID(), TypAgenta.ONLINE);
+        double casPrichoduOnline = this.generatorDalsiPrichodOnlineZakaznik.sample();
+        if (casPrichoduOnline <= this.dlzkaTrvaniaSimulacie)
+        {
+            this.pridajAgenta(onlineZakaznik);
+            UdalostPrichodZakaznika prichod = new UdalostPrichodZakaznika(this, casPrichoduOnline, onlineZakaznik);
             this.naplanujUdalost(prichod);
         }
 
@@ -462,7 +487,7 @@ public class SimulaciaSystem extends SimulacneJadro
             // Kontrola stavu kalendara udalosti
             for (Udalost udalost : this.getKalendarUdalosti())
             {
-                if (udalost instanceof UdalostPrichodZakaznika)
+                if (udalost instanceof UdalostPrichodZakaznika || udalost instanceof UdalostVstupZakaznika)
                 {
                     throw new RuntimeException("Doslo k naplanovaniu udalosti prichodu zakaznika po otvaracej dobe!");
                 }
@@ -511,9 +536,19 @@ public class SimulaciaSystem extends SimulacneJadro
         return this.generatorTypZakaznika;
     }
 
-    public SpojityExponencialnyGenerator getGeneratorDalsiPrichod()
+    public SpojityExponencialnyGenerator getGeneratorDalsiPrichodBeznyZakaznik()
     {
-        return this.generatorDalsiPrichod;
+        return this.generatorDalsiPrichodBeznyZakaznik;
+    }
+
+    public SpojityExponencialnyGenerator getGeneratorDalsiPrichodZmluvnyZakaznik()
+    {
+        return this.generatorDalsiPrichodZmluvnyZakaznik;
+    }
+
+    public SpojityExponencialnyGenerator getGeneratorDalsiPrichodOnlineZakaznik()
+    {
+        return this.generatorDalsiPrichodOnlineZakaznik;
     }
 
     public SpojityRovnomernyGenerator getGeneratorVydanieListka()
